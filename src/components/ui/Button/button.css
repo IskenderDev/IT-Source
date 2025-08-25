@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+.btn {
+  @apply font-medium rounded-full transition-all duration-700 inline-flex items-center justify-center;
+}
+
+.btn--solid {
+  background: linear-gradient(91.12deg, #1AC4A1 0.96%, #2D5E54 220.37%);
+  color: white;
+}
+.btn--solid:hover {
+  background: var(--color-primary-900);
+  color: #011627;
+}
+.btn--solid:active {
+  background: var(--color-primary-700);
+}
+
+.btn--outline {
+  @apply border-[3px] font-light;
+  border-color: #1CBE9C;
+  background: transparent;
+}
+.btn--outline:hover {
+  background: var(--color-primary-900);
+  color: #011627;
+}
+
+.btn--sm {
+  @apply h-9 text-sm;
+  width: 120px; 
+}
+.btn--md {
+  @apply h-11 text-base;
+  width: 160px;
+}
+.btn--lg {
+  @apply h-12 text-lg;
+  width: 260px;
+}
+
+.btn--full {
+  @apply w-full;
+}

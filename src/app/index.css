@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap');
+
+@import "tailwindcss";
+*,
+*::before,
+*::after { box-sizing: border-box; }
+html, body, #root { min-height: 100%; }
+body { margin: 0; }
+
+@theme {
+  --font-sans: "Manrope", monospace;
+  --font-mono: "IBM Plex Mono", monospace;
+
+  --color-primary-50:  #03CEA40D;
+  --color-primary-100: #03CEA426;
+  --color-primary-250: #03CEA459;
+  --color-primary-300: #026A54;
+  --color-primary-500-gradient: linear-gradient(180deg, #0AFFCC 0%, #017D64 100%);
+  --color-primary-700: #3BFCD4;
+  --color-primary-900: #9FFEEA;
+
+  --color-secondary: #011627;
+
+  --bg-main: #011627;
+  --bg-home: linear-gradient(0.13deg, #001B32 0.12%, #064982 82.16%);
+
+}
+
+body {
+  background: var(--bg-home);
+  background-attachment: fixed;  
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: white;                     
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+@utility bg-main {
+  background-image: var(--bg-main-gradient);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@utility color-primary-500 {
+  background-image: var(--color-primary-500-gradient);
+}
+
+
+@utility bg-home {
+  background-image: var(--bg-home);
+}
+
+@utility text-secondary {
+  color: var(--color-secondary);
+}
+
+
+.embla { overflow: hidden; }
+.embla__container { will-change: transform; }
+.embla__slide { min-width: 0; }
