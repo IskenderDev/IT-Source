@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import type { EmblaOptionsType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
@@ -66,6 +66,57 @@ export default function Slider({
 
   const scrollTo = useCallback((i: number) => emblaApi?.scrollTo(i), [emblaApi]);
 
+  /* ---------- equal-height на мобилке ---------- */
+  const articleRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const [mobileMinHeight, setMobileMinHeight] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState<boolean>(() =>
+    typeof window !== "undefined" ? window.innerWidth < 768 : true
+  );
+
+  // следим за брейкпоинтом
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  // считаем максимальную высоту среди карточек на мобилке
+  useEffect(() => {
+    if (!isMobile) {
+      setMobileMinHeight(null);
+      return;
+    }
+    const els = articleRefs.current.filter(Boolean) as HTMLDivElement[];
+    if (!els.length) return;
+
+    const compute = () => {
+      const max = Math.max(...els.map((el) => el.scrollHeight));
+      setMobileMinHeight(max);
+    };
+
+    compute();
+
+    const ro = new ResizeObserver(() => compute());
+    els.forEach((el) => ro.observe(el));
+
+    const onResize = () => compute();
+    window.addEventListener("resize", onResize);
+
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", onResize);
+    };
+  }, [slides, isMobile]);
+
+  // корректный колбэк ref (возвращает void, тип — HTMLDivElement)
+  const setArticleRef = useCallback(
+    (index: number) => (el: HTMLDivElement | null): void => {
+      articleRefs.current[index] = el;
+    },
+    []
+  );
+
   return (
     <section className={`relative w-full font-sans p-4 ${className}`}>
       <div className="mb-12 md:mb-16 text-center text-[#D9D9D9] flex items-center justify-center flex-col gap-6 relative">
@@ -100,8 +151,9 @@ export default function Slider({
           {slides.map((s, i) => (
             <div key={i} className="flex-[0_0_100%]">
               <article
+                ref={setArticleRef(i)}
                 className="
-                  relative w-full h-auto md:h-[520px] lg:h-[560px]
+                  relative w-full
                   rounded-[24px] md:rounded-[28px]
                   p-4 md:p-8 lg:p-9 text-white
                   shadow-[0_8px_40px_rgba(0,0,0,0.35)]
@@ -111,6 +163,7 @@ export default function Slider({
                   background:
                     s.background ??
                     "linear-gradient(280.68deg, #054277 1.65%, #01192A 97.64%)",
+                  minHeight: isMobile && mobileMinHeight ? mobileMinHeight : undefined,
                 }}
               >
                 {i === 0 && (
@@ -130,14 +183,18 @@ export default function Slider({
                   />
                 )}
 
+                {/* Контент: на md+ две колонки; слева делаем flex-col, чтобы кнопки прижимались вниз */}
                 <div
                   className="
-                    grid h-full items-center
+                    grid
                     grid-cols-1 md:grid-cols-[1.2fr_0.8fr]
-                    gap-4 md:gap-4 lg:gap-6 md:text-left
+                    gap-4 md:gap-4 lg:gap-6
+                    md:text-left
+                    relative z-10
                   "
                 >
-                  <div className="mx-0 md:mx-40 lg:mx-40">
+                  {/* Левая колонка — flex-col, чтобы кнопки ушли вниз */}
+                  <div className="mx-0 md:mx-40 lg:mx-40 flex flex-col h-full">
                     <h3 className="text-[24px] sm:text-[28px] md:text-[32px] lg:text-[40px] font-bold leading-snug">
                       {s.title}
                     </h3>
@@ -147,7 +204,13 @@ export default function Slider({
                     </p>
 
                     {(s.primary || s.secondary) && (
-                      <div className="mt-4 md:mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
+                      <div
+                        className="
+                          mt-4 md:mt-6
+                          mt-auto
+                          flex flex-wrap gap-3 justify-center md:justify-start
+                        "
+                      >
                         {s.primary && (
                           <a href={s.primary.href}>
                             <Button size="lg">{s.primary.label}</Button>
@@ -164,6 +227,7 @@ export default function Slider({
                     )}
                   </div>
 
+                  {/* Правая колонка — картинка, скрыта на мобилке */}
                   <div className="hidden md:block h-full">
                     <img
                       src={s.image}
@@ -178,6 +242,7 @@ export default function Slider({
                   </div>
                 </div>
 
+                {/* Стрелки (md+) */}
                 <button
                   onClick={() => emblaApi?.scrollPrev()}
                   aria-label="Предыдущий слайд"
@@ -207,6 +272,7 @@ export default function Slider({
         </div>
       </div>
 
+      {/* индикаторы (md+) */}
       <div className="mt-4 hidden md:flex w-full items-center justify-center gap-2">
         {scrollSnaps.map((_, i) => (
           <button

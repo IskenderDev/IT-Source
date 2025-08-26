@@ -1,49 +1,19 @@
 // components/ProjectsCarousel.tsx
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "../../ui";
-
-/* ===================== Типы ===================== */
-export type CaseSolution = {
-  title?: string;
-  items: string[];
-};
-
-export type CaseBlocks = {
-  task: string;
-  challenges?: string[];
-  result: string;
-};
-
-export type CaseDetails = {
-  blocks: CaseBlocks;
-  solutions: CaseSolution[];
-  logo?: string;
-  heroImage?: string;
-};
-
-export type Project = {
-  id: string;
-  title: string;
-  subtitle: string;
-  image: string;
-  modalImage?: string;
-  cta?: { label: string; href: string };
-  location?: string;
-  details?: CaseDetails;
-};
+import type { Project } from "../../../app/data/Projects";
 
 export type ProjectsCarouselProps = {
   projects: Project[];
-  heading?: string;
+  badgeLabel?: string;
   className?: string;
   autoplay?: boolean;
   autoplayDelayMs?: number;
 };
 
-/* ===================== Компонент ===================== */
 export default function ProjectsCarousel({
   projects,
-  heading = "Наши проекты",
+  badgeLabel = "Проекты примеры внедрений",
   className = "",
   autoplay = true,
   autoplayDelayMs = 4000,
@@ -55,13 +25,11 @@ export default function ProjectsCarousel({
   const [modal, setModal] = useState<Project | null>(null);
   const [isPaused, setIsPaused] = useState<boolean>(false);
 
-  // Кол-во "страниц"
-  const pages = useMemo<number>(
+  const pages = useMemo(
     () => Math.max(1, Math.ceil(projects.length / perView)),
     [projects.length, perView]
   );
 
-  // SSR-safe брейкпоинт: 1 карточка на мобиле, 2 на md+
   useEffect(() => {
     const update = () => {
       if (typeof window === "undefined") return;
@@ -72,19 +40,14 @@ export default function ProjectsCarousel({
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  // Синхронизация индикаторов по скроллу
   useEffect(() => {
     const el = trackRef.current;
     if (!el) return;
-    const onScroll = () => {
-      const next = Math.round(el.scrollLeft / el.clientWidth);
-      setPage(next);
-    };
+    const onScroll = () => setPage(Math.round(el.scrollLeft / el.clientWidth));
     el.addEventListener("scroll", onScroll, { passive: true });
     return () => el.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Автопрокрутка
   useEffect(() => {
     if (!autoplay) return;
     const id = window.setInterval(() => {
@@ -97,7 +60,6 @@ export default function ProjectsCarousel({
     return () => window.clearInterval(id);
   }, [autoplay, autoplayDelayMs, page, pages, isPaused]);
 
-  // Пауза при hover/focus
   useEffect(() => {
     const wrap = wrapRef.current;
     if (!wrap) return;
@@ -115,7 +77,7 @@ export default function ProjectsCarousel({
     };
   }, []);
 
-  // ESC для модалки + блок скролла body
+  // ESC + блок скролла body в модалке
   useEffect(() => {
     if (!modal) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setModal(null);
@@ -128,44 +90,23 @@ export default function ProjectsCarousel({
     };
   }, [modal]);
 
-  const scrollToPage = (n: number) => {
-    const el = trackRef.current;
-    if (!el) return;
-    const clamped = Math.max(0, Math.min(n, pages - 1));
-    el.scrollTo({ left: clamped * el.clientWidth, behavior: "smooth" });
-  };
-
-  const prev = () => scrollToPage(page - 1);
-  const next = () => scrollToPage(page + 1);
-
   return (
     <section className={`w-full py-8 md:py-12 ${className}`}>
       <div className="mx-auto max-w-[1280px] px-4 md:px-8">
-        <div className="mb-6 flex items-center justify-between gap-4">
-          <h2 className="text-lg md:text-2xl font-semibold text-white/90">
-            {heading}
-          </h2>
-
-          <div className="hidden md:flex items-center gap-2">
-            <button
-              onClick={prev}
-              aria-label="Назад"
-              className="rounded-xl bg-white/10 hover:bg-white/20 transition px-3 py-2"
-            >
-              ‹
-            </button>
-            <button
-              onClick={next}
-              aria-label="Вперёд"
-              className="rounded-xl bg-white/10 hover:bg-white/20 transition px-3 py-2"
-            >
-              ›
-            </button>
-          </div>
-        </div>
+        <h2
+          className="
+            mx-auto mb-8 inline-flex items-center justify-center
+            rounded-full px-6 md:px-10 py-2
+            font-mono text-sm md:text-lg text-white/90
+            ring-1 ring-white/10 shadow-[inset_0_-1px_0_rgba(255,255,255,.12)]
+            bg-[linear-gradient(180deg,rgba(15,61,57,.65),rgba(9,34,39,.65))]
+            backdrop-blur-[2px]
+          "
+        >
+          {badgeLabel}
+        </h2>
 
         <div ref={wrapRef} aria-roledescription="carousel" aria-label="Проекты">
-          {/* Трек */}
           <div
             ref={trackRef}
             data-hide-scrollbar
@@ -179,9 +120,7 @@ export default function ProjectsCarousel({
             role="group"
             aria-live="polite"
           >
-            <style>{`
-              [data-hide-scrollbar]::-webkit-scrollbar{display:none}
-            `}</style>
+            <style>{`[data-hide-scrollbar]::-webkit-scrollbar{display:none}`}</style>
 
             {projects.map((p) => (
               <article
@@ -219,47 +158,19 @@ export default function ProjectsCarousel({
                   </p>
 
                   <div className="mt-5">
-                    {p.details ? (
-                      <Button fullWidth onClick={() => setModal(p)}>
-                        Подробнее
-                      </Button>
-                    ) : p.cta ? (
-                      <a
-                        href={p.cta.href}
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <Button fullWidth>{p.cta.label}</Button>
-                      </a>
-                    ) : (
-                      <Button fullWidth onClick={() => setModal(p)}>
-                        Подробнее
-                      </Button>
-                    )}
+                    {/* ВСЕГДА открываем модалку */}
+                    <Button fullWidth onClick={() => setModal(p)}>
+                      Подробнее
+                    </Button>
                   </div>
                 </div>
               </article>
             ))}
           </div>
-
-          {/* Точки */}
-          <div className="mt-4 flex items-center justify-center gap-2">
-            {Array.from({ length: pages }).map((_, i) => (
-              <button
-                key={i}
-                aria-label={`К слайду ${i + 1}`}
-                onClick={() => scrollToPage(i)}
-                className={`h-2 rounded-full transition-all ${
-                  page === i
-                    ? "w-6 bg-white"
-                    : "w-2 bg-white/40 hover:bg-white/60"
-                }`}
-              />
-            ))}
-          </div>
         </div>
       </div>
 
-      {/* ---------- Модалка ---------- */}
+      {/* ---------- Модалка (в стиле макета Sky Park) ---------- */}
       {modal && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8"
@@ -271,129 +182,135 @@ export default function ProjectsCarousel({
             className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             onClick={() => setModal(null)}
           />
-          <div className="relative z-10 w-full max-w-[1100px] overflow-hidden rounded-2xl border border-white/10 bg-[#0B1E2F]">
-            {(modal.modalImage || modal.image) && (
-              <div className="relative">
-                <img
-                  src={modal.modalImage || modal.image}
-                  alt={modal.title}
-                  className="w-full max-h-[48vh] object-cover"
-                />
-                <button
-                  onClick={() => setModal(null)}
-                  aria-label="Закрыть"
-                  className="absolute right-3 top-3 rounded-xl bg-black/55 hover:bg-black/70 text-white px-3 py-2"
+          <div
+            className="
+              relative z-10 w-full max-w-[1200px]
+              overflow-hidden rounded-2xl border border-white/10
+              bg-[#0B1E2F]
+            "
+          >
+            {/* Верхняя двухколоночная зона: слева текст, справа — фото */}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 p-5 md:p-8">
+              {/* Левая часть */}
+              <div className="lg:col-span-7">
+                {/* Большой заголовок модалки */}
+                <h3
+                  id="project-modal-title"
+                  className="font-mono text-white text-2xl md:text-3xl lg:text-[32px] font-semibold leading-tight"
                 >
-                  ✕
-                </button>
+                  {modal.details.heading}
+                </h3>
+
+                {/* Короткий подзаголовок/описание под заголовком (из карточки) */}
+                <p className="mt-3 text-white/80 text-sm md:text-base">
+                  {modal.subtitle}
+                </p>
+
+                {/* Карточки: задача / вызовы / результат — как в макете */}
+                <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Задача */}
+                  <div className="rounded-xl border border-white/15 bg-white/[0.04] p-4">
+                    <div className="text-white font-semibold mb-2">
+                      {modal.details.blocks.task.title}
+                    </div>
+                    <div className="text-white/85 text-sm leading-relaxed">
+                      {modal.details.blocks.task.text}
+                    </div>
+                  </div>
+
+                  {/* Ключевые вызовы */}
+                  {modal.details.blocks.challenges && (
+                    <div className="rounded-xl border border-white/15 bg-white/[0.04] p-4">
+                      <div className="text-white font-semibold mb-2">
+                        {modal.details.blocks.challenges.title}
+                      </div>
+                      <ul className="text-white/85 text-sm leading-relaxed list-disc pl-5 space-y-1">
+                        {modal.details.blocks.challenges.items.map((c, i) => (
+                          <li key={i}>{c}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Результат — на всю ширину на sm, справа на lg */}
+                  <div className="rounded-xl border border-white/15 bg-white/[0.04] p-4 sm:col-span-2 lg:col-span-1">
+                    <div className="text-white font-semibold mb-2">
+                      {modal.details.blocks.result.title}
+                    </div>
+                    <div className="text-white/85 text-sm leading-relaxed">
+                      {modal.details.blocks.result.text}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Правая часть: фото (как на макете) */}
+              <div className="lg:col-span-5">
+                {(modal.details.heroImage || modal.modalImage || modal.image) && (
+                  <div className="relative overflow-hidden rounded-xl border border-white/10">
+                    <img
+                      src={modal.details.heroImage || modal.modalImage || modal.image}
+                      alt={modal.title}
+                      className="w-full h-full max-h-[360px] object-cover"
+                    />
+                  </div>
+                )}
+                {/* Лого под фото, если есть */}
+                {modal.details.logo && (
+                  <div className="mt-4">
+                    <img
+                      src={modal.details.logo}
+                      alt="Логотип"
+                      className="h-10 md:h-12 object-contain opacity-90"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Низ: Реализованные решения (полоса в два столбца) */}
+            {modal.details.solutions?.length > 0 && (
+              <div className="px-5 md:px-8 pb-6 md:pb-8">
+                <div className="text-white text-xl font-semibold mb-3">
+                  Реализованные решения
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
+                  {modal.details.solutions.map((group, idx) => (
+                    <div
+                      key={idx}
+                      className="rounded-xl border border-white/10 bg-white/[0.03] p-4 md:p-5"
+                    >
+                      <div className="text-white font-semibold mb-2">
+                        {group.title}
+                      </div>
+                      <ul className="text-white/85 text-sm leading-relaxed list-disc pl-5 space-y-1">
+                        {group.items.map((it, i) => (
+                          <li key={i}>{it}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+
+               
               </div>
             )}
 
-            <div className="p-5 md:p-8">
-              <h3
-                id="project-modal-title"
-                className="text-white text-xl md:text-2xl font-semibold font-mono"
-              >
-                {modal.title}
-              </h3>
-              {modal.location && (
-                <div className="mt-1 text-sm text-white/60">
-                  Локация: {modal.location}
-                </div>
-              )}
-              <p className="mt-3 text-white/85">{modal.subtitle}</p>
-
-              {!!modal.details && (
-                <div className="mt-6 grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
-                  {/* Задача */}
-                  <div className="rounded-xl bg-white/[0.06] p-4 md:p-5 border border-white/10">
-                    <div className="font-semibold text-white text-lg mb-2">
-                      Задача
-                    </div>
-                    <div className="text-white/85 text-sm leading-relaxed">
-                      {modal.details.blocks.task}
-                    </div>
-                  </div>
-
-                  {/* Ключевые вызовы (если есть) */}
-                  {Array.isArray(modal.details.blocks.challenges) &&
-                    modal.details.blocks.challenges.length > 0 && (
-                      <div className="rounded-xl bg-white/[0.06] p-4 md:p-5 border border-white/10">
-                        <div className="font-semibold text-white text-lg mb-2">
-                          Ключевые вызовы
-                        </div>
-                        <ul className="text-white/85 text-sm leading-relaxed list-disc pl-5 space-y-1">
-                          {modal.details.blocks.challenges.map((c, i) => (
-                            <li key={i}>{c}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
-
-                  {/* Результат */}
-                  <div className="rounded-xl bg-white/[0.06] p-4 md:p-5 border border-white/10 lg:col-span-1">
-                    <div className="font-semibold text-white text-lg mb-2">
-                      Результат
-                    </div>
-                    <div className="text-white/85 text-sm leading-relaxed">
-                      {modal.details.blocks.result}
-                    </div>
-                  </div>
-
-                  {/* Реализованные решения */}
-                  <div className="lg:col-span-3 mt-2">
-                    <div className="text-white text-xl font-semibold mb-3">
-                      Реализованные решения
-                    </div>
-                    <div className="grid sm:grid-cols-2 gap-4 md:gap-6">
-                      {modal.details.solutions.map((group, idx) => (
-                        <div
-                          key={idx}
-                          className="rounded-xl bg-white/[0.04] p-4 md:p-5 border border-white/10"
-                        >
-                          {group.title && (
-                            <div className="text-white font-semibold mb-2">
-                              {group.title}
-                            </div>
-                          )}
-                          <ul className="text-white/85 text-sm leading-relaxed space-y-1 list-disc pl-5">
-                            {group.items.map((it, i) => (
-                              <li key={i}>{it}</li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* CTA */}
-              <div className="mt-6 flex flex-wrap gap-3">
-                {modal.cta && (
-                  <a href={modal.cta.href}>
-                    <Button className="!rounded-full !text-white !font-semibold !bg-transparent btn-gradient-green">
-                      {modal.cta.label}
-                    </Button>
-                  </a>
-                )}
-                <Button onClick={() => setModal(null)}>
-                  Закрыть
-                </Button>
-              </div>
-            </div>
+            {/* Крестик */}
+            <button
+              onClick={() => setModal(null)}
+              aria-label="Закрыть"
+              className="
+                absolute right-3 top-3 md:right-4 md:top-4
+                rounded-xl bg-black/55 hover:bg-black/70
+                text-white px-3 py-2
+              "
+            >
+              ✕
+            </button>
           </div>
         </div>
       )}
-
-      {/* Локальный утилити-класс под зелёный градиент кнопки */}
-      <style>{`
-        .btn-gradient-green {
-          background-image: linear-gradient(90deg, #2DD4BF 0%, #22C55E 100%);
-          box-shadow: inset 0 -1px 0 rgba(255,255,255,.15);
-          padding: 12px 20px;
-        }
-      `}</style>
     </section>
   );
 }
