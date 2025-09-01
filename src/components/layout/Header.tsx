@@ -1,26 +1,8 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { HEADER_LINKS, type SectionId } from "../../app/data/header";
 
 const HEADER_OFFSET = 10;
-
-type SectionId =
-  | "home"
-  | "services"
-  | "equipment"
-  | "pricing"
-  | "reviews"
-  | "faq"
-  | "contact";
-
-const LINKS: Array<{ id: SectionId; label: string }> = [
-  { id: "home", label: "Главная" },
-  { id: "services", label: "Услуги" },
-  { id: "equipment", label: "Оборудование" },
-  { id: "pricing", label: "Цены" },
-  { id: "reviews", label: "Отзывы" },
-  { id: "faq", label: "FAQ" },
-  { id: "contact", label: "Контакты" },
-];
 
 function scrollToId(id: string) {
   const el = document.getElementById(id);
@@ -41,7 +23,7 @@ export default function Header() {
 
   const activeId = useMemo<SectionId | null>(() => {
     const h = (location.hash || "").replace("#", "");
-    return (LINKS.find((l) => l.id === h)?.id as SectionId) ?? null;
+    return (HEADER_LINKS.find((l) => l.id === h)?.id as SectionId) ?? null;
   }, [location.hash]);
 
   const goTo = (id: SectionId) => {
@@ -100,7 +82,7 @@ export default function Header() {
 
         <nav className="hidden md:flex items-center gap-8 text-sm text-white">
           <ul className="hidden md:flex items-center gap-8">
-            {LINKS.map((link) => (
+            {HEADER_LINKS.map((link) => (
               <li key={link.id}>
                 <button
                   onClick={() => goTo(link.id)}
@@ -154,7 +136,7 @@ export default function Header() {
         </button>
       </div>
 
-      {/* <div
+      <div
         className={[
           "md:hidden",
           "fixed inset-0 z-40",
@@ -181,7 +163,7 @@ export default function Header() {
           ].join(" ")}
         >
           <ul className="space-y-2">
-            {LINKS.map((link) => (
+            {HEADER_LINKS.map((link) => (
               <li key={link.id}>
                 <button
                   onClick={() => goTo(link.id)}
@@ -212,7 +194,7 @@ export default function Header() {
             © {new Date().getFullYear()} ITSource
           </p>
         </div>
-      </div> */}
+      </div>
     </header>
   );
 }
