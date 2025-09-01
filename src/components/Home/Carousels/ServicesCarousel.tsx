@@ -56,7 +56,7 @@ export default function ServicesCarousel() {
   const scrollTo = useCallback((i: number) => emblaApi?.scrollTo(i), [emblaApi]);
 
   return (
-    <section className="relative w-full font-sans ">
+    <section className="relative w-full font-sans mt-5">
       <SectionTitle heading="Услуги" className="mb-6" />
       <div className="overflow-hidden rounded-[28px]" ref={emblaRef}>
         <div className="flex">

@@ -64,71 +64,66 @@ function PlanCard({ plan }: { plan: Plan }) {
   return (
     <div
       className={[
-        // сеточное позиционирование для адаптивности
+        // позиционирование в сетке
         featured ? "sm:col-span-2 lg:col-span-1 lg:col-start-2" : "",
-        // карточка
-        "relative isolate h-full w-full max-w-[480px] sm:max-w-none",
+        // контейнер карточки
+        "relative isolate h-full w-full",
       ].join(" ")}
     >
       <div
         className={[
           "relative z-10 flex h-full flex-col overflow-hidden rounded-3xl border bg-white/5",
-          "border-white/10 p-6 sm:p-8 md:p-10",
+          "border-white/10 p-5 sm:p-7 md:p-8 lg:p-10",
           featured
-            ? "lg:scale-[1.04] lg:ring-2 lg:ring-white/20 lg:shadow-[0_10px_60px_rgba(10,255,204,.15)]"
+            ? "lg:scale-[1.03] lg:ring-2 lg:ring-white/20 lg:shadow-[0_10px_60px_rgba(10,255,204,.14)]"
             : "",
           "transition-transform duration-300 will-change-transform",
         ].join(" ")}
       >
-        {/* светящиеся шарики — мягче на мобилках */}
+        {/* мягкие свечения */}
         <div
-          className="pointer-events-none absolute -left-14 -top-14 h-40 w-40 sm:h-48 sm:w-48 rounded-full blur-3xl opacity-35"
+          className="pointer-events-none absolute -left-10 -top-10 h-28 w-28 sm:h-36 sm:w-36 md:h-44 md:w-44 rounded-full blur-3xl opacity-35"
           style={{
             background:
               "radial-gradient(140px 140px at 50% 50%, rgba(10,252,204,0.45), rgba(0,0,0,0))",
           }}
         />
         <div
-          className="pointer-events-none absolute -right-16 -bottom-16 h-44 w-44 sm:h-56 sm:w-56 rounded-full blur-3xl opacity-25"
+          className="pointer-events-none absolute -right-12 -bottom-12 h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48 rounded-full blur-3xl opacity-25"
           style={{
             background:
               "radial-gradient(160px 160px at 50% 50%, rgba(63,252,212,0.35), rgba(0,0,0,0))",
           }}
         />
 
-        {/* Цена */}
         <div className="relative flex items-end gap-2">
-          <div className="text-[28px] sm:text-[32px] md:text-[36px] font-bold text-white">
+          <div className="text-[26px] sm:text-[30px] md:text-[34px] lg:text-[36px] font-bold text-white leading-none">
             {price}
           </div>
-          <div className="pb-0.5 sm:pb-1 text-white/80 font-semibold text-[14px] sm:text-[16px] md:text-[18px]">
+          <div className="pb-0.5 sm:pb-1 text-white/80 font-semibold text-[13px] sm:text-[15px] md:text-[16px] leading-none">
             сом/мес
           </div>
         </div>
 
-        {/* Основные характеристики */}
-        <ul className="mt-4 sm:mt-5 md:mt-6 text-white/85 space-y-1.5">
-          <li className="text-[18px] sm:text-[20px] md:text-[22px]">{cpu}</li>
-          <li className="text-[18px] sm:text-[20px] md:text-[22px]">{ram}</li>
-          <li className="text-[18px] sm:text-[20px] md:text-[22px]">{ssd}</li>
+        <ul className="mt-4 sm:mt-5 md:mt-6 text-white/85 space-y-1">
+          <li className="text-[17px] sm:text-[19px] md:text-[21px]">{cpu}</li>
+          <li className="text-[17px] sm:text-[19px] md:text-[21px]">{ram}</li>
+          <li className="text-[17px] sm:text-[19px] md:text-[21px]">{ssd}</li>
         </ul>
 
-        {/* Кнопка */}
-        <div className="mt-6 sm:mt-7 md:mt-8 relative">
+        <div className="mt-5 sm:mt-6 md:mt-7 relative">
           <Button
             size="lg"
-            className="w-full text-[15px] sm:text-[16px] md:text-[17px] !rounded-full !bg-[var(--color-primary-500-gradient)]"
+            className="w-full text-[14.5px] sm:text-[15.5px] md:text-[16.5px] !rounded-full !bg-[var(--color-primary-500-gradient)]"
             aria-label={`Выбрать план за ${price} сом/мес`}
           >
             Я хочу это
           </Button>
         </div>
 
-        {/* разделитель */}
-        <div className="my-6 sm:my-7 md:my-8 h-px w-full bg-white/10" />
+        <div className="my-5 sm:my-6 md:my-7 h-px w-full bg-white/10" />
 
-        {/* Список фичей — растягиваем, чтобы низ карточек ровнялся */}
-        <ul className="text-left text-white text-[14.5px] sm:text-[15.5px] md:text-[16.5px] leading-relaxed space-y-1 mt-auto">
+        <ul className="mt-auto text-left text-white text-[14px] sm:text-[15px] md:text-[16px] leading-relaxed space-y-1.5">
           {features.map((f, i) => (
             <li key={i}>{f}</li>
           ))}
@@ -138,16 +133,12 @@ function PlanCard({ plan }: { plan: Plan }) {
   );
 }
 
-/* ---------- Секция ---------- */
 export default function PricingPlans() {
   return (
-    <section
-      className="relative w-full py-12 sm:py-14 md:py-20 text-center"
-    >
-      {/* фон за секцией */}
+    <section className="relative w-full py-10 sm:py-14 md:py-20 text-center">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div
-          className="absolute left-1/2 top-0 h-56 sm:h-64 w-[900px] sm:w-[1200px] -translate-x-1/2 rounded-full blur-3xl opacity-30"
+          className="absolute left-1/2 top-0 h-48 sm:h-60 md:h-64 w-[820px] sm:w-[1000px] md:w-[1200px] -translate-x-1/2 rounded-full blur-3xl opacity-30"
           style={{
             background:
               "radial-gradient(1200px 200px at 50% 0%, rgba(10,255,204,.25), rgba(1,23,39,0))",
@@ -158,16 +149,15 @@ export default function PricingPlans() {
       <div className="mx-auto max-w-[1200px] px-4 md:px-8 font-mono">
         <SectionTitle
           heading="Пакеты наших услуг"
-          subheading="Изучите наши гибкие тарифные планы, удовлетворяющие потребности любого бизнеса. Выберите план, который соответствует вашему бюджету и требованиям, а мы позаботимся обо всём остальном."
+          subheading="Изучите наши гибкие тарифные планы, удовлетворяющие потребности любого бизнеса. Выберите план, который соответствует вашему бюджету и требованиям."
         />
 
-        {/* Сетка карточек */}
         <div
           className={[
-            "mt-10 sm:mt-14 md:mt-20 grid",
+            "mt-8 sm:mt-12 md:mt-16 grid",
             "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
-            "items-stretch justify-items-center",
-            "gap-6 sm:gap-7 md:gap-8 lg:gap-10",
+            "items-stretch justify-items-stretch",
+            "gap-5 sm:gap-6 md:gap-8 lg:gap-10",
           ].join(" ")}
         >
           {plans.map((p, idx) => (
