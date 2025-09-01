@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import type { EmblaOptionsType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { Button } from "../../ui";
+import { Button, SectionTitle } from "../../ui";
 
 export type Slide = {
   title: string;
@@ -68,15 +68,8 @@ export default function Slider({
 
   return (
     <section className={`relative w-full font-sans p-4 ${className}`}>
-      <div className="mb-12 md:mb-16 text-center text-[#D9D9D9] flex items-center justify-center flex-col gap-6 relative">
-        <div className="inline-flex items-center rounded-full px-14 md:py-2 text-2xl md:text-5xl bg-[#03CEA433]">
-          {heading}
-        </div>
-        {subheading && (
-          <p className="text-[15px] md:text-[24px] max-w-72 md:max-w-[1000px] font-light">
-            {subheading}
-          </p>
-        )}
+      <div className="mb-12 md:mb-16 relative">
+        <SectionTitle heading={heading} subheading={subheading} />
 
         {showGlow && (
           <div

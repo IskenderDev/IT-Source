@@ -1,4 +1,5 @@
 import React from "react";
+import { SectionTitle } from "../../ui";
 
 export type Stage = {
   number: number;
@@ -54,9 +55,7 @@ export default function ProjectPhases({
 }: ProjectPhasesProps) {
   return (
     <section className={`relative font-mono  text-white flex flex-col text-center justify-center items-center ${className} `}>
-      <div className="inline-flex items-center rounded-full px-14  md:py-2  text-xl md:text-5xl w-72 md:w-auto bg-[#03CEA433]">
-        {heading}
-      </div>
+      <SectionTitle heading={heading} />
       <div className="absolute inset-0 -z-10" />
 
       <div className="pointer-events-none absolute inset-0 [mask-image:radial-gradient(70%_100%_at_50%_50%,#000_55%,transparent_100%)]">

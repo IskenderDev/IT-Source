@@ -1,4 +1,4 @@
-import { Button } from "../../ui";
+import { Button, SectionTitle } from "../../ui";
 
 /* ---------- Типы ---------- */
 type Plan = {
@@ -143,7 +143,6 @@ export default function PricingPlans() {
   return (
     <section
       className="relative w-full py-12 sm:py-14 md:py-20 text-center"
-      aria-labelledby="pricing-heading"
     >
       {/* фон за секцией */}
       <div className="pointer-events-none absolute inset-0 -z-10">
@@ -157,18 +156,10 @@ export default function PricingPlans() {
       </div>
 
       <div className="mx-auto max-w-[1200px] px-4 md:px-8 font-mono">
-        <h2
-          id="pricing-heading"
-          className="inline-flex items-center rounded-full px-6 sm:px-10 md:px-14 py-1.5 md:py-2 text-lg sm:text-2xl md:text-5xl bg-[#03CEA433]"
-        >
-          Пакеты наших услуг
-        </h2>
-
-        <p className="mx-auto mt-4 sm:mt-5 max-w-3xl text-[13px] sm:text-base md:text-2xl text-white/90">
-          Изучите наши гибкие тарифные планы, удовлетворяющие потребности любого
-          бизнеса. Выберите план, который соответствует вашему бюджету и
-          требованиям, а мы позаботимся обо всём остальном.
-        </p>
+        <SectionTitle
+          heading="Пакеты наших услуг"
+          subheading="Изучите наши гибкие тарифные планы, удовлетворяющие потребности любого бизнеса. Выберите план, который соответствует вашему бюджету и требованиям, а мы позаботимся обо всём остальном."
+        />
 
         {/* Сетка карточек */}
         <div

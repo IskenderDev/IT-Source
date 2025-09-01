@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button } from "../../ui";
+import { Button, SectionTitle } from "../../ui";
 
 type Solution = {
   id: string;
@@ -132,14 +132,11 @@ const ReadySolutions = ({ solutions = DEFAULT_SOLUTIONS }: Props) => {
   return (
     <section className="w-full py-12 md:py-16 font-sans">
       <div className="mx-auto max-w-[1200px] px-4 md:px-8">
-        <div className="flex flex-col justify-center items-center mb-24">
-          <h2 className="rounded-full px-6 md:px-14 py-2 text-xl md:text-5xl bg-[#03CEA433]">
-            Готовые отраслевые решения
-          </h2>
-          <p className="mx-auto mt-5 max-w-3xl text-sm md:text-2xl text-white">
-            Типовые решения для различных сфер бизнеса
-          </p>
-        </div>
+        <SectionTitle
+          heading="Готовые отраслевые решения"
+          subheading="Типовые решения для различных сфер бизнеса"
+          className="mb-24"
+        />
 
         <ul className="mt-8 md:mt-12 space-y-8 flex flex-col gap-14">
           {solutions.map((s) => (

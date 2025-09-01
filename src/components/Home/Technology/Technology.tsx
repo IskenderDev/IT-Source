@@ -1,5 +1,6 @@
 import brands3_d from "/brands/Brands3_d.svg";
 import brands3_m from "/brands/Brands3_m.svg";
+import { SectionTitle } from "../../ui";
 
 const desktopUrls = [brands3_d];
 const mobileUrls = [brands3_m];
@@ -7,11 +8,10 @@ const mobileUrls = [brands3_m];
 export default function Technology() {
   return (
     <section className="w-full py-10 md:py-14 mt-36 font-sans">
-      <div className="px-4 md:px-8 mb-5">
-        <h2 className="text-center text-white text-sm md:text-2xl">
-          Мы используем новейшее оборудование от:
-        </h2>
-      </div>
+      <SectionTitle
+        heading="Мы используем новейшее оборудование от:"
+        className="px-4 md:px-8 mb-5"
+      />
 
       <div className="hidden sm:block">
         {desktopUrls.map((src, i) => (

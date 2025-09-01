@@ -1,4 +1,5 @@
 import { FaStar, FaCogs, FaWrench, FaPhoneAlt } from "react-icons/fa";
+import { SectionTitle } from "../../ui";
 
 const features = [
   {
@@ -26,6 +27,7 @@ const features = [
 export default function Features() {
   return (
     <section className="w-full bg-gradient-to-r from-teal-200 to-teal-300 py-10 rounded-2xl text-black mt-28 font-sans">
+      <SectionTitle heading="Преимущества" className="text-black mb-10" />
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
         {features.map((f, i) => (
           <div key={i} className="flex flex-col items-center gap-3">
