@@ -91,7 +91,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Контакты */}
           <div>
             <h4 className="text-white font-semibold">Контакты</h4>
             <div className="mt-4 space-y-4 text-sm">
@@ -147,7 +146,6 @@ export default function Footer() {
   );
 }
 
-/** Кнопка-ссылка для соцсетей */
 function SocialLink({
   href,
   label,
@@ -170,7 +168,6 @@ function SocialLink({
   );
 }
 
-/** Плавная прокрутка к секции по id (совместимо с твоим Header) */
 function scrollToHash(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
