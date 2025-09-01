@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Button } from "../../ui";
+import { Button, SectionTitle } from "../../ui";
 import type { Project } from "../../../app/data/Projects";
 import ProjectModal from "../../ui/ProjectModal/ProjectModal";
 
@@ -80,18 +80,7 @@ export default function ProjectsCarousel({
   return (
     <section className={`w-full py-8 md:py-12 ${className}`}>
       <div className="mx-auto max-w-[1280px] px-4 md:px-8">
-        <h2
-          className="
-            mx-auto mb-8 inline-flex items-center justify-center
-            rounded-full px-6 md:px-10 py-2
-            font-mono text-sm md:text-lg text-white/90
-            ring-1 ring-white/10 shadow-[inset_0_-1px_0_rgba(255,255,255,.12)]
-            bg-[linear-gradient(180deg,rgba(15,61,57,.65),rgba(9,34,39,.65))]
-            backdrop-blur-[2px]
-          "
-        >
-          {badgeLabel}
-        </h2>
+        <SectionTitle heading={badgeLabel} className="mb-8" />
 
         <div ref={wrapRef} aria-roledescription="carousel" aria-label="Проекты">
           <div

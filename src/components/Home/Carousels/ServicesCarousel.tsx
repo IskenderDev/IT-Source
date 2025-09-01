@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import type { EmblaOptionsType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
-import { Button } from "../../ui";
+import { Button, SectionTitle } from "../../ui";
 
 const slides = [
   {
@@ -57,6 +57,7 @@ export default function ServicesCarousel() {
 
   return (
     <section className="relative w-full font-sans ">
+      <SectionTitle heading="Услуги" className="mb-6" />
       <div className="overflow-hidden rounded-[28px]" ref={emblaRef}>
         <div className="flex">
           {slides.map((s, i) => (
