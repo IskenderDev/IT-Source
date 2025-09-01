@@ -1,2 +1,4 @@
 import { Button } from './Button/Button';
-export {Button}
+import { SectionTitle } from './SectionTitle/SectionTitle';
+
+export { Button, SectionTitle };
