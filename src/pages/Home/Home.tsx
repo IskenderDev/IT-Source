@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Hero from "../../components/Home/Hero/Hero";
+import About from "../../components/Home/About/About";
 import ServicesCarousel from "../../components/Home/Carousels/ServicesCarousel";
 import Features from "../../components/Home/ListFeatures/Features";
 import Brands from "../../components/Home/Brands/Brands";
@@ -41,6 +42,7 @@ export default function Home() {
   return (
     <main className="bg-[#010C15]">
       <Hero />
+      <About />
       <ServicesCarousel />
       <Features />
       <Brands />
