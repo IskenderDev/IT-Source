@@ -16,6 +16,7 @@ import ReadySolutions from "../../components/Home/ReadySolutions/ReadySolutions"
 import ProjectsCarousel from "../../components/Home/Carousels/ProjectsCarousel";
 import {PROJECTS} from "../../app/data/Projects"
 import TransformationCTA from "../../components/Home/TransformationCTA/TransformationCTA";
+import ContactForm from "../../components/Home/ContactForm/ContactForm";
 
 const HEADER_OFFSET = 80;
 
@@ -54,8 +55,9 @@ export default function Home() {
       <HostingSection/>
       <PricingPlans/>
       <SpecialSolutions/>
-      <ReadySolutions/>  
+      <ReadySolutions/>
       <ProjectsCarousel projects={PROJECTS}/>
+      <ContactForm/>
       <TransformationCTA/>
     </main>
   );
