@@ -44,7 +44,6 @@ export default function Home() {
   return (
     <main className="bg-[#010C15]">
       <Hero />
-      <About />
       <ServicesCarousel />
       <Features />
       <Brands />
@@ -57,8 +56,9 @@ export default function Home() {
       <SpecialSolutions/>
       <ReadySolutions/>
       <ProjectsCarousel projects={PROJECTS}/>
-      <ContactForm/>
       <TransformationCTA/>
+      <About />
+      <ContactForm/>
     </main>
   );
 }
