@@ -2,7 +2,7 @@ import { BRANDS_DESKTOP, BRANDS_MOBILE } from "../../../app/data/brands";
 
 export default function Brands() {
   return (
-    <section className="w-full py-10 md:py-14 mt-36 font-sans">
+    <section className="w-full py-20 mt-36 font-sans">
      <div className="px-4 md:px-8">
         <h2 className="text-center text-[#F1F1F1] text-sm md:text-base">
           Мы помогли более 100+ компаниям

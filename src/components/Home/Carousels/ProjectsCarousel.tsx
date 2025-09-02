@@ -78,7 +78,7 @@ export default function ProjectsCarousel({
   }, []);
 
   return (
-    <section className={`w-full py-8 md:py-12 ${className}`}>
+    <section className={`w-full py-20 ${className}`}>
       <div className="mx-auto max-w-[1280px] px-4 md:px-8">
         <SectionTitle heading={badgeLabel} className="mb-8" />
 

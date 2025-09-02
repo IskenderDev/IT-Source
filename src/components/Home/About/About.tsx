@@ -5,7 +5,7 @@ export default function About() {
   return (
     <section
       id="about"
-      className="relative py-16 px-6 md:px-20 font-mono text-center overflow-hidden"
+      className="relative py-20 px-6 md:px-20 font-mono text-center overflow-hidden"
     >
 
       <div className="mx-auto relative z-10 text-white">

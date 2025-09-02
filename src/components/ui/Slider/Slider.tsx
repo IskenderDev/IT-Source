@@ -12,9 +12,9 @@ export type Slide = {
   secondary?: { label: string; href: string };
   imageAlt?: string;
   background?: string;
-  imgMaxHMobile?: number;   // px
-  imgMaxHDesktop?: number;  // px
-  imgRightPx?: number;      // px (только для md+)
+  imgMaxHMobile?: number;
+  imgMaxHDesktop?: number;
+  imgRightPx?: number;
 };
 
 type Props = {
@@ -28,15 +28,12 @@ type Props = {
   showGlow?: boolean;
   glowColor?: string;
   glowSize?: number;
-  /** Картинка сверху на мобилке (sm и ниже) */
   mobileImageTop?: boolean;
-  /** Одинаковая высота карточек на мобилке, px (только для sm и ниже) */
   mobileSlideMinH?: number;
 
-  /** === Глобальные настройки размеров/смещения картинки === */
-  imageMaxHMobile?: number;   // px, по умолчанию 192 (≈ max-h-48)
-  imageMaxHDesktop?: number;  // px, по умолчанию 480
-  imageRightPx?: number;      // px, по умолчанию 112 (≈ right-28)
+  imageMaxHMobile?: number;
+  imageMaxHDesktop?: number;
+  imageRightPx?: number;
 };
 
 export default function Slider({
@@ -127,7 +124,7 @@ export default function Slider({
                     flex flex-col
                   "
                   style={{
-                    ["--mh" as any]: `${mobileSlideMinH}px`,
+                    ["--mh" as string]: `${mobileSlideMinH}px`,
                     background:
                       s.background ??
                       "linear-gradient(280.68deg, #054277 1.65%, #01192A 97.64%)",
@@ -150,7 +147,6 @@ export default function Slider({
                     />
                   )}
 
-                  {/* ====== Мобилка: картинка сверху, текст прибит к низу ====== */}
                   {mobileImageTop && s.image && (
                     <div className="md:hidden flex justify-center">
                       <img
@@ -163,7 +159,6 @@ export default function Slider({
                     </div>
                   )}
 
-                  {/* Блок текста на мобилке — в самом конце и с mt-auto */}
                   <div className="md:hidden mt-auto">
                     <div className="font-mono">
                       <h3 className="text-[24px] sm:text-[28px] font-bold leading-snug text-center">
@@ -191,7 +186,6 @@ export default function Slider({
                     </div>
                   </div>
 
-                  {/* ====== Планшет/Десктоп: сетка с картинкой справа ====== */}
                   <div
                     className="
                       hidden md:grid h-full relative
@@ -199,7 +193,6 @@ export default function Slider({
                       items-center
                     "
                   >
-                    {/* Текст слева */}
                     <div className="ml-0 md:ml-28 font-mono">
                       <h3 className="text-[32px] lg:text-[40px] font-bold leading-snug">
                         {s.title}
@@ -225,7 +218,6 @@ export default function Slider({
                       )}
                     </div>
 
-                    {/* Картинка справа */}
                     <div className="h-full">
                       <img
                         src={s.image}
@@ -245,7 +237,6 @@ export default function Slider({
                     </div>
                   </div>
 
-                  {/* Стрелки на md+ */}
                   <button
                     onClick={() => emblaApi?.scrollPrev()}
                     aria-label="Предыдущий слайд"

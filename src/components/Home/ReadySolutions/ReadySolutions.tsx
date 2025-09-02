@@ -80,7 +80,7 @@ const ReadySolutions = ({ solutions = DEFAULT_SOLUTIONS }: Props) => {
   };
 
   return (
-    <section className="w-full py-12 md:py-16 font-sans">
+    <section className="w-full py-20 font-sans">
       <div className="mx-auto max-w-[1200px] px-4 md:px-8">
         <SectionTitle
           heading="Готовые отраслевые решения"

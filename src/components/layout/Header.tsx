@@ -51,7 +51,6 @@ export default function Header() {
     setOpen(false);
   };
 
-  // Автоскролл при переходе на главную с хэшемx
   useEffect(() => {
     if (isHome && location.hash) {
       const id = location.hash.replace("#", "");
@@ -82,8 +81,6 @@ export default function Header() {
         >
           <img src="/logo.svg" alt="ITSource Logo" className="h-9 w-auto" />
         </Link>
-
-        {/* Десктопное меню */}
         <nav
           className={[
             "hidden md:flex items-center gap-8 text-sm transition-colors",
@@ -138,8 +135,6 @@ export default function Header() {
             Связаться
           </button>
         </nav>
-
-        {/* Бургер */}
         <button
           type="button"
           className={[
@@ -170,8 +165,6 @@ export default function Header() {
           )}
         </button>
       </div>
-
-      {/* Мобильное меню */}
       {open && (
         <div className="md:hidden absolute left-0 right-0 top-full z-50 bg-white shadow-lg border-t border-gray-200 animate-fadeIn">
           <ul className="flex flex-col divide-y divide-gray-200">

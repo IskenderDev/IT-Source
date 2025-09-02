@@ -119,7 +119,7 @@ function PlanCard({ plan }: { plan: Plan }) {
 
 export default function Packages() {
   return (
-    <section className="relative w-full py-10 sm:py-14 md:py-20  bg-gradient-to-b from-[#010c15] to-black">
+    <section className="relative w-full py-20 bg-gradient-to-b from-[#010c15] to-black">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute left-1/2 top-0 h-48 sm:h-60 md:h-64 w-[820px] sm:w-[1000px] md:w-[1200px] -translate-x-1/2 rounded-full blur-3xl opacity-30" />
       </div>
@@ -150,7 +150,7 @@ export default function Packages() {
         </div>
       </div>
       <ContactForm />
-      <section className="relative text-white py-16 px-6 md:px-12">
+      <section className="relative text-white py-20 px-6 md:px-12">
         <div className="max-w-7xl mx-auto">
           <header className="text-center mb-10 md:mb-14">
             <h2 className="text-2xl md:text-4xl font-semibold">

@@ -2,7 +2,7 @@ import { TECHNOLOGY_DESKTOP, TECHNOLOGY_MOBILE } from "../../../app/data/technol
 
 export default function Technology() {
   return (
-    <section className="w-full py-10 md:py-14 mt-36 font-sans">
+    <section className="w-full py-20 mt-36 font-sans">
     <div className="px-4 md:px-8 mb-5">
         <h2 className="text-center text-white text-sm md:text-2xl">
           Мы используем новейшее оборудование от:

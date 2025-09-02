@@ -10,7 +10,7 @@ const year = new Date().getFullYear();
 export default function Footer() {
   return (
     <footer className="border-t border-white/10 text-white/90 font-sans bg-black">
-      <div className="mx-auto px-4 sm:px-8 lg:px-16 py-12 lg:py-16  ">
+      <div className="mx-auto px-4 sm:px-8 lg:px-16 py-20  ">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 lg:gap-16">
           <div className="flex flex-col justify-between">
             <div>

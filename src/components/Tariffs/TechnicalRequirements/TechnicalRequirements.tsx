@@ -1,4 +1,3 @@
-// components/Requirements/TechnicalRequirements.tsx
 import {
     FaWindows,
     FaChrome,

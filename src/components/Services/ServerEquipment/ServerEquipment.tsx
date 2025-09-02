@@ -37,7 +37,7 @@
 
     export default function ServerEquipment() {
     return (
-        <section className="relative py-20   px-6 md:px-12 lg:px-20 text-white bg-[#010B14]">
+        <section className="relative py-20 px-6 md:px-12 lg:px-20 text-white bg-[#010B14]">
         <div className="text-center mx-auto max-w-2xl">
             <h2 className="text-4xl font-mono font-bold ">
             Что такое серверное оборудование?

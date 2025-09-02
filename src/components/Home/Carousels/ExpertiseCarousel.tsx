@@ -1,4 +1,3 @@
-// components/Home/Expertise/ExpertiseSection.tsx
 import { useCallback, useEffect, useMemo, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import type { EmblaOptionsType } from "embla-carousel";
@@ -35,9 +34,9 @@ type Props = {
   mobileImageTop?: boolean;
   mobileSlideMinH?: number;
 
-  imageMaxHMobile?: number;   // px
-  imageMaxHDesktop?: number;  // px
-  imageRightPx?: number;      // px
+  imageMaxHMobile?: number;
+  imageMaxHDesktop?: number;
+  imageRightPx?: number;
 
   showArrows?: boolean;
   showDots?: boolean;
@@ -55,7 +54,7 @@ export default function ExpertiseSection({
   glowColor = "#FFEE53",
   glowSize = 200,
   mobileImageTop = true,
-  mobileSlideMinH = 700,           // ⚙️ по умолчанию 900px на мобилке
+  mobileSlideMinH = 700,
   imageMaxHMobile = 300,
   imageMaxHDesktop = 480,
   imageRightPx = 112,
@@ -91,7 +90,6 @@ export default function ExpertiseSection({
 
   return (
     <section className={`relative w-full font-sans p-4 ${className}`}>
-      {/* Заголовки */}
       <div className="mb-12 md:mb-16 relative">
         <SectionTitle heading={heading} subheading={subheading} />
         {showGlow && (
@@ -118,7 +116,7 @@ export default function ExpertiseSection({
             const dMax = s.imgMaxHDesktop ?? imageMaxHDesktop;
             const dRight = s.imgRightPx ?? imageRightPx;
 
-            const hideImage = i === 0; // 🧩 не показываем картинку на первом слайде
+            const hideImage = i === 0;
 
             return (
               <div key={i} className="flex-[0_0_100%]">
@@ -134,7 +132,7 @@ export default function ExpertiseSection({
                     flex flex-col
                   "
                   style={{
-                    ["--mh" as any]: `${mobileSlideMinH}px`,
+                    ["--mh" as string]: `${mobileSlideMinH}px`,
                     background:
                       s.background ??
                       "linear-gradient(280.68deg, #054277 1.65%, #01192A 97.64%)",
@@ -157,7 +155,6 @@ export default function ExpertiseSection({
                     />
                   )}
 
-                  {/* ===== Мобилка: картинка сверху (кроме 1-го слайда) ===== */}
                   {mobileImageTop && s.image && !hideImage && (
                     <div className="md:hidden flex justify-center">
                       <img
@@ -170,7 +167,6 @@ export default function ExpertiseSection({
                     </div>
                   )}
 
-                  {/* Текст на мобилке */}
                   <div className="md:hidden mt-auto font-mono">
                     <h3 className="text-[24px] sm:text-[28px] font-bold leading-snug text-center">
                       {s.title}
@@ -197,7 +193,6 @@ export default function ExpertiseSection({
                     )}
                   </div>
 
-                  {/* ===== Десктоп: текст слева, картинка справа (кроме 1-го) ===== */}
                   <div
                     className="
                       hidden md:grid h-full relative
@@ -205,7 +200,6 @@ export default function ExpertiseSection({
                       items-center
                     "
                   >
-                    {/* Текст — на первом слайде растягиваем на 2 колонки */}
                     <div className={`ml-0 md:ml-28 font-mono ${hideImage ? "md:col-span-2" : ""}`}>
                       <h3 className="text-[32px] lg:text-[40px] font-bold leading-snug">
                         {s.title}
@@ -232,7 +226,6 @@ export default function ExpertiseSection({
                       )}
                     </div>
 
-                    {/* Картинка справа — НЕ рендерим на первом слайде */}
                     {!hideImage && (
                       <div className="h-full">
                         <img
@@ -254,7 +247,6 @@ export default function ExpertiseSection({
                     )}
                   </div>
 
-                  {/* Стрелки */}
                   {showArrows && (
                     <>
                       <button
@@ -289,7 +281,6 @@ export default function ExpertiseSection({
         </div>
       </div>
 
-      {/* Точки */}
       {showDots && (
         <div className="mt-4 hidden md:flex w-full items-center justify-center gap-2">
           {scrollSnaps.map((_, i) => (
