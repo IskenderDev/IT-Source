@@ -1,10 +1,12 @@
 
-const Tariffs  = () => {
+import Advantages from "../../components/Tariffs/Advantages/Advantages";
+
+const Tariffs = () => {
   return (
     <div>
-      OneC
+      <Advantages />
     </div>
-  )
-}
+  );
+};
 
-export default Tariffs 
+export default Tariffs;
