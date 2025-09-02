@@ -1,5 +1,5 @@
 
-const OneC  = () => {
+const Tariffs  = () => {
   return (
     <div>
       OneC
@@ -7,4 +7,4 @@ const OneC  = () => {
   )
 }
 
-export default OneC 
+export default Tariffs 

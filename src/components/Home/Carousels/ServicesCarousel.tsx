@@ -1,41 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
-import type { EmblaOptionsType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { Button, SectionTitle } from "../../ui";
-
-const slides = [
-  {
-    image: "/slides/exp.png",
-    title: "Экспертиза",
-    subtitle: "Аудит, консалтинг, анализ инфраструктуры",
-    cta: { label: "Подробнее", href: "/services/expertise" },
-    ghost: { label: "Скачать чек-лист", href: "/files/checklist.pdf" },
-  },
-  {
-    image: "/slides/design.png",
-    title: "Проектирование под ключ",
-    subtitle: "Сетевые, серверные и слаботочные решения",
-    cta: { label: "Подробнее", href: "/services/design" },
-  },
-  {
-    image: "/slides/hosting.png",
-    title: "Аренда серверов",
-    subtitle: "Готовая IT-инфраструктура в ЦОД без перерывов",
-    cta: { label: "Подробнее", href: "/services/servers" },
-  },
-  {
-    image: "/slides/special.png",
-    title: "Специальные решения",
-    subtitle: "UKEY, IoT, интеграции, автоматизация",
-    cta: { label: "Подробнее", href: "/services/special" },
-  },
-];
-
-const options: EmblaOptionsType = { loop: true, align: "start" };
+import { SERVICE_OPTIONS, SERVICE_SLIDES } from "../../../app/data/servicesCarousel";
 
 export default function ServicesCarousel() {
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [
+  const [emblaRef, emblaApi] = useEmblaCarousel(SERVICE_OPTIONS, [
     Autoplay({ delay: 5000, stopOnInteraction: false }),
   ]);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -60,7 +30,7 @@ export default function ServicesCarousel() {
       <SectionTitle heading="Услуги" className="mb-6" />
       <div className="overflow-hidden rounded-[28px]" ref={emblaRef}>
         <div className="flex">
-          {slides.map((s, i) => (
+          {SERVICE_SLIDES.map((s, i) => (
             <div key={i} className="relative min-w-0 flex-[0_0_100%]">
               <img
                 src={s.image}
@@ -111,7 +81,6 @@ export default function ServicesCarousel() {
                 </div>
               </div>
 
-              {/* Стрелки */}
               <button
                 onClick={() => emblaApi?.scrollPrev()}
                 aria-label="Предыдущий слайд"
@@ -142,7 +111,6 @@ export default function ServicesCarousel() {
         </div>
       </div>
 
-      {/* Индикаторы */}
       <div className="mt-4 hidden md:flex w-full items-center justify-center gap-2">
         {scrollSnaps.map((_, i) => (
           <button

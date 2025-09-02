@@ -1,6 +1,6 @@
-/* ================== Типы ================== */
+
 export type ModalBlockText = {
-  title: string; // "Задача" | "Результат"
+  title: string; 
   text: string;
 };
 
@@ -10,29 +10,29 @@ export type ModalBlockList = {
 };
 
 export type CaseDetails = {
-  heading: string; // Большой заголовок модалки (как на макете)
-  heroImage?: string; // Большая картинка в шапке модалки (если нужна)
+  heading: string; 
+  heroImage?: string; 
   logo?: string;
   blocks: {
     task: ModalBlockText;
     challenges?: ModalBlockList;
     result: ModalBlockText;
   };
-  solutions: ModalBlockList[]; // Секции под "Реализованные решения"
+  solutions: ModalBlockList[]; 
 };
 
 export type Project = {
   id: string;
-  title: string; // Заголовок карточки (точно как в дизайне)
-  subtitle: string; // Подзаголовок карточки (точно как в дизайне)
-  image: string; // Картинка карточки
-  modalImage?: string; // Картинка в модалке/крупный превью
+  title: string; 
+  subtitle: string; 
+  image: string; 
+  modalImage?: string; 
   cta?: { label: string; href: string };
   location?: string;
-  details: CaseDetails; // Данные модалки
+  details: CaseDetails; 
 };
 
-/* ================== Данные ================== */
+
 export const PROJECTS: Project[] = [
   {
     id: "binteq",

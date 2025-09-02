@@ -12,6 +12,9 @@ export type Slide = {
   secondary?: { label: string; href: string };
   imageAlt?: string;
   background?: string;
+  imgMaxHMobile?: number;   // px
+  imgMaxHDesktop?: number;  // px
+  imgRightPx?: number;      // px (только для md+)
 };
 
 type Props = {
@@ -25,6 +28,15 @@ type Props = {
   showGlow?: boolean;
   glowColor?: string;
   glowSize?: number;
+  /** Картинка сверху на мобилке (sm и ниже) */
+  mobileImageTop?: boolean;
+  /** Одинаковая высота карточек на мобилке, px (только для sm и ниже) */
+  mobileSlideMinH?: number;
+
+  /** === Глобальные настройки размеров/смещения картинки === */
+  imageMaxHMobile?: number;   // px, по умолчанию 192 (≈ max-h-48)
+  imageMaxHDesktop?: number;  // px, по умолчанию 480
+  imageRightPx?: number;      // px, по умолчанию 112 (≈ right-28)
 };
 
 export default function Slider({
@@ -38,6 +50,12 @@ export default function Slider({
   showGlow = false,
   glowColor = "#FFEE53",
   glowSize = 200,
+  mobileImageTop = true,
+  mobileSlideMinH = 560,
+
+  imageMaxHMobile = 192,
+  imageMaxHDesktop = 480,
+  imageRightPx = 112,
 }: Props) {
   const emblaPlugins = useMemo(
     () => (autoplay ? [Autoplay({ delay: autoplayDelayMs, stopOnInteraction: false })] : []),
@@ -90,114 +108,171 @@ export default function Slider({
 
       <div className="overflow-hidden" ref={emblaRef}>
         <div className="flex gap-4 md:gap-5 lg:gap-6">
-          {slides.map((s, i) => (
-            <div key={i} className="flex-[0_0_100%]">
-              <article
-                className="
-                  relative w-full h-auto md:h-[520px] lg:h-[560px]
-                  rounded-[24px] md:rounded-[28px]
-                  p-4 md:p-8 lg:p-9 text-white
-                  shadow-[0_8px_40px_rgba(0,0,0,0.35)]
-                  overflow-hidden
-                "
-                style={{
-                  background:
-                    s.background ??
-                    "linear-gradient(280.68deg, #054277 1.65%, #01192A 97.64%)",
-                }}
-              >
-                {i === 0 && (
-                  <div
-                    className="pointer-events-none absolute rounded-full hidden md:block"
-                    style={{
-                      width: 260,
-                      height: 260,
-                      left: -80,
-                      transform: "translateY(-50%)",
-                      background: "#FC54EE",
-                      opacity: 0.35,
-                      filter: "blur(120px)",
-                      zIndex: 0,
-                      top: "50%",
-                    }}
-                  />
-                )}
+          {slides.map((s, i) => {
+            const mMax = s.imgMaxHMobile ?? imageMaxHMobile;
+            const dMax = s.imgMaxHDesktop ?? imageMaxHDesktop;
+            const dRight = s.imgRightPx ?? imageRightPx;
 
-                <div
+            return (
+              <div key={i} className="flex-[0_0_100%]">
+                <article
                   className="
-                    grid h-full items-center
-                    grid-cols-1 md:grid-cols-[1.2fr_0.8fr]
-                    gap-4 md:gap-4 lg:gap-6 md:text-left
-                    font-sans
+                    relative w-full
+                    min-h-[var(--mh)] md:min-h-0
+                    h-auto md:h-[520px] lg:h-[560px]
+                    rounded-[24px] md:rounded-[28px]
+                    p-4 md:p-8 lg:p-9 text-white
+                    shadow-[0_8px_40px_rgba(0,0,0,0.35)]
+                    overflow-hidden
+                    flex flex-col
                   "
+                  style={{
+                    ["--mh" as any]: `${mobileSlideMinH}px`,
+                    background:
+                      s.background ??
+                      "linear-gradient(280.68deg, #054277 1.65%, #01192A 97.64%)",
+                  }}
                 >
-                  <div className="ml-0 md:ml-28 w-4xl  font-mono">
-                    <h3 className="text-[24px] sm:text-[28px] md:text-[32px] lg:text-[40px] font-bold leading-snug">
-                      {s.title}
-                    </h3>
-
-                    <p className="mt-3 md:mt-6 text-[13px] sm:text-[14px] md:text-[16px] leading-relaxed text-white/90 whitespace-pre-line">
-                      {s.text}
-                    </p>
-
-                    {(s.primary || s.secondary) && (
-                      <div className="mt-4 md:mt-6 flex flex-wrap gap-3 justify-center md:justify-start">
-                        {s.primary && (
-                          <a href={s.primary.href}>
-                            <Button size="lg">{s.primary.label}</Button>
-                          </a>
-                        )}
-                        {s.secondary && (
-                          <a href={s.secondary.href}>
-                            <Button size="lg" variant="outline">
-                              {s.secondary.label}
-                            </Button>
-                          </a>
-                        )}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="hidden md:block h-full">
-                    <img
-                      src={s.image}
-                      alt={s.imageAlt ?? ""}
-                      loading="lazy"
-                      className="
-                        absolute right-28 top-1/2 -translate-y-1/2
-                        max-h-[480px] object-contain
-                        drop-shadow-[0_20px_40px_rgba(0,0,0,0.35)]
-                      "
+                  {i === 0 && (
+                    <div
+                      className="pointer-events-none absolute rounded-full hidden md:block"
+                      style={{
+                        width: 260,
+                        height: 260,
+                        left: -80,
+                        transform: "translateY(-50%)",
+                        background: "#FC54EE",
+                        opacity: 0.35,
+                        filter: "blur(120px)",
+                        zIndex: 0,
+                        top: "50%",
+                      }}
                     />
+                  )}
+
+                  {/* ====== Мобилка: картинка сверху, текст прибит к низу ====== */}
+                  {mobileImageTop && s.image && (
+                    <div className="md:hidden flex justify-center">
+                      <img
+                        src={s.image}
+                        alt={s.imageAlt ?? ""}
+                        loading="lazy"
+                        style={{ maxHeight: `${mMax}px` }}
+                        className="object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.35)]"
+                      />
+                    </div>
+                  )}
+
+                  {/* Блок текста на мобилке — в самом конце и с mt-auto */}
+                  <div className="md:hidden mt-auto">
+                    <div className="font-mono">
+                      <h3 className="text-[24px] sm:text-[28px] font-bold leading-snug text-center">
+                        {s.title}
+                      </h3>
+                      <p className="mt-3 text-[13px] sm:text-[14px] leading-relaxed text-white/90 whitespace-pre-line text-center">
+                        {s.text}
+                      </p>
+                      {(s.primary || s.secondary) && (
+                        <div className="mt-4 flex flex-wrap gap-3 justify-center">
+                          {s.primary && (
+                            <a href={s.primary.href}>
+                              <Button size="lg">{s.primary.label}</Button>
+                            </a>
+                          )}
+                          {s.secondary && (
+                            <a href={s.secondary.href}>
+                              <Button size="lg" variant="outline">
+                                {s.secondary.label}
+                              </Button>
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                <button
-                  onClick={() => emblaApi?.scrollPrev()}
-                  aria-label="Предыдущий слайд"
-                  className="
-                    hidden md:flex absolute left-4 top-1/2 -translate-y-1/2
-                    h-11 w-11 rounded-full bg-white text-[#03CEA4]
-                    items-center justify-center hover:bg-white/90 active:scale-95 transition
-                  "
-                >
-                  <ChevronLeft />
-                </button>
+                  {/* ====== Планшет/Десктоп: сетка с картинкой справа ====== */}
+                  <div
+                    className="
+                      hidden md:grid h-full relative
+                      grid-cols-[1.2fr_0.8fr] gap-4 lg:gap-6 md:text-left
+                      items-center
+                    "
+                  >
+                    {/* Текст слева */}
+                    <div className="ml-0 md:ml-28 font-mono">
+                      <h3 className="text-[32px] lg:text-[40px] font-bold leading-snug">
+                        {s.title}
+                      </h3>
+                      <p className="mt-6 text-[16px] leading-relaxed text-white/90 whitespace-pre-line">
+                        {s.text}
+                      </p>
+                      {(s.primary || s.secondary) && (
+                        <div className="mt-6 flex flex-wrap gap-3">
+                          {s.primary && (
+                            <a href={s.primary.href}>
+                              <Button size="lg">{s.primary.label}</Button>
+                            </a>
+                          )}
+                          {s.secondary && (
+                            <a href={s.secondary.href}>
+                              <Button size="lg" variant="outline">
+                                {s.secondary.label}
+                              </Button>
+                            </a>
+                          )}
+                        </div>
+                      )}
+                    </div>
 
-                <button
-                  onClick={() => emblaApi?.scrollNext()}
-                  aria-label="Следующий слайд"
-                  className="
-                    hidden md:flex absolute right-4 top-1/2 -translate-y-1/2
-                    h-11 w-11 rounded-full bg-white text-[#03CEA4]
-                    items-center justify-center hover:bg-white/90 active:scale-95 transition
-                  "
-                >
-                  <ChevronRight />
-                </button>
-              </article>
-            </div>
-          ))}
+                    {/* Картинка справа */}
+                    <div className="h-full">
+                      <img
+                        src={s.image}
+                        alt={s.imageAlt ?? ""}
+                        loading="lazy"
+                        style={{
+                          maxHeight: `${dMax}px`,
+                          right: `${dRight}px`,
+                          top: "50%",
+                        }}
+                        className="
+                          absolute -translate-y-1/2
+                          object-contain
+                          drop-shadow-[0_20px_40px_rgba(0,0,0,0.35)]
+                        "
+                      />
+                    </div>
+                  </div>
+
+                  {/* Стрелки на md+ */}
+                  <button
+                    onClick={() => emblaApi?.scrollPrev()}
+                    aria-label="Предыдущий слайд"
+                    className="
+                      hidden md:flex absolute left-4 top-1/2 -translate-y-1/2
+                      h-11 w-11 rounded-full bg-white text-[#03CEA4]
+                      items-center justify-center hover:bg-white/90 active:scale-95 transition
+                    "
+                  >
+                    <ChevronLeft />
+                  </button>
+
+                  <button
+                    onClick={() => emblaApi?.scrollNext()}
+                    aria-label="Следующий слайд"
+                    className="
+                      hidden md:flex absolute right-4 top-1/2 -translate-y-1/2
+                      h-11 w-11 rounded-full bg-white text-[#03CEA4]
+                      items-center justify-center hover:bg-white/90 active:scale-95 transition
+                    "
+                  >
+                    <ChevronRight />
+                  </button>
+                </article>
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -219,14 +294,7 @@ export default function Slider({
 
 function ChevronLeft() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      width="20"
-      height="20"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
@@ -234,14 +302,7 @@ function ChevronLeft() {
 
 function ChevronRight() {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      width="20"
-      height="20"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-    >
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
       <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );

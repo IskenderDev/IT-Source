@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { Home, OneC, Services } from "../pages";
+import { Home, Tariffs, Services } from "../pages";
 import Header from "../components/layout/Header";
 import Footer from '../components/layout/Footer';
 
@@ -11,7 +11,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/services" element={<Services />} />
-        <Route path="/1c" element={<OneC />} />
+        <Route path="/tariffs" element={<Tariffs />} />
       </Routes>
       <Footer/>
     </div>

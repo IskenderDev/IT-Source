@@ -1,26 +1,9 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+
+type SectionId = "home" | "tariffs" | "services" | "contact";
 
 const HEADER_OFFSET = 10;
-
-type SectionId =
-  | "home"
-  | "services"
-  | "equipment"
-  | "pricing"
-  | "reviews"
-  | "faq"
-  | "contact";
-
-const LINKS: Array<{ id: SectionId; label: string }> = [
-  { id: "home", label: "Главная" },
-  { id: "services", label: "Услуги" },
-  { id: "equipment", label: "Оборудование" },
-  { id: "pricing", label: "Цены" },
-  { id: "reviews", label: "Отзывы" },
-  { id: "faq", label: "FAQ" },
-  { id: "contact", label: "Контакты" },
-];
 
 function scrollToId(id: string) {
   const el = document.getElementById(id);
@@ -37,22 +20,40 @@ export default function Header() {
   const navigate = useNavigate();
   const isHome = location.pathname === "/";
   const [open, setOpen] = useState(false);
-  const panelRef = useRef<HTMLDivElement>(null);
 
+  // Подсветка активного пункта
   const activeId = useMemo<SectionId | null>(() => {
-    const h = (location.hash || "").replace("#", "");
-    return (LINKS.find((l) => l.id === h)?.id as SectionId) ?? null;
-  }, [location.hash]);
+    if (location.pathname === "/tariffs") return "tariffs";
+    if (location.pathname === "/services") return "services";
+    if (location.pathname === "/") {
+      const h = (location.hash || "").replace("#", "") as SectionId;
+      return (h || "home") as SectionId;
+    }
+    return null;
+  }, [location.pathname, location.hash]);
 
+  // Унифицированный переход
   const goTo = (id: SectionId) => {
-    if (isHome) {
-      scrollToId(id);
-    } else {
-      navigate(`/#${id}`);
+    switch (id) {
+      case "home":
+        if (!isHome) navigate("/");
+        else scrollToId("home");
+        break;
+      case "tariffs":
+        if (location.pathname !== "/tariffs") navigate("/tariffs");
+        break;
+      case "services":
+        if (location.pathname !== "/services") navigate("/services");
+        break;
+      case "contact":
+        if (isHome) scrollToId("contact");
+        else navigate("/#contact");
+        break;
     }
     setOpen(false);
   };
 
+  // Автоскролл при переходе на главную с хэшем
   useEffect(() => {
     if (isHome && location.hash) {
       const id = location.hash.replace("#", "");
@@ -61,158 +62,176 @@ export default function Header() {
     }
   }, [isHome, location.hash]);
 
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open]);
-
-  useEffect(() => {
-    if (open) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => {
-        document.body.style.overflow = prev;
-      };
-    }
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    const onClick = (e: MouseEvent) => {
-      if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
-  }, [open]);
-
   return (
-    <header className="inset-x-0 top-0 z-50 bg-transparent backdrop-blur-[20px] border-b border-white/10 font-sans">
+    <header
+      className={[
+        "relative",
+        "inset-x-0 top-0 z-50 border-b font-sans transition-colors duration-300",
+        open
+          ? "bg-white border-gray-200"
+          : "bg-transparent backdrop-blur-[20px] border-white/10",
+      ].join(" ")}
+    >
       <div className="mx-auto flex items-center justify-between px-4 sm:px-8 lg:px-16 py-4 lg:py-6">
-        <Link to="/" className="flex items-center gap-2 shrink-0" aria-label="На главную">
-          <img src="/logo.svg" alt="ITSource Logo" className="h-11 w-auto" />
+        <Link
+          to="/"
+          className="flex items-center gap-2 shrink-0"
+          aria-label="На главную"
+          onClick={(e) => {
+            e.preventDefault();
+            goTo("home");
+          }}
+        >
+          <img src="/logo.svg" alt="ITSource Logo" className="h-9 w-auto" />
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8 text-sm text-white">
-          <ul className="hidden md:flex items-center gap-8">
-            {LINKS.map((link) => (
-              <li key={link.id}>
-                <button
-                  onClick={() => goTo(link.id)}
-                  className={[
-                    "transition-colors",
-                    "hover:text-primary",
-                    activeId === link.id ? "text-primary" : "text-white/90",
-                  ].join(" ")}
-                >
-                  {link.label}
-                </button>
-              </li>
-            ))}
-          </ul>
+        {/* Десктопное меню */}
+        <nav
+          className={[
+            "hidden md:flex items-center gap-8 text-sm transition-colors",
+            open ? "text-gray-900" : "text-white",
+          ].join(" ")}
+        >
+          <button
+            onClick={() => goTo("home")}
+            className={
+              activeId === "home"
+                ? "text-primary"
+                : "text-white/90 hover:text-primary"
+            }
+          >
+            Главная
+          </button>
+          <button
+            onClick={() => goTo("tariffs")}
+            className={
+              activeId === "tariffs"
+                ? "text-primary"
+                : "text-white/90 hover:text-primary"
+            }
+          >
+            Тарифы
+          </button>
+          <button
+            onClick={() => goTo("services")}
+            className={
+              activeId === "services"
+                ? "text-primary"
+                : "text-white/90 hover:text-primary"
+            }
+          >
+            Услуги
+          </button>
           <button
             onClick={() => goTo("contact")}
-            className="ml-10  text-[#03CEA4] bg-[#03CEA426] py-3 px-6 font-semibold transition-transform active:scale-[0.98] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#03CEA4]/60"
+            className={
+              activeId === "contact"
+                ? "text-primary"
+                : "text-white/90 hover:text-primary"
+            }
+          >
+            Контакты
+          </button>
+
+          <button
+            onClick={() => goTo("contact")}
+            className="ml-6 text-[#03CEA4] bg-[#03CEA426] py-2.5 px-6 font-semibold transition active:scale-95"
           >
             Связаться
           </button>
         </nav>
 
+        {/* Бургер */}
         <button
           type="button"
-          className="md:hidden inline-flex items-center justify-center rounded-xl p-2 text-white/90 transition active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+          className={[
+            "md:hidden inline-flex items-center justify-center p-2 transition active:scale-95 focus:outline-none",
+            open ? "text-gray-900" : "text-white/90",
+          ].join(" ")}
           aria-label="Меню"
-          aria-controls="mobile-menu"
-          aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
-          <span className="relative block h-5 w-6">
-            <span
-              className={[
-                "absolute left-0 top-0 h-[2px] w-6 bg-white transition-transform duration-300",
-                open ? "translate-y-[10px] rotate-45" : "",
-              ].join(" ")}
-            />
-            <span
-              className={[
-                "absolute left-0 top-[9px] h-[2px] w-6 bg-white transition-opacity duration-300",
-                open ? "opacity-0" : "opacity-100",
-              ].join(" ")}
-            />
-            <span
-              className={[
-                "absolute left-0 bottom-0 h-[2px] w-6 bg-white transition-transform duration-300",
-                open ? "-translate-y-[10px] -rotate-45" : "",
-              ].join(" ")}
-            />
-          </span>
+          {open ? (
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg
+              className="h-6 w-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          )}
         </button>
       </div>
 
-      {/* <div
-        className={[
-          "md:hidden",
-          "fixed inset-0 z-40",
-          open ? "pointer-events-auto" : "pointer-events-none",
-        ].join(" ")}
-        aria-hidden={!open}
-      >
-        <div
-          className={[
-            "absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity",
-            open ? "opacity-100" : "opacity-0",
-          ].join(" ")}
-        />
-
-        <div
-          id="mobile-menu"
-          ref={panelRef}
-          className={[
-            "absolute right-0 top-0 h-full w-[78%] max-w-[340px]",
-            "bg-[#0B1622]/95 backdrop-blur-xl border-l border-white/10",
-            "transition-transform duration-300",
-            open ? "translate-x-0" : "translate-x-full",
-            "px-6 pb-10 pt-24",
-          ].join(" ")}
-        >
-          <ul className="space-y-2">
-            {LINKS.map((link) => (
-              <li key={link.id}>
-                <button
-                  onClick={() => goTo(link.id)}
-                  className={[
-                    "w-full text-left rounded-xl px-4 py-3",
-                    "text-white/90 hover:text-white",
-                    "hover:bg-white/5 active:bg-white/10",
-                    "transition",
-                    activeId === link.id ? "text-primary bg-white/5" : "",
-                  ].join(" ")}
-                >
-                  {link.label}
-                </button>
-              </li>
-            ))}
+      {/* Мобильное меню */}
+      {open && (
+        <div className="md:hidden absolute left-0 right-0 top-full z-50 bg-white shadow-lg border-t border-gray-200 animate-fadeIn">
+          <ul className="flex flex-col divide-y divide-gray-200">
+            <li>
+              <button
+                onClick={() => goTo("home")}
+                className={[
+                  "w-full text-left px-6 py-4 hover:bg-gray-50 transition",
+                  activeId === "home" ? "text-primary" : "text-gray-800",
+                ].join(" ")}
+              >
+                Главная
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => goTo("tariffs")}
+                className={[
+                  "w-full text-left px-6 py-4 hover:bg-gray-50 transition",
+                  activeId === "tariffs" ? "text-primary" : "text-gray-800",
+                ].join(" ")}
+              >
+                Тарифы
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => goTo("services")}
+                className={[
+                  "w-full text-left px-6 py-4 hover:bg-gray-50 transition",
+                  activeId === "services" ? "text-primary" : "text-gray-800",
+                ].join(" ")}
+              >
+                Услуги
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={() => goTo("contact")}
+                className={[
+                  "w-full text-left px-6 py-4 hover:bg-gray-50 transition",
+                  activeId === "contact" ? "text-primary" : "text-gray-800",
+                ].join(" ")}
+              >
+                Контакты
+              </button>
+            </li>
           </ul>
-
-          <div className="mt-6 border-t border-white/10 pt-6">
+          <div className="px-6 py-4 border-t border-gray-200">
             <button
               onClick={() => goTo("contact")}
-              className="w-full text-[#03CEA4] bg-[#03CEA426] py-3.5 px-6 font-semibold transition active:scale-[0.99] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#03CEA4]/60"
+              className="w-full text-[#03CEA4] bg-[#03CEA426] py-3 font-semibold transition active:scale-[0.99]"
             >
               Связаться
             </button>
           </div>
-
-          <p className="mt-6 text-xs text-white/50">
-            © {new Date().getFullYear()} ITSource
-          </p>
         </div>
-      </div> */}
+      )}
     </header>
   );
 }

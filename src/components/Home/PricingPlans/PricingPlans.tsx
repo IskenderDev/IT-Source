@@ -1,72 +1,12 @@
 import { Button, SectionTitle } from "../../ui";
-
-/* ---------- Типы ---------- */
-type Plan = {
-  price: number;
-  cpu: string;
-  ram: string;
-  ssd: string;
-  features: string[];
-  featured?: boolean;
-};
-
-/* ---------- Данные ---------- */
-const plans: Plan[] = [
-  {
-    price: 6500,
-    cpu: "8 ядер",
-    ram: "16 RAM",
-    ssd: "SSD 128",
-    features: [
-      "Техподдержка",
-      "UPS",
-      "Генератор",
-      "Доступность 24/7/365",
-      "Антивирус",
-      "Ежедневное резервное копирование",
-    ],
-  },
-  {
-    price: 8500,
-    cpu: "16 ядер",
-    ram: "24 RAM",
-    ssd: "SSD 256",
-    featured: true,
-    features: [
-      "Техподдержка",
-      "UPS",
-      "Генератор",
-      "Доступность 24/7/365",
-      "Антивирус",
-      "Ежедневное резервное копирование",
-    ],
-  },
-  {
-    price: 11500,
-    cpu: "32 ядра",
-    ram: "32 RAM",
-    ssd: "SSD 512",
-    features: [
-      "Техподдержка",
-      "UPS",
-      "Генератор",
-      "Доступность 24/7/365",
-      "Антивирус",
-      "Ежедневное резервное копирование",
-    ],
-  },
-];
-
-/* ---------- UI ---------- */
+import { PLANS, type Plan } from "../../../app/data/pricingPlans";
 function PlanCard({ plan }: { plan: Plan }) {
   const { price, cpu, ram, ssd, features, featured } = plan;
 
   return (
     <div
       className={[
-        // позиционирование в сетке
         featured ? "sm:col-span-2 lg:col-span-1 lg:col-start-2" : "",
-        // контейнер карточки
         "relative isolate h-full w-full",
       ].join(" ")}
     >
@@ -80,21 +20,20 @@ function PlanCard({ plan }: { plan: Plan }) {
           "transition-transform duration-300 will-change-transform",
         ].join(" ")}
       >
-        {/* мягкие свечения */}
-        <div
-          className="pointer-events-none absolute -left-10 -top-10 h-28 w-28 sm:h-36 sm:w-36 md:h-44 md:w-44 rounded-full blur-3xl opacity-35"
-          style={{
-            background:
-              "radial-gradient(140px 140px at 50% 50%, rgba(10,252,204,0.45), rgba(0,0,0,0))",
-          }}
-        />
-        <div
-          className="pointer-events-none absolute -right-12 -bottom-12 h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48 rounded-full blur-3xl opacity-25"
-          style={{
-            background:
-              "radial-gradient(160px 160px at 50% 50%, rgba(63,252,212,0.35), rgba(0,0,0,0))",
-          }}
-        />
+          <div
+            className="pointer-events-none absolute -left-10 -top-10 h-28 w-28 sm:h-36 sm:w-36 md:h-44 md:w-44 rounded-full blur-3xl opacity-35"
+            style={{
+              background:
+                "radial-gradient(140px 140px at 50% 50%, rgba(10,252,204,0.45), rgba(0,0,0,0))",
+            }}
+          />
+          <div
+            className="pointer-events-none absolute -right-12 -bottom-12 h-32 w-32 sm:h-40 sm:w-40 md:h-48 md:w-48 rounded-full blur-3xl opacity-25"
+            style={{
+              background:
+                "radial-gradient(160px 160px at 50% 50%, rgba(63,252,212,0.35), rgba(0,0,0,0))",
+            }}
+          />
 
         <div className="relative flex items-end gap-2">
           <div className="text-[26px] sm:text-[30px] md:text-[34px] lg:text-[36px] font-bold text-white leading-none">
@@ -160,7 +99,7 @@ export default function PricingPlans() {
             "gap-5 sm:gap-6 md:gap-8 lg:gap-10",
           ].join(" ")}
         >
-          {plans.map((p, idx) => (
+          {PLANS.map((p, idx) => (
             <PlanCard key={idx} plan={p} />
           ))}
         </div>

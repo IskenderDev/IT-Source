@@ -1,4 +1,4 @@
 import Home from './Home/Home';
-import OneC from './OneC/OneC ';
 import Services from './Services/Services';
-export {Home, OneC, Services}
+import Tariffs from './Tariffs/Tariffs';
+export {Home, Tariffs, Services}

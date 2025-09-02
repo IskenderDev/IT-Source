@@ -1,8 +1,4 @@
-import brands3_d from "/brands/Brands3_d.svg";
-import brands3_m from "/brands/Brands3_m.svg";
-
-const desktopUrls = [brands3_d];
-const mobileUrls = [brands3_m];
+import { TECHNOLOGY_DESKTOP, TECHNOLOGY_MOBILE } from "../../../app/data/technology";
 
 export default function Technology() {
   return (
@@ -14,7 +10,7 @@ export default function Technology() {
       </div>
 
       <div className="hidden sm:block">
-        {desktopUrls.map((src, i) => (
+        {TECHNOLOGY_DESKTOP.map((src, i) => (
           <img
             key={i}
             src={src}
@@ -28,7 +24,7 @@ export default function Technology() {
 
       <div className="sm:hidden">
         <div className="mx-4 rounded-2xl px-3 py-4">
-          {mobileUrls.map((src, i) => (
+          {TECHNOLOGY_MOBILE.map((src, i) => (
             <img
               key={i}
               src={src}

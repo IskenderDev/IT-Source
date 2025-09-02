@@ -49,7 +49,7 @@ export default function Home() {
       <Brands />
       <ExpertiseCarousel />
       <SolutionsSection />
-      <ProjectPhases className="mt-20 md:mt-52" />
+      <ProjectPhases className="mt-20" />
       <Technology/>
       <HostingSection/>
       <PricingPlans/>

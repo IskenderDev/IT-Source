@@ -1,10 +1,4 @@
-import brands1_d from "/brands/Brands1_d.svg";
-import brands2_d from "/brands/Brands2_d.svg";
-import brands1_m from "/brands/Brands1_m.svg";
-import brands2_m from "/brands/Brands2_m.svg";
-
-const desktopUrls = [brands1_d, brands2_d];
-const mobileUrls  = [brands1_m, brands2_m];
+import { BRANDS_DESKTOP, BRANDS_MOBILE } from "../../../app/data/brands";
 
 export default function Brands() {
   return (
@@ -17,7 +11,7 @@ export default function Brands() {
       </div>
 
       <div className="hidden sm:block">
-        {desktopUrls.map((src, i) => (
+        {BRANDS_DESKTOP.map((src, i) => (
           <img
             key={i}
             src={src}
@@ -31,7 +25,7 @@ export default function Brands() {
 
       <div className="sm:hidden">
         <div className="mx-4 rounded-2xl px-3 py-4">
-          {mobileUrls.map((src, i) => (
+          {BRANDS_MOBILE.map((src, i) => (
             <img
               key={i}
               src={src}
