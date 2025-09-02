@@ -13,15 +13,12 @@ type CardProps = {
 function ContactCard({ title, lines, Icon, glow }: CardProps) {
   return (
     <div
-      className="group relative rounded-xl border border-white/10 p-6 md:p-8 overflow-hidden"
-      style={{ background: "rgba(255,255,255,0.02)" }}
+      className="group relative bg-[#0e1c29] border border-white/10 h-[270px] p-6 md:p-8 overflow-hidden"
     >
-      {/* Glow behind icon */}
       <div
         className="pointer-events-none absolute -bottom-6 -left-6 w-40 h-40 rounded-full blur-[120px] transition-opacity duration-300"
         style={{ background: glow, opacity: 0.28 }}
       />
-      {/* Hover amplify glow */}
       <div
         className="pointer-events-none absolute -bottom-6 -left-6 w-40 h-40 rounded-full blur-[120px] opacity-0 transition-opacity duration-300 group-hover:opacity-30"
         style={{ background: glow }}

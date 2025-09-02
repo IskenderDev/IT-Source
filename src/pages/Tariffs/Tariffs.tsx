@@ -1,5 +1,10 @@
 
-import TariffsHero from "../../components/Tariffs/TariffsHero";
+import Packages from "../../components/Tariffs/Packages/Packages";
+import RdpDeploymentOptions from "../../components/Tariffs/RdpDeploymentOptions/RdpDeploymentOptions";
+import SecuritySection from "../../components/Tariffs/SecuritySection/SecuritySection";
+import TariffsBenefits from "../../components/Tariffs/TariffsBenefits/TariffsBenefits";
+import TariffsHero from "../../components/Tariffs/TariffsHero/TariffsHero";
+import TechnicalRequirements from "../../components/Tariffs/TechnicalRequirements/TechnicalRequirements";
 
 const Tariffs = () => {
   return (
@@ -11,6 +16,11 @@ const Tariffs = () => {
       }}
     >
       <TariffsHero />
+      <TariffsBenefits/>
+      <TechnicalRequirements/>
+      <RdpDeploymentOptions/>
+      <SecuritySection/>
+     <Packages/>
     </div>
   );
 };

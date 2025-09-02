@@ -1,4 +1,4 @@
-import ServiceHero from "../Services/ServiceHero/ServiceHero";
+import ServiceHero from "../../Services/ServiceHero/ServiceHero";
 
 const TariffsHero = () => (
   <ServiceHero
@@ -8,7 +8,7 @@ const TariffsHero = () => (
         <img
           src="/assets/tariffs-hero.svg"
           alt="1C:Enterprise — удалённый доступ"
-          className="relative z-10 w-full h-auto select-none"
+          className="relative z-10 w-full -mb-30 md:-mb-0 select-none"
           loading="eager"
         />
       </picture>

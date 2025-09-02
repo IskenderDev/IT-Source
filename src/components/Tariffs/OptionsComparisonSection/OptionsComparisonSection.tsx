@@ -1,16 +1,18 @@
+// components/ServerOptions/OptionsComparisonSection.tsx
 import { IoIosCheckmark } from "react-icons/io";
 
 type Cell = { text: string; check?: boolean };
 type Row = { feature: string; cloud: Cell; local: Cell };
 
 const ROWS: Row[] = [
-  { feature: "Первоначальные затраты", cloud: { text: "Меньше" }, local: { text: "Больше" } },
-  { feature: "Гибкость", cloud: { text: "Больше" }, local: { text: "Меньше" } },
+  { feature: "Первоначальные затраты", cloud: { text: "Меньше", check: true }, local: { text: "Больше" } },
+  { feature: "Масштабируемость", cloud: { text: "Большая", check: true }, local: { text: "Маленькая" } },
   { feature: "Доступность", cloud: { text: "Высокая", check: true }, local: { text: "Маленькая" } },
   { feature: "Безопасность", cloud: { text: "Высокая", check: true }, local: { text: "Высокая", check: true } },
-  { feature: "Опции персонализации", cloud: { text: "Ограниченные" }, local: { text: "Высокие" } },
+  { feature: "Опции персонализации", cloud: { text: "Меньше" }, local: { text: "Больше", check: true } },
   { feature: "Зависимость от интернета", cloud: { text: "Есть" }, local: { text: "Нет", check: true } },
-  { feature: "Контроль над данными/безопасностью", cloud: { text: "Меньше" }, local: { text: "Больше", check: true } },
+  { feature: "Контроль над данными и безопасностью", cloud: { text: "Меньше" }, local: { text: "Больше", check: true } },
+  { feature: "Подписка", cloud: { text: "Есть", check: true }, local: { text: "Нет" } },
 ];
 
 function CellContent({ cell }: { cell: Cell }) {
@@ -21,25 +23,26 @@ function CellContent({ cell }: { cell: Cell }) {
       aria-label={cell.text}
     >
       <span className="whitespace-normal break-words">{cell.text}</span>
-      {cell.check && <IoIosCheckmark className="text-[20px] md:text-[22px] text-[#27AE60]" aria-hidden />}
+      {cell.check && (
+        <IoIosCheckmark className="text-[20px] md:text-[22px] text-[#27AE60]" aria-hidden />
+      )}
     </div>
   );
 }
 
-export default function DeploymentComparisonSection() {
+export default function OptionsComparisonSection() {
   return (
-    <section
-      className="relative isolate py-16 md:py-20 px-4 md:px-8 font-mono text-white"
-      aria-label="Сравнение опций развертывания"
-    >
+    <section className="relative isolate py-16 md:py-20 px-4 md:px-8 font-mono text-white">
       <div className="mx-auto text-center space-y-4 max-w-5xl">
         <h2 className="text-2xl md:text-4xl font-semibold">Детальное сравнение двух опций</h2>
         <p className="text-white/70 md:text-lg">
-          В заключение следует отметить, что выбор зависит от конкретных потребностей и требований каждого клиента. Перед
-          принятием решения, клиенты должны тщательно проконсультироваться с нами для получения указаний и рекомендаций.
+          В заключение следует отметить, что выбор зависит от конкретных потребностей и требований каждого клиента.
+          Прежде чем принять решение, клиенты должны тщательно проконсультироваться с нами для получения указаний и
+          рекомендаций.
         </p>
       </div>
 
+      {/* Таблица */}
       <div className="relative mx-auto mt-8 md:mt-12 max-w-6xl">
         <div
           className="
@@ -49,7 +52,7 @@ export default function DeploymentComparisonSection() {
             [background-clip:padding-box]
           "
         >
-          {/* glow */}
+          {/* Glow */}
           <div
             className="pointer-events-none absolute -top-20 -left-20 h-[360px] w-[520px] rounded-full opacity-[0.25] blur-[140px] transition-opacity duration-300 group-hover:opacity-[0.30]"
             style={{ background: "linear-gradient(135deg, #03CEA4, #4DA3FF)", willChange: "transform" }}
@@ -59,24 +62,19 @@ export default function DeploymentComparisonSection() {
             style={{ background: "linear-gradient(135deg, #C15CFF, #FF6AD5)", willChange: "transform" }}
           />
 
-          {/* Только таблица скроллится по X на узких экранах */}
           <div
             className="relative overflow-x-auto overscroll-contain lg:overflow-x-hidden"
             style={{ WebkitOverflowScrolling: "touch" }}
-            role="region"
-            aria-label="Горизонтальная прокрутка таблицы"
           >
             <table
-              role="table"
-              aria-label="Сравнение опций развертывания"
               className="
                 w-full min-w-[900px]
                 table-fixed
-                text-[15px] md:text-[16px] lg:text-[17px] leading-[1.6]
+                text-[15px] md:text-[16px] lg:text-[17px]
                 border-separate border-spacing-0
               "
             >
-              {/* фиксированные доли колонок — одинаково в Firefox/Chrome */}
+              {/* фиксированные доли колонок */}
               <colgroup>
                 <col className="w-[30%]" />
                 <col className="w-[35%]" />
@@ -84,20 +82,14 @@ export default function DeploymentComparisonSection() {
               </colgroup>
 
               <thead className="bg-white/[0.06] text-white/90">
-                <tr className="border-b border-[rgba(255,255,255,0.10)] text-left align-middle">
-                  <th
-                    scope="col"
-                    className="px-5 py-5 md:px-6 md:py-6 border-r border-[rgba(255,255,255,0.06)] whitespace-normal break-words"
-                  >
-                    Функции
+                <tr className="border-b border-[rgba(255,255,255,0.10)] text-left">
+                  <th className="px-5 py-6 md:px-6 md:py-6 font-semibold border-r border-[rgba(255,255,255,0.06)]">
+                    Функция
                   </th>
-                  <th
-                    scope="col"
-                    className="px-5 py-5 md:px-6 md:py-6 border-r border-[rgba(255,255,255,0.06)] whitespace-normal break-words"
-                  >
+                  <th className="px-5 py-6 md:px-6 md:py-6 font-semibold border-r border-[rgba(255,255,255,0.06)]">
                     Облачное развертывание
                   </th>
-                  <th scope="col" className="px-5 py-5 md:px-6 md:py-6 whitespace-normal break-words">
+                  <th className="px-5 py-6 md:px-6 md:py-6 font-semibold">
                     Локальное развертывание
                   </th>
                 </tr>
@@ -107,20 +99,13 @@ export default function DeploymentComparisonSection() {
                 {ROWS.map((row, idx) => (
                   <tr
                     key={row.feature}
-                    className={`
-                      ${idx % 2 === 1 ? "bg-white/5" : "bg-transparent"}
-                      border-b border-[rgba(255,255,255,0.06)]
-                      transition-transform duration-200 hover:-translate-y-[1px]
-                      align-middle
-                    `}
+                    className={`${idx % 2 === 1 ? "bg-white/5" : "bg-transparent"} border-b border-[rgba(255,255,255,0.06)]`}
                   >
-                    <td className="px-5 md:px-6 py-6 md:py-7 border-r border-[rgba(255,255,255,0.06)] whitespace-normal break-words">
-                      {row.feature}
-                    </td>
-                    <td className="px-5 md:px-6 py-6 md:py-7 border-r border-[rgba(255,255,255,0.06)] whitespace-normal break-words">
+                    <td className="px-5 md:px-6 py-6 md:py-7">{row.feature}</td>
+                    <td className="px-5 md:px-6 py-6 md:py-7 border-l border-[rgba(255,255,255,0.06)]">
                       <CellContent cell={row.cloud} />
                     </td>
-                    <td className="px-5 md:px-6 py-6 md:py-7 whitespace-normal break-words">
+                    <td className="px-5 md:px-6 py-6 md:py-7 border-l border-[rgba(255,255,255,0.06)]">
                       <CellContent cell={row.local} />
                     </td>
                   </tr>
