@@ -12,7 +12,7 @@ function PlanCard({ plan }: { plan: Plan }) {
     >
       <div
         className={[
-          "relative z-10 flex h-full flex-col overflow-hidden rounded-3xl border bg-white/5",
+          "relative z-10 flex h-full flex-col overflow-hidden border bg-white/5",
           "border-white/10 p-5 sm:p-7 md:p-8 lg:p-10",
           featured
             ? "lg:scale-[1.03] lg:ring-2 lg:ring-white/20 lg:shadow-[0_10px_60px_rgba(10,255,204,.14)]"

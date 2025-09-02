@@ -21,7 +21,6 @@ export default function Header() {
   const isHome = location.pathname === "/";
   const [open, setOpen] = useState(false);
 
-  // Подсветка активного пункта
   const activeId = useMemo<SectionId | null>(() => {
     if (location.pathname === "/tariffs") return "tariffs";
     if (location.pathname === "/services") return "services";
@@ -32,7 +31,6 @@ export default function Header() {
     return null;
   }, [location.pathname, location.hash]);
 
-  // Унифицированный переход
   const goTo = (id: SectionId) => {
     switch (id) {
       case "home":
@@ -53,7 +51,7 @@ export default function Header() {
     setOpen(false);
   };
 
-  // Автоскролл при переходе на главную с хэшем
+  // Автоскролл при переходе на главную с хэшемx
   useEffect(() => {
     if (isHome && location.hash) {
       const id = location.hash.replace("#", "");

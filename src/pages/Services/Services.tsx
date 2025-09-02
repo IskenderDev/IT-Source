@@ -1,3 +1,9 @@
+import ContactAddressSection from "../../components/Services/ContactAddressSection/ContactAddressSection";
+import CustomServersSection from "../../components/Services/CustomServersSection/CustomServersSection";
+import ProductsSection from "../../components/Services/ProductsSection/ProductsSection";
+import ServerEquipment from "../../components/Services/ServerEquipment/ServerEquipment";
+import ServerOptions from "../../components/Services/ServerOptions/ServerOptions";
+import ServersBenefits from "../../components/Services/ServersBenefits/ServersBenefits";
 import ServiceHero from "../../components/Services/ServiceHero/ServiceHero";
 
 const Services = () => {
@@ -15,7 +21,14 @@ const Services = () => {
         subtitle={
           'Сервис "Серверное оборудование" предназначен для обеспечения предприятий аппаратными и программными решениями для максимально эффективных ИТ-операций.'
         }
-      />
+      /> 
+      <ServerEquipment/> 
+      <CustomServersSection/>
+      <ProductsSection/> 
+      <ServersBenefits/> 
+      <ServerOptions/> 
+      <ContactAddressSection/> 
+      
     </div>
   );
 };

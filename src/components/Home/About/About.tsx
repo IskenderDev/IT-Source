@@ -1,4 +1,5 @@
 import { SectionTitle } from "../../ui";
+import ContactForm from "../ContactForm/ContactForm";
 
 export default function About() {
   return (
@@ -41,7 +42,8 @@ export default function About() {
             менеджменте.
           </p>
         </div>
-      </div>
+      </div> 
+      <ContactForm/>
     </section>
   );
 }

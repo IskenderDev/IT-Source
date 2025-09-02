@@ -26,7 +26,6 @@ export default function ServiceHero({
       }}
     >
 
-      {/* SVG на всю ширину */}
       <img
         src={svgSrc}
         alt=""
@@ -34,7 +33,6 @@ export default function ServiceHero({
         loading="eager"
       />
 
-      {/* Контент */}
       <div className="relative z-10 mx-auto max-w-5xl text-center mt-12 px-4">
         <h1
           className="font-mono text-white font-semibold tracking-wide leading-tight
