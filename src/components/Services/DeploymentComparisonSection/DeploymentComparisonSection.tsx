@@ -29,7 +29,7 @@ function CellContent({ cell }: { cell: Cell }) {
 export default function DeploymentComparisonSection() {
   return (
     <section
-      className="relative isolate py-16 md:py-20 px-4 md:px-8 font-mono text-white"
+      className="relative isolate py-20 px-4 md:px-8 font-mono text-white"
       aria-label="Сравнение опций развертывания"
     >
       <div className="mx-auto text-center space-y-4 max-w-5xl">
@@ -49,7 +49,6 @@ export default function DeploymentComparisonSection() {
             [background-clip:padding-box]
           "
         >
-          {/* glow */}
           <div
             className="pointer-events-none absolute -top-20 -left-20 h-[360px] w-[520px] rounded-full opacity-[0.25] blur-[140px] transition-opacity duration-300 group-hover:opacity-[0.30]"
             style={{ background: "linear-gradient(135deg, #03CEA4, #4DA3FF)", willChange: "transform" }}
@@ -59,7 +58,6 @@ export default function DeploymentComparisonSection() {
             style={{ background: "linear-gradient(135deg, #C15CFF, #FF6AD5)", willChange: "transform" }}
           />
 
-          {/* Только таблица скроллится по X на узких экранах */}
           <div
             className="relative overflow-x-auto overscroll-contain lg:overflow-x-hidden"
             style={{ WebkitOverflowScrolling: "touch" }}
@@ -76,7 +74,6 @@ export default function DeploymentComparisonSection() {
                 border-separate border-spacing-0
               "
             >
-              {/* фиксированные доли колонок — одинаково в Firefox/Chrome */}
               <colgroup>
                 <col className="w-[30%]" />
                 <col className="w-[35%]" />

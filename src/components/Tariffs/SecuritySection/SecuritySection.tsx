@@ -1,4 +1,3 @@
-// components/Security/SecuritySection.tsx
 import type { JSX } from "react";
 import { FaLock, FaUserShield, FaShieldAlt, FaDatabase } from "react-icons/fa";
 import { MdSystemUpdateAlt } from "react-icons/md";

@@ -1,4 +1,3 @@
-// components/Benefits/TariffsBenefits.tsx
 import type { JSX } from "react";
 import {
   FaLock,

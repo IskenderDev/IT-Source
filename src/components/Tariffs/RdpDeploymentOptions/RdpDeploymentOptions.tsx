@@ -1,4 +1,3 @@
-// components/ServerOptions/RdpDeploymentOptions.tsx
 import { HiOutlineCloud } from "react-icons/hi";
 import { MdDns } from "react-icons/md";
 import { IoIosCheckmark } from "react-icons/io";
@@ -9,7 +8,7 @@ export default function RdpDeploymentOptions() {
   return (
     <section
       id="rdp-deployment-options"
-      className="relative py-24 px-6 bg-gradient-to-b from-[#011627] to-[#000b15]"
+      className="relative py-20 px-6 bg-gradient-to-b from-[#011627] to-[#000b15]"
     >
       <div className="max-w-6xl mx-auto text-center space-y-6">
         <h2 className="text-3xl md:text-4xl font-bold text-white">
@@ -22,16 +21,13 @@ export default function RdpDeploymentOptions() {
         </p>
       </div>
 
-      {/* Карточки */}
       <div className="relative mt-16 grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-6xl mx-auto">
-        {/* Glow слева (облако) */}
         <div
           className="absolute -top-24 -left-32 w-[400px] h-[400px] rounded-full opacity-30 blur-[160px] pointer-events-none"
           style={{
             background: "linear-gradient(135deg, #03CEA4 0%, #4DA3FF 100%)",
           }}
         />
-        {/* Glow справа (локально) */}
         <div
           className="absolute -bottom-24 -right-32 w-[400px] h-[400px] rounded-full opacity-30 blur-[160px] pointer-events-none"
           style={{
@@ -39,16 +35,11 @@ export default function RdpDeploymentOptions() {
               "linear-gradient(135deg, #C15CFF 0%, #FF6AD5 70%, #27AE60 100%)",
           }}
         />
-
-        {/* ---------- Облачное ---------- */}
         <div className="relative border border-white/10 bg-white/5 backdrop-blur-md p-8 transition-transform duration-300 hover:-translate-y-1">
-          {/* Header */}
           <div className="flex items-center gap-3 pb-4 mb-6 border-b border-white/10">
             <HiOutlineCloud className="text-2xl text-[#03CEA4]" />
             <h3 className="text-xl font-bold text-white">Облачное развертывание</h3>
           </div>
-
-          {/* Плюсы */}
           <div className="space-y-4 mb-6">
             <h4 className="text-lg font-semibold text-white">Плюсы</h4>
             <ul className="space-y-3 text-white/75">
@@ -83,7 +74,6 @@ export default function RdpDeploymentOptions() {
             </ul>
           </div>
 
-          {/* Минусы */}
           <div className="space-y-4">
             <h4 className="text-lg font-semibold text-white">Минусы</h4>
             <ul className="space-y-3 text-white/75">
@@ -112,15 +102,11 @@ export default function RdpDeploymentOptions() {
           </div>
         </div>
 
-        {/* ---------- Локальное ---------- */}
         <div className="relative border border-white/10 bg-white/5 backdrop-blur-md p-8 transition-transform duration-300 hover:-translate-y-1">
-          {/* Header */}
           <div className="flex items-center gap-3 pb-4 mb-6 border-b border-white/10">
             <MdDns className="text-2xl text-[#C15CFF]" />
             <h3 className="text-xl font-bold text-white">Локальное развертывание</h3>
           </div>
-
-          {/* Плюсы */}
           <div className="space-y-4 mb-6">
             <h4 className="text-lg font-semibold text-white">Плюсы</h4>
             <ul className="space-y-3 text-white/75">
@@ -148,7 +134,6 @@ export default function RdpDeploymentOptions() {
             </ul>
           </div>
 
-          {/* Минусы */}
           <div className="space-y-4">
             <h4 className="text-lg font-semibold text-white">Минусы</h4>
             <ul className="space-y-3 text-white/75">

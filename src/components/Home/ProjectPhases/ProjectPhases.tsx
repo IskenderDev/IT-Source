@@ -13,7 +13,7 @@ export default function ProjectPhases({
   className = "",
 }: ProjectPhasesProps) {
   return (
-    <section className={`relative font-mono  text-white flex flex-col text-center justify-center items-center ${className} `}>
+    <section className={`relative py-20 font-mono text-white flex flex-col text-center justify-center items-center ${className}`}>
       <SectionTitle heading={heading} />
       <div className="absolute inset-0 -z-10" />
 

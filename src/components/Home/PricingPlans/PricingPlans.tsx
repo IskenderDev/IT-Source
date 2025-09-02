@@ -74,7 +74,7 @@ function PlanCard({ plan }: { plan: Plan }) {
 
 export default function PricingPlans() {
   return (
-    <section className="relative w-full py-10 sm:py-14 md:py-20 text-center">
+    <section className="relative w-full py-20 text-center">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div
           className="absolute left-1/2 top-0 h-48 sm:h-60 md:h-64 w-[820px] sm:w-[1000px] md:w-[1200px] -translate-x-1/2 rounded-full blur-3xl opacity-30"

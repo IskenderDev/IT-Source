@@ -4,7 +4,7 @@ export default function ContactForm() {
   return (
     <section
       id="contact"
-      className="relative bg-transparent py-24 flex items-center justify-center px-4 overflow-hidden px-20"
+      className="relative bg-transparent py-20 flex items-center justify-center overflow-hidden px-20"
     >
       <form className="relative z-10 max-w-2xl w-full bg-[#010C15]/50 backdrop-blur-3xl rounded-2xl border border-white/20 p-8 md:p-10 shadow-lg text-white">
         <div

@@ -1,10 +1,5 @@
-// components/Benefits/UserBenefits.tsx
 import type { JSX } from "react";
-import {
-  FaChartLine,      // Эффективность
-  FaUserFriends,    // Коллаборация
-  FaExpandAlt,      // Масштабируемость
-} from "react-icons/fa";
+import { FaChartLine, FaUserFriends, FaExpandAlt } from "react-icons/fa";
 import { MdSecurity, MdDevicesOther, MdPhoneIphone } from "react-icons/md";
 
 type Benefit = {
@@ -61,7 +56,7 @@ const BENEFITS: Benefit[] = [
 
 export default function UserBenefits() {
   return (
-    <section className="py-20 md:pt-44 px-6 text-white">
+    <section className="py-20 px-6 text-white">
       <div className="px-5 md:px-16 mx-auto ">
         <h2 className="text-3xl text-center md:text-4xl font-bold mb-4">
           Преимущества для пользователей
@@ -73,7 +68,6 @@ export default function UserBenefits() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-30">
           {BENEFITS.map((b, i) => (
             <div key={b.title} className="relative flex flex-col items-start gap-3">
-              {/* glow за иконкой */}
               <div
                 className="absolute w-32 h-32 rounded-full blur-[100px] opacity-60 transition-all duration-300"
                 style={{

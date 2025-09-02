@@ -1,4 +1,3 @@
-// components/Benefits/ServersBenefits.tsx
 import type { JSX } from "react";
 import {
     FaShieldAlt,
@@ -100,7 +99,6 @@ import {
                   <h3 className="font-semibold text-lg">{b.title}</h3>
                 </div>
   
-                {/* Text */}
                 <p className="text-white/70 ml-9 relative z-10 text-sm leading-relaxed">
                   {b.text}
                 </p>

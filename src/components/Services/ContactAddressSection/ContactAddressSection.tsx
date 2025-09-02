@@ -1,4 +1,3 @@
-// components/Contact/ContactAddressSection.tsx
 import { FaBuilding, FaPhoneAlt, FaAt } from "react-icons/fa";
 import type { JSX } from "react";
 import ContactForm from "../../Home/ContactForm/ContactForm";
@@ -7,7 +6,7 @@ type CardProps = {
   title: string;
   lines: (string | JSX.Element)[];
   Icon: React.ElementType;
-  glow: string; // hex
+  glow: string;
 };
 
 function ContactCard({ title, lines, Icon, glow }: CardProps) {
@@ -43,7 +42,7 @@ function ContactCard({ title, lines, Icon, glow }: CardProps) {
 
 export default function ContactAddressSection() {
   return (
-    <section className="relative bg-[#011627] text-white py-16 px-6 md:px-12">
+    <section className="relative bg-[#011627] text-white py-20 px-6 md:px-12">
       <div className="max-w-7xl mx-auto">
         <header className="text-center mb-10 md:mb-14">
           <h2 className="text-2xl md:text-4xl font-semibold">

@@ -1,11 +1,10 @@
-// components/Products/ProductsSection.tsx
 import React from "react";
 
 type ProductCard = {
   title: string;
   text: string;
-  imageSrc: string; // svg/png/jpg из /assets
-  glow: string; // цвет свечения
+  imageSrc: string;
+  glow: string;
 };
 
 type Props = {
@@ -81,9 +80,8 @@ export default function ProductsSection({
   return (
     <section
       id="products"
-      className={`relative w-full py-16 md:py-20 bg-[#010B14] text-white font-mono ${className}`}
+      className={`relative w-full py-20 bg-[#010B14] text-white font-mono ${className}`}
     >
-      {/* Заголовок */}
       <div className="mx-auto max-w-5xl px-4 text-center">
         <h2 className="text-2xl md:text-4xl font-semibold tracking-tight">
           {title}
@@ -93,7 +91,6 @@ export default function ProductsSection({
         </p>
       </div>
 
-      {/* Сетка */}
       <div className="mx-auto mt-10 md:mt-12 max-w-6xl px-4">
         <div className="grid gap-4 sm:gap-6 md:gap-7 grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
           {items.map((card, i) => (

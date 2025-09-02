@@ -1,13 +1,11 @@
-// components/CustomServers/CustomServersSection.tsx
 import { FaServer } from "react-icons/fa";
 import { Button } from "../../ui";
 
 export default function CustomServersSection() {
   return (
-    <section className="relative bg-[#010B14] py-16 px-6 md:px-12 font-mono text-white">
+    <section className="relative bg-[#010B14] py-20 px-6 md:px-12 font-mono text-white">
       <div className="relative z-10 max-w-7xl mx-auto border border-white/10 px-8 md:px-12 bg-[#02111e] backdrop-blur-sm shadow-lg">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 items-center">
-          {/* Левая колонка */}
           <div className="space-y-6">
             <FaServer className="text-[#03CEA4] text-3xl" />
             <h2 className="text-2xl md:text-3xl font-semibold">
@@ -22,7 +20,6 @@ export default function CustomServersSection() {
             </p>
           </div>
 
-          {/* Центральная колонка: на всю высоту, фон #02111e */}
           <div
             className="
               col-span-1 md:col-span-1 lg:col-span-1
@@ -37,13 +34,10 @@ export default function CustomServersSection() {
               className="h-full max-h-full w-auto object-contain"
             />
           </div>
-
-          {/* Правая колонка (форма) */}
           <form
             className="flex flex-col gap-4 p-6 shadow-lg h-fit"
             onSubmit={(e) => {
               e.preventDefault();
-              // TODO: Bitrix24 Webhook integration
             }}
           >
             <div>
