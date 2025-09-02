@@ -1,7 +1,8 @@
 import { Button } from "../../ui";
 
 type ServiceHeroProps = {
-  svgSrc: string;
+  svgSrc?: string;
+  image?: React.ReactNode;
   title: string;
   subtitle?: string;
   ctaHref?: string;
@@ -10,7 +11,8 @@ type ServiceHeroProps = {
 };
 
 export default function ServiceHero({
-  svgSrc,
+  svgSrc = "",
+  image,
   title,
   subtitle,
   ctaHref = "#contact",
@@ -26,12 +28,14 @@ export default function ServiceHero({
       }}
     >
 
-      <img
-        src={svgSrc}
-        alt=""
-        className="relative z-10 w-full h-auto select-none"
-        loading="eager"
-      />
+      {image ?? (
+        <img
+          src={svgSrc}
+          alt=""
+          className="relative z-10 w-full h-auto select-none"
+          loading="eager"
+        />
+      )}
 
       <div className="relative z-10 mx-auto max-w-5xl text-center mt-12 px-4">
         <h1
