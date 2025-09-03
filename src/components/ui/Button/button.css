@@ -26,19 +26,3 @@
   color: #011627;
 }
 
-.btn--sm {
-  @apply h-9 text-sm;
-  width: 120px; 
-}
-.btn--md {
-  @apply h-11 text-base;
-  width: 160px;
-}
-.btn--lg {
-  @apply h-12 text-lg;
-  width: 260px;
-}
-
-.btn--full {
-  @apply w-full;
-}

@@ -1,8 +1,7 @@
 import { forwardRef, type ButtonHTMLAttributes } from "react";
 import "./button.css";
-import { BUTTON_SIZE_CLASS } from "../../../app/data/button";
+import { BUTTON_SIZE_CLASS, BUTTON_SIZE_CLASS_SM, type ButtonSize } from "../../../app/data/button";
 
-type ButtonSize = "sm" | "md" | "lg";
 type ButtonVariant = "solid" | "outline";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -14,7 +13,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
-      size = "md",
+      size = "lg",            
       fullWidth,
       variant = "solid",
       className = "",
@@ -27,7 +26,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         ref={ref}
-        className={`btn btn--${variant} ${BUTTON_SIZE_CLASS[size]} ${width} ${className}`}
+        className={`btn btn--${variant} ${BUTTON_SIZE_CLASS["md"]} ${BUTTON_SIZE_CLASS_SM[size]} ${width} ${className}`}
         {...props}
       >
         {children}

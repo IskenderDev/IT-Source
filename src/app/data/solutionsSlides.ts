@@ -11,10 +11,11 @@ export const SOLUTIONS_SLIDES: Slide[] = [
       "Системы оповещения — звуковое и световое информирование\n" +
       "Телефония — современные IP-АТС и интеграции",
     image: "/slides/low-current.png",
-    secondary: { label: "Скачать чек-лист", href: "/files/checklist.pdf" },
+    secondary: { label: "Скачать чек-лист 2", href: "/check-lists/check-list_2.pdf" },
+    tertiary:  { label: "Скачать чек-лист 3", href: "/check-lists/check-list_3.pdf" },
     background:
       "linear-gradient(96.31deg, rgba(6, 73, 130, 0.38) 23.99%, rgba(1, 25, 42, 0.38) 69.11%)",
-  },
+  },  
   {
     title: "Сетевые решения",
     text:

@@ -13,24 +13,24 @@ export type Slide = {
   secondary?: { label: string; href: string };
   imageAlt?: string;
   background?: string;
-  imgMaxHMobile?: number;   
-  imgMaxHDesktop?: number;  
-  imgRightPx?: number;      
+  imgMaxHMobile?: number;
+  imgMaxHDesktop?: number;
+  imgRightPx?: number;
 };
 
 type Props = {
   slides?: Slide[];
   heading?: string;
   subheading?: string;
-
   options?: EmblaOptionsType;
   autoplay?: boolean;
   autoplayDelayMs?: number;
-
   className?: string;
+
   showGlow?: boolean;
   glowColor?: string;
   glowSize?: number;
+
   mobileImageTop?: boolean;
   mobileSlideMinH?: number;
 
@@ -50,14 +50,18 @@ export default function ExpertiseSection({
   autoplay = true,
   autoplayDelayMs = 5000,
   className = "",
+
   showGlow = false,
   glowColor = "#FFEE53",
   glowSize = 200,
+
   mobileImageTop = true,
   mobileSlideMinH = 700,
+
   imageMaxHMobile = 300,
   imageMaxHDesktop = 480,
   imageRightPx = 112,
+
   showArrows = true,
   showDots = true,
 }: Props) {
@@ -66,11 +70,7 @@ export default function ExpertiseSection({
     [autoplay, autoplayDelayMs]
   );
 
-  const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, align: "start", ...options },
-    plugins
-  );
-
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start", ...options }, plugins);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
@@ -83,7 +83,13 @@ export default function ExpertiseSection({
     if (!emblaApi) return;
     setScrollSnaps(emblaApi.scrollSnapList());
     emblaApi.on("select", onSelect);
+    // полезно при ресайзе, чтобы точки и стрелки не рассинхронилиь
+    emblaApi.on("reInit", onSelect);
     onSelect();
+    return () => {
+      emblaApi?.off("select", onSelect);
+      emblaApi?.off("reInit", onSelect);
+    };
   }, [emblaApi, onSelect]);
 
   const scrollTo = useCallback((i: number) => emblaApi?.scrollTo(i), [emblaApi]);
@@ -109,14 +115,25 @@ export default function ExpertiseSection({
         )}
       </div>
 
-      <div className="overflow-hidden" ref={emblaRef}>
+      <div
+        ref={emblaRef}
+        className="overflow-hidden"
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Экспертиза — слайдер"
+      >
         <div className="flex gap-4 md:gap-5 lg:gap-6">
           {slides.map((s, i) => {
+            // Лимиты и позиционирование изображений
             const mMax = s.imgMaxHMobile ?? imageMaxHMobile;
             const dMax = s.imgMaxHDesktop ?? imageMaxHDesktop;
             const dRight = s.imgRightPx ?? imageRightPx;
 
-            const hideImage = i === 0;
+            // ЛОГИКА ПОКАЗА ИЗОБРАЖЕНИЙ:
+            // - Десктоп: показываем у ВСЕХ слайдов, если есть s.image
+            // - Мобилка: скрыто только у первого (i === 0)
+            const showImgDesktop = Boolean(s.image);
+            const showImgMobile = Boolean(s.image) && i !== 0;
 
             return (
               <div key={i} className="flex-[0_0_100%]">
@@ -133,11 +150,11 @@ export default function ExpertiseSection({
                   "
                   style={{
                     ["--mh" as string]: `${mobileSlideMinH}px`,
-                    background:
-                      s.background ??
-                      "linear-gradient(280.68deg, #054277 1.65%, #01192A 97.64%)",
+                    background: s.background ?? "linear-gradient(280.68deg, #054277 1.65%, #01192A 97.64%)",
                   }}
+                  aria-label={`Слайд ${i + 1} из ${slides.length}`}
                 >
+                  {/* Лёгкий акцент для первого слайда на десктопе */}
                   {i === 0 && (
                     <div
                       className="pointer-events-none absolute rounded-full hidden md:block"
@@ -155,44 +172,30 @@ export default function ExpertiseSection({
                     />
                   )}
 
-                  {mobileImageTop && s.image && !hideImage && (
+                  {/* Мобилка: картинка сверху (кроме первого слайда) */}
+                  {mobileImageTop && showImgMobile && (
                     <div className="md:hidden flex justify-center">
                       <img
                         src={s.image}
                         alt={s.imageAlt ?? ""}
                         loading="lazy"
+                        decoding="async"
                         style={{ maxHeight: `${mMax}px` }}
                         className="object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.35)]"
                       />
                     </div>
                   )}
 
-                  <div className="md:hidden mt-auto font-mono">
-                    <h3 className="text-[24px] sm:text-[28px] font-bold leading-snug text-center">
-                      {s.title}
-                    </h3>
-                    <p className="mt-3 text-[13px] sm:text-[14px] leading-relaxed text-white/90 whitespace-pre-line text-center">
+                  {/* Контент мобилки */}
+                  <div className="md:hidden mt-auto font-mono text-center">
+                    <h3 className="text-[24px] sm:text-[28px] font-bold leading-snug">{s.title}</h3>
+                    <p className="mt-3 text-[13px] sm:text-[14px] leading-relaxed text-white/90 whitespace-pre-line">
                       {s.text}
                     </p>
-
-                    {(s.primary || s.secondary) && (
-                      <div className="mt-4 flex flex-wrap gap-3 justify-center">
-                        {s.primary && (
-                          <a href={s.primary.href}>
-                            <Button size="lg">{s.primary.label}</Button>
-                          </a>
-                        )}
-                        {s.secondary && (
-                          <a href={s.secondary.href}>
-                            <Button size="lg" variant="outline">
-                              {s.secondary.label}
-                            </Button>
-                          </a>
-                        )}
-                      </div>
-                    )}
+                    <CTAButtons primary={s.primary} secondary={s.secondary} center />
                   </div>
 
+                  {/* Десктопная сетка */}
                   <div
                     className="
                       hidden md:grid h-full relative
@@ -200,38 +203,19 @@ export default function ExpertiseSection({
                       items-center
                     "
                   >
-                    <div className={`ml-0 md:ml-28 font-mono ${hideImage ? "md:col-span-2" : ""}`}>
-                      <h3 className="text-[32px] lg:text-[40px] font-bold leading-snug">
-                        {s.title}
-                      </h3>
-                      <p className="mt-6 text-[16px] leading-relaxed text-white/90 whitespace-pre-line">
-                        {s.text}
-                      </p>
-
-                      {(s.primary || s.secondary) && (
-                        <div className="mt-6 flex flex-wrap gap-3">
-                          {s.primary && (
-                            <a href={s.primary.href}>
-                              <Button size="lg">{s.primary.label}</Button>
-                            </a>
-                          )}
-                          {s.secondary && (
-                            <a href={s.secondary.href}>
-                              <Button size="lg" variant="outline">
-                                {s.secondary.label}
-                              </Button>
-                            </a>
-                          )}
-                        </div>
-                      )}
+                    <div className={`ml-0 md:ml-28 font-mono ${!showImgDesktop ? "md:col-span-2" : ""}`}>
+                      <h3 className="text-[32px] lg:text-[40px] font-bold leading-snug">{s.title}</h3>
+                      <p className="mt-6 text-[16px] leading-relaxed text-white/90 whitespace-pre-line">{s.text}</p>
+                      <CTAButtons primary={s.primary} secondary={s.secondary} />
                     </div>
 
-                    {!hideImage && (
-                      <div className="h-full">
+                    {showImgDesktop && (
+                      <div className="h-full relative">
                         <img
                           src={s.image}
                           alt={s.imageAlt ?? ""}
                           loading="lazy"
+                          decoding="async"
                           style={{
                             maxHeight: `${dMax}px`,
                             right: `${dRight}px`,
@@ -247,6 +231,7 @@ export default function ExpertiseSection({
                     )}
                   </div>
 
+                  {/* Стрелки */}
                   {showArrows && (
                     <>
                       <button
@@ -281,12 +266,14 @@ export default function ExpertiseSection({
         </div>
       </div>
 
+      {/* Точки */}
       {showDots && (
-        <div className="mt-4 hidden md:flex w-full items-center justify-center gap-2">
+        <div className="mt-4 hidden md:flex w-full items-center justify-center gap-2" aria-label="Навигация по слайдам">
           {scrollSnaps.map((_, i) => (
             <button
               key={i}
               aria-label={`Перейти к слайду ${i + 1}`}
+              aria-current={selectedIndex === i}
               onClick={() => scrollTo(i)}
               className={`h-1.5 rounded-full transition ${
                 selectedIndex === i ? "w-8 bg-white" : "w-1.5 bg-white/50 hover:bg-white/70"
@@ -296,6 +283,39 @@ export default function ExpertiseSection({
         </div>
       )}
     </section>
+  );
+}
+
+/** Вынесенные CTA, чтобы не дублировать разметку */
+function CTAButtons({
+  primary,
+  secondary,
+  center = false,
+}: {
+  primary?: { label: string; href: string };
+  secondary?: { label: string; href: string };
+  center?: boolean;
+}) {
+  if (!primary && !secondary) return null;
+
+  const secondaryHref = secondary?.href ?? "/check-lists/check-list_1.pdf";
+  const isPdf = /\.pdf($|\?)/i.test(secondaryHref);
+
+  return (
+    <div className={`mt-4 md:mt-6 flex flex-wrap gap-3 ${center ? "justify-center" : ""}`}>
+      {primary && (
+        <a href={primary.href} className="inline-block">
+          <Button size="lg">{primary.label}</Button>
+        </a>
+      )}
+      {secondary && (
+        <a href={secondaryHref} {...(isPdf ? { download: "" } : {})} className="inline-block">
+          <Button size="lg" variant="outline">
+            {secondary.label}
+          </Button>
+        </a>
+      )}
+    </div>
   );
 }
 

@@ -10,6 +10,8 @@ export type Slide = {
   image: string;
   primary?: { label: string; href: string };
   secondary?: { label: string; href: string };
+  /** Новая третья кнопка (outline) */
+  tertiary?: { label: string; href: string };
   imageAlt?: string;
   background?: string;
   imgMaxHMobile?: number;
@@ -80,6 +82,9 @@ export default function Slider({
   }, [emblaApi, onSelect]);
 
   const scrollTo = useCallback((i: number) => emblaApi?.scrollTo(i), [emblaApi]);
+
+  // хелпер: для pdf ставим download
+  const isPdf = (href?: string) => !!href && /\.pdf(\?|#|$)/i.test(href);
 
   return (
     <section className={`relative w-full font-sans p-4 ${className}`}>
@@ -159,6 +164,7 @@ export default function Slider({
                     </div>
                   )}
 
+                  {/* Mobile content */}
                   <div className="md:hidden mt-auto">
                     <div className="font-mono">
                       <h3 className="text-[24px] sm:text-[28px] font-bold leading-snug text-center">
@@ -167,7 +173,7 @@ export default function Slider({
                       <p className="mt-3 text-[13px] sm:text-[14px] leading-relaxed text-white/90 whitespace-pre-line text-center">
                         {s.text}
                       </p>
-                      {(s.primary || s.secondary) && (
+                      {(s.primary || s.secondary || s.tertiary) && (
                         <div className="mt-4 flex flex-wrap gap-3 justify-center">
                           {s.primary && (
                             <a href={s.primary.href}>
@@ -175,9 +181,16 @@ export default function Slider({
                             </a>
                           )}
                           {s.secondary && (
-                            <a href={s.secondary.href}>
+                            <a href={s.secondary.href} {...(isPdf(s.secondary.href) ? { download: true } : {})}>
                               <Button size="lg" variant="outline">
                                 {s.secondary.label}
+                              </Button>
+                            </a>
+                          )}
+                          {s.tertiary && (
+                            <a href={s.tertiary.href} {...(isPdf(s.tertiary.href) ? { download: true } : {})}>
+                              <Button size="lg" variant="outline">
+                                {s.tertiary.label}
                               </Button>
                             </a>
                           )}
@@ -186,6 +199,7 @@ export default function Slider({
                     </div>
                   </div>
 
+                  {/* Desktop content */}
                   <div
                     className="
                       hidden md:grid h-full relative
@@ -200,7 +214,8 @@ export default function Slider({
                       <p className="mt-6 text-[16px] leading-relaxed text-white/90 whitespace-pre-line">
                         {s.text}
                       </p>
-                      {(s.primary || s.secondary) && (
+
+                      {(s.primary || s.secondary || s.tertiary) && (
                         <div className="mt-6 flex flex-wrap gap-3">
                           {s.primary && (
                             <a href={s.primary.href}>
@@ -208,9 +223,16 @@ export default function Slider({
                             </a>
                           )}
                           {s.secondary && (
-                            <a href={s.secondary.href}>
+                            <a href={s.secondary.href} {...(isPdf(s.secondary.href) ? { download: true } : {})}>
                               <Button size="lg" variant="outline">
                                 {s.secondary.label}
+                              </Button>
+                            </a>
+                          )}
+                          {s.tertiary && (
+                            <a href={s.tertiary.href} {...(isPdf(s.tertiary.href) ? { download: true } : {})}>
+                              <Button size="lg" variant="outline">
+                                {s.tertiary.label}
                               </Button>
                             </a>
                           )}

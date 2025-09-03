@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { Button, SectionTitle } from "../../ui";
-import { SERVICE_OPTIONS, SERVICE_SLIDES } from "../../../app/data/servicesCarousel";
+import { Button } from "../../ui";
+import {
+  SERVICE_OPTIONS,
+  SERVICE_SLIDES,
+} from "../../../app/data/servicesCarousel";
 
 export default function ServicesCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel(SERVICE_OPTIONS, [
@@ -23,11 +26,13 @@ export default function ServicesCarousel() {
     onSelect();
   }, [emblaApi, onSelect]);
 
-  const scrollTo = useCallback((i: number) => emblaApi?.scrollTo(i), [emblaApi]);
+  const scrollTo = useCallback(
+    (i: number) => emblaApi?.scrollTo(i),
+    [emblaApi]
+  );
 
   return (
     <section className="relative w-full font-sans mt-5">
-      <SectionTitle heading="Услуги" className="mb-6" />
       <div className="overflow-hidden rounded-[28px]" ref={emblaRef}>
         <div className="flex">
           {SERVICE_SLIDES.map((s, i) => (
@@ -71,8 +76,16 @@ export default function ServicesCarousel() {
                     )}
 
                     {s.ghost && (
-                      <a href={s.ghost.href} className="inline-block">
-                        <Button size="lg" variant="outline" className="hidden md:inline-flex">
+                      <a
+                        href="/check-lists/check-list_1.pdf"
+                        download
+                        className="inline-block"
+                      >
+                        <Button
+                          size="lg"
+                          variant="outline"
+                          className="hidden md:inline-flex"
+                        >
                           {s.ghost.label}
                         </Button>
                       </a>
@@ -118,7 +131,9 @@ export default function ServicesCarousel() {
             aria-label={`Перейти к слайду ${i + 1}`}
             onClick={() => scrollTo(i)}
             className={`h-1.5 rounded-full transition ${
-              selectedIndex === i ? "w-8 bg-white" : "w-1.5 bg-white/50 hover:bg-white/70"
+              selectedIndex === i
+                ? "w-8 bg-white"
+                : "w-1.5 bg-white/50 hover:bg-white/70"
             }`}
           />
         ))}

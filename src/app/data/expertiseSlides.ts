@@ -16,7 +16,7 @@ export const EXPERTISE_SLIDES: Slide[] = [
       "Оценка ИТ-сервисов — диагностика работы почты, файловых хранилищ, ERP/CRM, систем резервного копирования",
     image: "/slides/checklist.png",
     primary: { label: "Связаться с нами", href: "/contacts" },
-    secondary: { label: "Скачать чек-лист", href: "/files/checklist.pdf" },
+    secondary: { label: "Скачать чек-лист 1", href: "/files/checklist.pdf" },
   },
   {
     title: "Консалтинг",

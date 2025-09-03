@@ -53,7 +53,7 @@ function PlanCard({ plan }: { plan: Plan }) {
         <div className="mt-5 sm:mt-6 md:mt-7 relative">
           <Button
             size="lg"
-            className="w-full text-[14.5px] sm:text-[15.5px] md:text-[16.5px] !rounded-full !bg-[var(--color-primary-500-gradient)]"
+            className="w-full text-[14.5px] sm:text-[15.5px] md:text-[16.5px]"
             aria-label={`Выбрать план за ${price} сом/мес`}
           >
             Я хочу это
