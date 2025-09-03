@@ -69,7 +69,7 @@ export default function ServicesCarousel() {
                   <div className="mt-4 md:mt-6 flex flex-wrap items-center justify-center md:justify-start gap-3">
                     {s.cta && (
                       <a href={s.cta.href} className="inline-block">
-                        <Button size="lg" className="hidden md:inline-flex">
+                        <Button size="lg" href="#contact" className="hidden md:inline-flex">
                           {s.cta.label}
                         </Button>
                       </a>

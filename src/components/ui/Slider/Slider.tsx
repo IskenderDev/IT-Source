@@ -219,7 +219,7 @@ export default function Slider({
                         <div className="mt-6 flex flex-wrap gap-3">
                           {s.primary && (
                             <a href={s.primary.href}>
-                              <Button size="lg">{s.primary.label}</Button>
+                              <Button size="lg" href="#contact">{s.primary.label}</Button>
                             </a>
                           )}
                           {s.secondary && (

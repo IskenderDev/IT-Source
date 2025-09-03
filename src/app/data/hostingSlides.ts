@@ -10,8 +10,8 @@ export const HOSTING_SLIDES: Slide[] = [
       "Разные конфигурации — от веб‑серверов до высоконагруженных БД\n" +
       "1C RDP — качественный доступ с соблюдением лицензирования по RDP/root",
     image: "/slides/servers.png",
-    primary: { label: "Подробнее", href: "/services/servers" },
-    secondary: { label: "Узнать больше", href: "/contacts" },
+    primary: { label: "Подробнее", href: "#contact" },
+    secondary: { label: "Узнать больше", href: "/check-lists/check-list_1.pdf" },
     background: "#06498233",
   },
   {

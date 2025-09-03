@@ -305,7 +305,7 @@ function CTAButtons({
     <div className={`mt-4 md:mt-6 flex flex-wrap gap-3 ${center ? "justify-center" : ""}`}>
       {primary && (
         <a href={primary.href} className="inline-block">
-          <Button size="lg">{primary.label}</Button>
+          <Button size="lg" href="#contact">{primary.label}</Button>
         </a>
       )}
       {secondary && (
