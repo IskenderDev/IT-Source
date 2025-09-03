@@ -59,6 +59,12 @@ export default function Header() {
     }
   }, [isHome, location.hash]);
 
+  // Базовые классы для пунктов (десктоп)
+  const navBase =
+    "relative pb-2 transition-colors duration-200 text-white/90 hover:text-white";
+  const navActive =
+    "after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-[#1cb898]";
+
   return (
     <header
       className={[
@@ -81,6 +87,8 @@ export default function Header() {
         >
           <img src="/logo.svg" alt="ITSource Logo" className="h-9 w-auto" />
         </Link>
+
+        {/* Desktop nav */}
         <nav
           className={[
             "hidden md:flex items-center gap-8 text-sm transition-colors",
@@ -89,52 +97,38 @@ export default function Header() {
         >
           <button
             onClick={() => goTo("home")}
-            className={
-              activeId === "home"
-                ? "text-primary"
-                : "text-white/90 hover:text-primary"
-            }
+            className={[navBase, activeId === "home" ? navActive : ""].join(" ")}
           >
             Главная
           </button>
           <button
             onClick={() => goTo("tariffs")}
-            className={
-              activeId === "tariffs"
-                ? "text-primary"
-                : "text-white/90 hover:text-primary"
-            }
+            className={[navBase, activeId === "tariffs" ? navActive : ""].join(" ")}
           >
             Тарифы
           </button>
           <button
             onClick={() => goTo("services")}
-            className={
-              activeId === "services"
-                ? "text-primary"
-                : "text-white/90 hover:text-primary"
-            }
+            className={[navBase, activeId === "services" ? navActive : ""].join(" ")}
           >
             Услуги
           </button>
           <button
             onClick={() => goTo("contact")}
-            className={
-              activeId === "contact"
-                ? "text-primary"
-                : "text-white/90 hover:text-primary"
-            }
+            className={[navBase, activeId === "contact" ? navActive : ""].join(" ")}
           >
             Контакты
           </button>
 
           <button
             onClick={() => goTo("contact")}
-            className="ml-6 text-[#03CEA4] bg-[#03CEA426] py-2.5 px-6 font-semibold transition active:scale-95"
+            className="ml-6 text-[#03CEA4] bg-[#03CEA426] py-2.5 px-6 font-semibold transition active:scale-95 rounded"
           >
             Связаться
           </button>
         </nav>
+
+        {/* Burger */}
         <button
           type="button"
           className={[
@@ -142,87 +136,94 @@ export default function Header() {
             open ? "text-gray-900" : "text-white/90",
           ].join(" ")}
           aria-label="Меню"
+          aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
         >
           {open ? (
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           ) : (
-            <svg
-              className="h-6 w-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
+            <svg className="h-6 w-6" fill="none" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           )}
         </button>
       </div>
-      {open && (
-        <div className="md:hidden absolute left-0 right-0 top-full z-50 bg-white shadow-lg border-t border-gray-200 animate-fadeIn">
-          <ul className="flex flex-col divide-y divide-gray-200">
-            <li>
-              <button
-                onClick={() => goTo("home")}
-                className={[
-                  "w-full text-left px-6 py-4 hover:bg-gray-50 transition",
-                  activeId === "home" ? "text-primary" : "text-gray-800",
-                ].join(" ")}
-              >
-                Главная
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => goTo("tariffs")}
-                className={[
-                  "w-full text-left px-6 py-4 hover:bg-gray-50 transition",
-                  activeId === "tariffs" ? "text-primary" : "text-gray-800",
-                ].join(" ")}
-              >
-                Тарифы
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => goTo("services")}
-                className={[
-                  "w-full text-left px-6 py-4 hover:bg-gray-50 transition",
-                  activeId === "services" ? "text-primary" : "text-gray-800",
-                ].join(" ")}
-              >
-                Услуги
-              </button>
-            </li>
-            <li>
-              <button
-                onClick={() => goTo("contact")}
-                className={[
-                  "w-full text-left px-6 py-4 hover:bg-gray-50 transition",
-                  activeId === "contact" ? "text-primary" : "text-gray-800",
-                ].join(" ")}
-              >
-                Контакты
-              </button>
-            </li>
-          </ul>
-          <div className="px-6 py-4 border-t border-gray-200">
+
+      {/* Mobile dropdown */}
+      <div
+        className={[
+          "md:hidden absolute left-0 right-0 top-full z-50 bg-white border-t border-gray-200 shadow-lg",
+          // анимация плавного появления сверху
+          open
+            ? "animate-slideDown pointer-events-auto opacity-100"
+            : "hidden opacity-0",
+        ].join(" ")}
+      >
+        <ul className="flex flex-col divide-y divide-gray-200">
+          <li>
+            <button
+              onClick={() => goTo("home")}
+              className={[
+                "w-full text-left px-6 py-4 hover:bg-gray-50 transition relative",
+                activeId === "home"
+                  ? "after:absolute after:left-6 after:right-6 after:bottom-0 after:h-[2px] after:bg-[#1cb898] text-gray-900"
+                  : "text-gray-800",
+              ].join(" ")}
+            >
+              Главная
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => goTo("tariffs")}
+              className={[
+                "w-full text-left px-6 py-4 hover:bg-gray-50 transition relative",
+                activeId === "tariffs"
+                  ? "after:absolute after:left-6 after:right-6 after:bottom-0 after:h-[2px] after:bg-[#1cb898] text-gray-900"
+                  : "text-gray-800",
+              ].join(" ")}
+            >
+              Тарифы
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={() => goTo("services")}
+              className={[
+                "w-full text-left px-6 py-4 hover:bg-gray-50 transition relative",
+                activeId === "services"
+                  ? "after:absolute after:left-6 after:right-6 after:bottom-0 after:h-[2px] after:bg-[#1cb898] text-gray-900"
+                  : "text-gray-800",
+              ].join(" ")}
+            >
+              Услуги
+            </button>
+          </li>
+          <li>
             <button
               onClick={() => goTo("contact")}
-              className="w-full text-[#03CEA4] bg-[#03CEA426] py-3 font-semibold transition active:scale-[0.99]"
+              className={[
+                "w-full text-left px-6 py-4 hover:bg-gray-50 transition relative",
+                activeId === "contact"
+                  ? "after:absolute after:left-6 after:right-6 after:bottom-0 after:h-[2px] after:bg-[#1cb898] text-gray-900"
+                  : "text-gray-800",
+              ].join(" ")}
             >
-              Связаться
+              Контакты
             </button>
-          </div>
+          </li>
+        </ul>
+        <div className="px-6 py-4 border-t border-gray-200">
+          <button
+            onClick={() => goTo("contact")}
+            className="w-full text-[#03CEA4] bg-[#03CEA426] py-3 font-semibold transition active:scale-[0.99] rounded"
+          >
+            Связаться
+          </button>
         </div>
-      )}
+      </div>
     </header>
   );
 }
