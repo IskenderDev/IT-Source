@@ -57,11 +57,13 @@ function SolutionModal({ open, onClose, solution }: ModalProps) {
         />
 
         <div className="p-6 flex justify-center ">
-          <a href={contactHref}>
-            <Button size="lg" className="rounded-full px-8 py-3 bg-emerald-400 text-black hover:bg-emerald-300 transition">
-              Связаться с нами
-            </Button>
-          </a>
+          <Button
+            size="lg"
+            className="rounded-full px-8 py-3 bg-emerald-400 text-black hover:bg-emerald-300 transition"
+            href={contactHref}
+          >
+            Связаться с нами
+          </Button>
         </div>
       </div>
     </div>
