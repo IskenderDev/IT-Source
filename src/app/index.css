@@ -7,6 +7,14 @@
 html, body, #root { min-height: 100%; overflow-x: hidden;}
 body { margin: 0; }
 
+@keyframes slideDown {
+  0%   { opacity: 0; transform: translateY(-12px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-slideDown {
+  animation: slideDown 220ms ease-out forwards;
+}
+
 .overflow-x-auto::-webkit-scrollbar { height: 6px; }
 .overflow-x-auto::-webkit-scrollbar-track { background: transparent; }
 .overflow-x-auto::-webkit-scrollbar-thumb {
