@@ -14,9 +14,9 @@ export default function TransformationCTA() {
         </p>
 
         <div className="flex flex-wrap justify-center gap-4">
-          <a href="/check-lists/check-list_1.pdf" download>
-            <Button size="lg">Начать трансформацию</Button>
-          </a>
+          <Button size="lg" href="/check-lists/check-list_1.pdf" download>
+            Начать трансформацию
+          </Button>
         </div>
       </div>
     </section>

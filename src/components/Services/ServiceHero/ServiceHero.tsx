@@ -52,8 +52,8 @@ export default function ServiceHero({
         )}
 
         <div className="mt-8">
-          <Button size="lg" >
-            <a href={ctaHref}>{ctaLabel}</a>
+          <Button size="lg" href={ctaHref}>
+            {ctaLabel}
           </Button>
         </div>
       </div>

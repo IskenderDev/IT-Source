@@ -6,6 +6,7 @@
 *::after { box-sizing: border-box; }
 html, body, #root { min-height: 100%; overflow-x: hidden;}
 body { margin: 0; }
+html { scroll-behavior: smooth; }
 
 .overflow-x-auto::-webkit-scrollbar { height: 6px; }
 .overflow-x-auto::-webkit-scrollbar-track { background: transparent; }
