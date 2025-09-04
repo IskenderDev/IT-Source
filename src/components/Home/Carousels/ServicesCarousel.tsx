@@ -2,10 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { Button } from "../../ui";
-import {
-  SERVICE_OPTIONS,
-  SERVICE_SLIDES,
-} from "../../../app/data/servicesCarousel";
+import { SERVICE_OPTIONS, SERVICE_SLIDES } from "../../../app/data/slides";
 
 export default function ServicesCarousel() {
   const [emblaRef, emblaApi] = useEmblaCarousel(SERVICE_OPTIONS, [
@@ -77,7 +74,7 @@ export default function ServicesCarousel() {
 
                     {s.ghost && (
                       <a
-                        href="/check-lists/check-list_1.pdf"
+                        href="/assets/check-lists/check-list_1.pdf"
                         download
                         className="inline-block"
                       >

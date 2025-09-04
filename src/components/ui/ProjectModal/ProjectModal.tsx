@@ -55,7 +55,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
       aria-modal="true"
       aria-labelledby="project-modal-title"
     >
-      {/* Клик по подложке закрывает модалку */}
       <button
         aria-label="Закрыть модалку"
         className="absolute inset-0 bg-transparent"
@@ -63,7 +62,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
       />
 
       <div className="relative z-10 mx-auto w-full max-w-[1400px] px-4 md:px-6 pt-[max(1.25rem,env(safe-area-inset-top))] pb-[max(1.25rem,env(safe-area-inset-bottom))]">
-        {/* Шапка + кнопка закрытия */}
         <div className="relative">
           <h3
             id="project-modal-title"
@@ -82,7 +80,6 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_520px] gap-4 md:gap-6">
-          {/* Левая колонка (контент) */}
           <div>
             {hasChallenges ? (
               <Fragment>

@@ -18,7 +18,7 @@ export default function Brands() {
                 key={`top-${i}`}
                 src={src}
                 alt={`brands-desktop-${i}`}
-                className="md:h-full h-28 w-auto mx-6" // увеличил размер и уменьшил отступ
+                className="md:h-full h-28 w-auto mx-6"
                 loading="lazy"
               />
             ))}

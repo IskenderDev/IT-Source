@@ -1,5 +1,5 @@
 import Slider from "../../ui/Slider/Slider";
-import { HOSTING_SLIDES } from "../../../app/data/hostingSlides";
+import { HOSTING_SLIDES } from "../../../app/data/slides";
 
 export default function HostingSection() {
   return (

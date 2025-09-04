@@ -84,7 +84,6 @@ export default function Slider({
 
   const scrollTo = useCallback((i: number) => emblaApi?.scrollTo(i), [emblaApi]);
 
-  // helpers
   const isPdf = (href?: string) => !!href && /\.pdf(\?|#|$)/i.test(href);
   const hasChecklist = (s: Slide) =>
     (!!s.secondary && isPdf(s.secondary.href)) ||
@@ -139,7 +138,6 @@ export default function Slider({
                       'linear-gradient(280.68deg, #054277 1.65%, #01192A 97.64%)',
                   }}
                 >
-                  {/* MOBILE */}
                   <div className="md:hidden mt-auto font-mono text-center">
                     {mobileImageTop && s.image && (
                       <div className="mb-3 flex justify-center">
@@ -199,7 +197,6 @@ export default function Slider({
                     )}
                   </div>
 
-                  {/* DESKTOP */}
                   <div className="hidden md:grid h-full relative grid-cols-[1.2fr_0.8fr] gap-4 lg:gap-6 items-center">
                     <div className="ml-0 md:ml-28 font-mono">
                       <h3 className="text-[32px] lg:text-[40px] font-bold leading-snug">
@@ -269,7 +266,6 @@ export default function Slider({
                     )}
                   </div>
 
-                  {/* arrows */}
                   <button
                     onClick={() => emblaApi?.scrollPrev()}
                     aria-label="Предыдущий слайд"
@@ -300,7 +296,6 @@ export default function Slider({
         </div>
       </div>
 
-      {/* dots */}
       <div className="mt-4 hidden md:flex w-full items-center justify-center gap-2">
         {scrollSnaps.map((_, i) => (
           <button

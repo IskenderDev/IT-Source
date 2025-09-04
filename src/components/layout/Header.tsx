@@ -59,7 +59,6 @@ export default function Header() {
     }
   }, [isHome, location.hash]);
 
-  // Базовые классы для пунктов (десктоп)
   const navBase =
     "relative pb-2 transition-colors duration-200 text-white/90 hover:text-white";
   const navActive =
@@ -85,10 +84,8 @@ export default function Header() {
             goTo("home");
           }}
         >
-          <img src="/logo.svg" alt="ITSource Logo" className="h-9 w-auto" />
+          <img src="/assets/logo.svg" alt="ITSource Logo" className="h-9 w-auto" />
         </Link>
-
-        {/* Desktop nav */}
         <nav
           className={[
             "hidden md:flex items-center gap-8 text-sm transition-colors",
@@ -127,8 +124,6 @@ export default function Header() {
             Связаться
           </button>
         </nav>
-
-        {/* Burger */}
         <button
           type="button"
           className={[
@@ -150,12 +145,9 @@ export default function Header() {
           )}
         </button>
       </div>
-
-      {/* Mobile dropdown */}
       <div
         className={[
           "md:hidden absolute left-0 right-0 top-full z-50 bg-white border-t border-gray-200 shadow-lg",
-          // анимация плавного появления сверху
           open
             ? "animate-slideDown pointer-events-auto opacity-100"
             : "hidden opacity-0",

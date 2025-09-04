@@ -1,5 +1,5 @@
 import Slider from "../../ui/Slider/Slider";
-import { SPECIAL_SOLUTION_SLIDES } from "../../../app/data/specialSolutionSlides";
+import { SPECIAL_SOLUTION_SLIDES } from "../../../app/data/slides";
 
 export default function SpecialSolutions() {
   return (
