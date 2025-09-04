@@ -1,5 +1,5 @@
 import Slider from "../../ui/Slider/Slider";
-import { SOLUTIONS_SLIDES } from "../../../app/data/solutionsSlides";
+import { SOLUTIONS_SLIDES } from "../../../app/data/slides";
 
 export default function SolutionsSection() {
   return (

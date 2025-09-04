@@ -211,7 +211,6 @@ export default function ContactForm() {
           </Button>
         </div>
 
-        {/* нижний glow */}
         <div
           aria-hidden
           className="pointer-events-none absolute bottom-20 -right-20 w-[200px] h-[75px] bg-[#03CEA4] rounded-full opacity-50 blur-[140px]"

@@ -3,7 +3,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import type { EmblaOptionsType } from "embla-carousel";
 import Autoplay from "embla-carousel-autoplay";
 import { Button, SectionTitle } from "../../ui";
-import { EXPERTISE_SLIDES } from "../../../app/data/expertiseSlides";
+import { EXPERTISE_SLIDES } from "../../../app/data/slides";
 
 export type Slide = {
   title: string;
@@ -190,7 +190,6 @@ export default function ExpertiseSection({
                     </div>
                   )}
 
-                  {/* === MOBILE === */}
                   <div className="md:hidden mt-auto font-mono text-center">
                     <h3 className="text-[24px] sm:text-[28px] font-bold leading-snug">
                       {s.title}
@@ -212,7 +211,6 @@ export default function ExpertiseSection({
                     />
                   </div>
 
-                  {/* === DESKTOP === */}
                   <div
                     className="
                       hidden md:grid h-full relative
@@ -267,7 +265,6 @@ export default function ExpertiseSection({
                     )}
                   </div>
 
-                  {/* Стрелки */}
                   {showArrows && (
                     <>
                       <button
@@ -302,7 +299,6 @@ export default function ExpertiseSection({
         </div>
       </div>
 
-      {/* Точки */}
       {showDots && (
         <div
           className="mt-4 hidden md:flex w-full items-center justify-center gap-2"
@@ -327,7 +323,6 @@ export default function ExpertiseSection({
   );
 }
 
-/** Вынесенные CTA */
 function CTAButtons({
   primary,
   secondary,
@@ -338,7 +333,7 @@ function CTAButtons({
 }) {
   if (!primary && !secondary) return null;
 
-  const secondaryHref = secondary?.href ?? "/check-lists/check-list_1.pdf";
+  const secondaryHref = secondary?.href ?? "/assets/check-lists/check-list_1.pdf";
   const isPdf = /\.pdf($|\?)/i.test(secondaryHref);
 
   return (

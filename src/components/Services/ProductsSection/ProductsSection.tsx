@@ -126,7 +126,7 @@ function ProductCardView({
         aria-hidden
         className="
           pointer-events-none absolute inset-0 rounded-2xl
-          [padding:1px]               /* толщина рамки */
+          [padding:1px]
           before:content-[''] before:absolute before:inset-0 before:rounded-[calc(theme(borderRadius.2xl)-1px)]
           before:bg-[linear-gradient(180deg,rgba(255,255,255,0.12),rgba(255,255,255,0))]
           before:[mask:linear-gradient(#000_0_0)_content-box,linear-gradient(#000_0_0)]
