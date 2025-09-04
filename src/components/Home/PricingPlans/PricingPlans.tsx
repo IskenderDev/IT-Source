@@ -87,9 +87,7 @@ export default function PricingPlans() {
 
       <div className="mx-auto max-w-[1200px] px-4 md:px-8 font-mono">
         <SectionTitle
-          heading="Пакеты наших услуг"
-          subheading="Изучите наши гибкие тарифные планы, удовлетворяющие потребности любого бизнеса. Выберите план, который соответствует вашему бюджету и требованиям."
-        />
+          heading="Тарифные планы"        />
 
         <div
           className={[

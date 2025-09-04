@@ -60,17 +60,23 @@ export default function ExpertiseSection({
 
   imageMaxHMobile = 300,
   imageMaxHDesktop = 480,
-  imageRightPx = 112,
+  imageRightPx = 50,
 
   showArrows = true,
   showDots = true,
 }: Props) {
   const plugins = useMemo(
-    () => (autoplay ? [Autoplay({ delay: autoplayDelayMs, stopOnInteraction: false })] : []),
+    () =>
+      autoplay
+        ? [Autoplay({ delay: autoplayDelayMs, stopOnInteraction: false })]
+        : [],
     [autoplay, autoplayDelayMs]
   );
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "start", ...options }, plugins);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: "start", ...options },
+    plugins
+  );
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
@@ -83,7 +89,6 @@ export default function ExpertiseSection({
     if (!emblaApi) return;
     setScrollSnaps(emblaApi.scrollSnapList());
     emblaApi.on("select", onSelect);
-    // полезно при ресайзе, чтобы точки и стрелки не рассинхронилиь
     emblaApi.on("reInit", onSelect);
     onSelect();
     return () => {
@@ -92,7 +97,10 @@ export default function ExpertiseSection({
     };
   }, [emblaApi, onSelect]);
 
-  const scrollTo = useCallback((i: number) => emblaApi?.scrollTo(i), [emblaApi]);
+  const scrollTo = useCallback(
+    (i: number) => emblaApi?.scrollTo(i),
+    [emblaApi]
+  );
 
   return (
     <section className={`relative w-full font-sans p-4 ${className}`}>
@@ -124,14 +132,10 @@ export default function ExpertiseSection({
       >
         <div className="flex gap-4 md:gap-5 lg:gap-6">
           {slides.map((s, i) => {
-            // Лимиты и позиционирование изображений
             const mMax = s.imgMaxHMobile ?? imageMaxHMobile;
             const dMax = s.imgMaxHDesktop ?? imageMaxHDesktop;
             const dRight = s.imgRightPx ?? imageRightPx;
 
-            // ЛОГИКА ПОКАЗА ИЗОБРАЖЕНИЙ:
-            // - Десктоп: показываем у ВСЕХ слайдов, если есть s.image
-            // - Мобилка: скрыто только у первого (i === 0)
             const showImgDesktop = Boolean(s.image);
             const showImgMobile = Boolean(s.image) && i !== 0;
 
@@ -150,11 +154,12 @@ export default function ExpertiseSection({
                   "
                   style={{
                     ["--mh" as string]: `${mobileSlideMinH}px`,
-                    background: s.background ?? "linear-gradient(280.68deg, #054277 1.65%, #01192A 97.64%)",
+                    background:
+                      s.background ??
+                      "linear-gradient(280.68deg, #054277 1.65%, #01192A 97.64%)",
                   }}
                   aria-label={`Слайд ${i + 1} из ${slides.length}`}
                 >
-                  {/* Лёгкий акцент для первого слайда на десктопе */}
                   {i === 0 && (
                     <div
                       className="pointer-events-none absolute rounded-full hidden md:block"
@@ -172,7 +177,6 @@ export default function ExpertiseSection({
                     />
                   )}
 
-                  {/* Мобилка: картинка сверху (кроме первого слайда) */}
                   {mobileImageTop && showImgMobile && (
                     <div className="md:hidden flex justify-center">
                       <img
@@ -186,16 +190,29 @@ export default function ExpertiseSection({
                     </div>
                   )}
 
-                  {/* Контент мобилки */}
+                  {/* === MOBILE === */}
                   <div className="md:hidden mt-auto font-mono text-center">
-                    <h3 className="text-[24px] sm:text-[28px] font-bold leading-snug">{s.title}</h3>
-                    <p className="mt-3 text-[13px] sm:text-[14px] leading-relaxed text-white/90 whitespace-pre-line">
+                    <h3 className="text-[24px] sm:text-[28px] font-bold leading-snug">
+                      {s.title}
+                    </h3>
+                    <p className="mt-3 text-[13px] sm:text-[14px] text-left text-white whitespace-pre-line">
                       {s.text}
                     </p>
-                    <CTAButtons primary={s.primary} secondary={s.secondary} center />
+
+                    {i === 0 && (
+                      <p className="mt-5 text-left  text-[14px] sm:text-[15px] font-semibold text-white">
+                        Комплексная Экспертиза и Аудит IT-инфраструктуры
+                      </p>
+                    )}
+
+                    <CTAButtons
+                      primary={s.primary}
+                      secondary={s.secondary}
+                      center
+                    />
                   </div>
 
-                  {/* Десктопная сетка */}
+                  {/* === DESKTOP === */}
                   <div
                     className="
                       hidden md:grid h-full relative
@@ -203,9 +220,28 @@ export default function ExpertiseSection({
                       items-center
                     "
                   >
-                    <div className={`ml-0 md:ml-28 font-mono ${!showImgDesktop ? "md:col-span-2" : ""}`}>
-                      <h3 className="text-[32px] lg:text-[40px] font-bold leading-snug">{s.title}</h3>
-                      <p className="mt-6 text-[16px] leading-relaxed text-white/90 whitespace-pre-line">{s.text}</p>
+                    <div
+                      className={`ml-0 md:ml-28 font-mono ${
+                        !showImgDesktop ? "md:col-span-2" : ""
+                      }`}
+                    >
+                      <h3 className="text-[32px] lg:text-[40px] font-bold leading-snug">
+                        {s.title}
+                      </h3>
+                      <div className="mt-6 text-[15px] w-4xl text-white font-light  [&>p]:mt-4 first:[&>p]:mt-0">
+                        {s.text.split(/\n{2,}/).map((para, idx) => (
+                          <p key={idx} className="whitespace-pre-line leading-5">
+                            {para}
+                          </p>
+                        ))}
+                      </div>
+
+                      {i === 0 && (
+                        <p className="mt-5 text-[16px] font-semibold text-white">
+                          Комплексная Экспертиза и Аудит IT-инфраструктуры
+                        </p>
+                      )}
+
                       <CTAButtons primary={s.primary} secondary={s.secondary} />
                     </div>
 
@@ -268,7 +304,10 @@ export default function ExpertiseSection({
 
       {/* Точки */}
       {showDots && (
-        <div className="mt-4 hidden md:flex w-full items-center justify-center gap-2" aria-label="Навигация по слайдам">
+        <div
+          className="mt-4 hidden md:flex w-full items-center justify-center gap-2"
+          aria-label="Навигация по слайдам"
+        >
           {scrollSnaps.map((_, i) => (
             <button
               key={i}
@@ -276,7 +315,9 @@ export default function ExpertiseSection({
               aria-current={selectedIndex === i}
               onClick={() => scrollTo(i)}
               className={`h-1.5 rounded-full transition ${
-                selectedIndex === i ? "w-8 bg-white" : "w-1.5 bg-white/50 hover:bg-white/70"
+                selectedIndex === i
+                  ? "w-8 bg-white"
+                  : "w-1.5 bg-white/50 hover:bg-white/70"
               }`}
             />
           ))}
@@ -286,11 +327,10 @@ export default function ExpertiseSection({
   );
 }
 
-/** Вынесенные CTA, чтобы не дублировать разметку */
+/** Вынесенные CTA */
 function CTAButtons({
   primary,
   secondary,
-  center = false,
 }: {
   primary?: { label: string; href: string };
   secondary?: { label: string; href: string };
@@ -302,14 +342,22 @@ function CTAButtons({
   const isPdf = /\.pdf($|\?)/i.test(secondaryHref);
 
   return (
-    <div className={`mt-4 md:mt-6 flex flex-wrap gap-3 ${center ? "justify-center" : ""}`}>
+    <div
+      className={`mt-4 md:mt-6 flex flex-wrap gap-3`}
+    >
       {primary && (
-        <a href={primary.href} className="inline-block">
-          <Button size="lg" href="#contact">{primary.label}</Button>
+        <a href={primary.href} className="inline-block ">
+          <Button size="lg" href="#contact">
+            {primary.label}
+          </Button>
         </a>
       )}
       {secondary && (
-        <a href={secondaryHref} {...(isPdf ? { download: "" } : {})} className="inline-block">
+        <a
+          href={secondaryHref}
+          {...(isPdf ? { download: "" } : {})}
+          className="inline-block"
+        >
           <Button size="lg" variant="outline">
             {secondary.label}
           </Button>
@@ -321,7 +369,14 @@ function CTAButtons({
 
 function ChevronLeft() {
   return (
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg
+      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+    >
       <path d="M15 18l-6-6 6-6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
@@ -329,7 +384,14 @@ function ChevronLeft() {
 
 function ChevronRight() {
   return (
-    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+    <svg
+      viewBox="0 0 24 24"
+      width="20"
+      height="20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+    >
       <path d="M9 6l6 6-6 6" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );

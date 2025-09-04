@@ -7,6 +7,50 @@
 html, body, #root { min-height: 100%; overflow-x: hidden;}
 body { margin: 0; }
 html { scroll-behavior: smooth; }
+p{
+  font-family: "Manrope", monospace !important;
+}
+h1,h2,h3,h4,h5,h6{
+  font-family:"IBM Plex Mono", monospace !important; 
+}
+@keyframes marquee-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 40s linear infinite; /* замедлил */
+  width: 200%;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 40s linear infinite;
+  width: 200%;
+}
+@keyframes marquee-left {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-right {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-marquee-left {
+  animation: marquee-left 40s linear infinite; /* замедлил */
+  width: 200%;
+}
+
+.animate-marquee-right {
+  animation: marquee-right 40s linear infinite;
+  width: 200%;
+}
 
 @keyframes slideDown {
   0%   { opacity: 0; transform: translateY(-12px); }

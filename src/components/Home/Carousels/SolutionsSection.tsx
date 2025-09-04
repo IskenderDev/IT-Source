@@ -12,6 +12,7 @@ export default function SolutionsSection() {
       slides={SOLUTIONS_SLIDES}
       mobileImageTop={false}
       mobileSlideMinH={400}
+      checklistDescription="Как выбрать качественного подрядчика и не пожелеть?"
     />
   );
 }

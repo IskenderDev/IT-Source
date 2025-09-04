@@ -10,7 +10,6 @@ export type Slide = {
   image: string;
   primary?: { label: string; href: string };
   secondary?: { label: string; href: string };
-  /** Новая третья кнопка (outline) */
   tertiary?: { label: string; href: string };
   imageAlt?: string;
   background?: string;
@@ -23,6 +22,7 @@ type Props = {
   slides: Slide[];
   heading: string;
   subheading?: string;
+  checklistDescription?: string;
   options?: EmblaOptionsType;
   autoplay?: boolean;
   autoplayDelayMs?: number;
@@ -42,6 +42,7 @@ export default function Slider({
   slides,
   heading,
   subheading,
+  checklistDescription,
   options,
   autoplay = true,
   autoplayDelayMs = 5000,
@@ -51,13 +52,13 @@ export default function Slider({
   glowSize = 200,
   mobileImageTop = true,
   mobileSlideMinH = 560,
-
   imageMaxHMobile = 192,
   imageMaxHDesktop = 480,
   imageRightPx = 112,
 }: Props) {
   const emblaPlugins = useMemo(
-    () => (autoplay ? [Autoplay({ delay: autoplayDelayMs, stopOnInteraction: false })] : []),
+    () =>
+      autoplay ? [Autoplay({ delay: autoplayDelayMs, stopOnInteraction: false })] : [],
     [autoplay, autoplayDelayMs]
   );
 
@@ -83,8 +84,11 @@ export default function Slider({
 
   const scrollTo = useCallback((i: number) => emblaApi?.scrollTo(i), [emblaApi]);
 
-  // хелпер: для pdf ставим download
+  // helpers
   const isPdf = (href?: string) => !!href && /\.pdf(\?|#|$)/i.test(href);
+  const hasChecklist = (s: Slide) =>
+    (!!s.secondary && isPdf(s.secondary.href)) ||
+    (!!s.tertiary && isPdf(s.tertiary.href));
 
   return (
     <section className={`relative w-full font-sans p-4 ${className}`}>
@@ -129,84 +133,74 @@ export default function Slider({
                     flex flex-col
                   "
                   style={{
-                    ["--mh" as string]: `${mobileSlideMinH}px`,
+                    ['--mh' as string]: `${mobileSlideMinH}px`,
                     background:
                       s.background ??
-                      "linear-gradient(280.68deg, #054277 1.65%, #01192A 97.64%)",
+                      'linear-gradient(280.68deg, #054277 1.65%, #01192A 97.64%)',
                   }}
                 >
-                  {i === 0 && (
-                    <div
-                      className="pointer-events-none absolute rounded-full hidden md:block"
-                      style={{
-                        width: 260,
-                        height: 260,
-                        left: -80,
-                        transform: "translateY(-50%)",
-                        background: "#FC54EE",
-                        opacity: 0.35,
-                        filter: "blur(120px)",
-                        zIndex: 0,
-                        top: "50%",
-                      }}
-                    />
-                  )}
+                  {/* MOBILE */}
+                  <div className="md:hidden mt-auto font-mono text-center">
+                    {mobileImageTop && s.image && (
+                      <div className="mb-3 flex justify-center">
+                        <img
+                          src={s.image}
+                          alt={s.imageAlt ?? ""}
+                          loading="lazy"
+                          style={{ maxHeight: `${mMax}px` }}
+                          className="object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.35)]"
+                        />
+                      </div>
+                    )}
 
-                  {mobileImageTop && s.image && (
-                    <div className="md:hidden flex justify-center">
-                      <img
-                        src={s.image}
-                        alt={s.imageAlt ?? ""}
-                        loading="lazy"
-                        style={{ maxHeight: `${mMax}px` }}
-                        className="object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.35)]"
-                      />
-                    </div>
-                  )}
+                    <h3 className="text-[24px] sm:text-[28px] font-bold leading-snug">
+                      {s.title}
+                    </h3>
+                    <p className="mt-3 text-[13px] sm:text-[14px] leading-relaxed text-white/90 whitespace-pre-line">
+                      {s.text}
+                    </p>
 
-                  {/* Mobile content */}
-                  <div className="md:hidden mt-auto">
-                    <div className="font-mono">
-                      <h3 className="text-[24px] sm:text-[28px] font-bold leading-snug text-center">
-                        {s.title}
-                      </h3>
-                      <p className="mt-3 text-[13px] sm:text-[14px] leading-relaxed text-white/90 whitespace-pre-line text-center">
-                        {s.text}
+                    {i === 0 && checklistDescription && hasChecklist(s) && (
+                      <p
+                        className={`mt-4 text-[14px] sm:text-[15px] font-semibold text-white/95`}
+                      >
+                        {checklistDescription}
                       </p>
-                      {(s.primary || s.secondary || s.tertiary) && (
-                        <div className="mt-4 flex flex-wrap gap-3 justify-center">
-                          {s.primary && (
-                            <a href={s.primary.href}>
-                              <Button size="lg">{s.primary.label}</Button>
-                            </a>
-                          )}
-                          {s.secondary && (
-                            <a href={s.secondary.href} {...(isPdf(s.secondary.href) ? { download: true } : {})}>
-                              <Button size="lg" variant="outline">
-                                {s.secondary.label}
-                              </Button>
-                            </a>
-                          )}
-                          {s.tertiary && (
-                            <a href={s.tertiary.href} {...(isPdf(s.tertiary.href) ? { download: true } : {})}>
-                              <Button size="lg" variant="outline">
-                                {s.tertiary.label}
-                              </Button>
-                            </a>
-                          )}
-                        </div>
-                      )}
-                    </div>
+                    )}
+
+                    {(s.primary || s.secondary || s.tertiary) && (
+                      <div className="mt-4 flex flex-wrap gap-3 justify-center">
+                        {s.primary && (
+                          <a href={s.primary.href}>
+                            <Button size="lg">{s.primary.label}</Button>
+                          </a>
+                        )}
+                        {s.secondary && (
+                          <a
+                            href={s.secondary.href}
+                            {...(isPdf(s.secondary.href) ? { download: true } : {})}
+                          >
+                            <Button size="lg" variant="outline">
+                              {s.secondary.label}
+                            </Button>
+                          </a>
+                        )}
+                        {s.tertiary && (
+                          <a
+                            href={s.tertiary.href}
+                            {...(isPdf(s.tertiary.href) ? { download: true } : {})}
+                          >
+                            <Button size="lg" variant="outline">
+                              {s.tertiary.label}
+                            </Button>
+                          </a>
+                        )}
+                      </div>
+                    )}
                   </div>
 
-                  {/* Desktop content */}
-                  <div
-                    className="
-                      hidden md:grid h-full relative
-                      grid-cols-[1.2fr_0.8fr] gap-4 lg:gap-6 md:text-left
-                      items-center
-                    "
-                  >
+                  {/* DESKTOP */}
+                  <div className="hidden md:grid h-full relative grid-cols-[1.2fr_0.8fr] gap-4 lg:gap-6 items-center">
                     <div className="ml-0 md:ml-28 font-mono">
                       <h3 className="text-[32px] lg:text-[40px] font-bold leading-snug">
                         {s.title}
@@ -215,22 +209,36 @@ export default function Slider({
                         {s.text}
                       </p>
 
+                      {i === 0 && checklistDescription && hasChecklist(s) && (
+                        <p
+                          className={`mt-5 text-[16px] font-semibold text-white`}
+                        >
+                          {checklistDescription}
+                        </p>
+                      )}
+
                       {(s.primary || s.secondary || s.tertiary) && (
                         <div className="mt-6 flex flex-wrap gap-3">
                           {s.primary && (
                             <a href={s.primary.href}>
-                              <Button size="lg" href="#contact">{s.primary.label}</Button>
+                              <Button size="lg">{s.primary.label}</Button>
                             </a>
                           )}
                           {s.secondary && (
-                            <a href={s.secondary.href} {...(isPdf(s.secondary.href) ? { download: true } : {})}>
+                            <a
+                              href={s.secondary.href}
+                              {...(isPdf(s.secondary.href) ? { download: true } : {})}
+                            >
                               <Button size="lg" variant="outline">
                                 {s.secondary.label}
                               </Button>
                             </a>
                           )}
                           {s.tertiary && (
-                            <a href={s.tertiary.href} {...(isPdf(s.tertiary.href) ? { download: true } : {})}>
+                            <a
+                              href={s.tertiary.href}
+                              {...(isPdf(s.tertiary.href) ? { download: true } : {})}
+                            >
                               <Button size="lg" variant="outline">
                                 {s.tertiary.label}
                               </Button>
@@ -240,25 +248,28 @@ export default function Slider({
                       )}
                     </div>
 
-                    <div className="h-full">
-                      <img
-                        src={s.image}
-                        alt={s.imageAlt ?? ""}
-                        loading="lazy"
-                        style={{
-                          maxHeight: `${dMax}px`,
-                          right: `${dRight}px`,
-                          top: "50%",
-                        }}
-                        className="
-                          absolute -translate-y-1/2
-                          object-contain
-                          drop-shadow-[0_20px_40px_rgba(0,0,0,0.35)]
-                        "
-                      />
-                    </div>
+                    {s.image && (
+                      <div className="h-full relative">
+                        <img
+                          src={s.image}
+                          alt={s.imageAlt ?? ""}
+                          loading="lazy"
+                          style={{
+                            maxHeight: `${dMax}px`,
+                            right: `${dRight}px`,
+                            top: "50%",
+                          }}
+                          className="
+                            absolute -translate-y-1/2
+                            object-contain
+                            drop-shadow-[0_20px_40px_rgba(0,0,0,0.35)]
+                          "
+                        />
+                      </div>
+                    )}
                   </div>
 
+                  {/* arrows */}
                   <button
                     onClick={() => emblaApi?.scrollPrev()}
                     aria-label="Предыдущий слайд"
@@ -289,12 +300,13 @@ export default function Slider({
         </div>
       </div>
 
+      {/* dots */}
       <div className="mt-4 hidden md:flex w-full items-center justify-center gap-2">
         {scrollSnaps.map((_, i) => (
           <button
             key={i}
-            aria-label={`Перейти к слайду ${i + 1}`}
             onClick={() => scrollTo(i)}
+            aria-label={`Перейти к слайду ${i + 1}`}
             className={`h-1.5 rounded-full transition ${
               selectedIndex === i ? "w-8 bg-white" : "w-1.5 bg-white/50 hover:bg-white/70"
             }`}

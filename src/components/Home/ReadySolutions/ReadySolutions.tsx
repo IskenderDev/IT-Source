@@ -58,6 +58,7 @@ function SolutionModal({ open, onClose, solution }: ModalProps) {
 
         <div className="p-6 flex justify-center ">
           <Button
+           onClick={onClose}
             size="lg"
             className="rounded-full px-8 py-3 bg-emerald-400 text-black hover:bg-emerald-300 transition"
             href={contactHref}
@@ -90,7 +91,7 @@ const ReadySolutions = ({ solutions = DEFAULT_SOLUTIONS }: Props) => {
           className="mb-24"
         />
 
-        <ul className="mt-8 md:mt-12 space-y-8 flex flex-col gap-14">
+        <ul className="-mt-15 md:mt-12 space-y-8 flex flex-col gap-14">
           {solutions.map((s) => (
             <li
               key={s.id}
@@ -110,9 +111,9 @@ const ReadySolutions = ({ solutions = DEFAULT_SOLUTIONS }: Props) => {
                   <h3 className="text-lg md:text-3xl font-semibold text-white">
                     {s.title}
                   </h3>
-                  <ul className="mt-3 md:mt-4 space-y-1.5 text-white text-xl md:text-sm leading-relaxed">
+                  <ul className="mt-3 md:mt-4 space-y-1 font-light text-white md:text-lg font-sans font-light leading-relaxed">
                     {s.bullets.map((b, i) => (
-                      <li key={i} className="flex gap-2">
+                      <li key={i} className="flex gap-1">
                         <span>{b}</span>
                       </li>
                     ))}

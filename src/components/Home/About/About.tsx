@@ -12,7 +12,7 @@ export default function About() {
         <SectionTitle heading="О нас" />
       <div className="absolute -left-40 top-20 hidden md:block w-[260px] h-[150px] rounded-full bg-[#03CEA4] opacity-30 blur-[128px] pointer-events-none" />
 
-        <div className="mt-8 space-y-6 text-lg md:text-base leading-relaxed text-left md:text-center">
+        <div className="mt-8 space-y-6 text-lg md:text-base leading-relaxed text-center">
           <p>
             IT Source — это кыргызстанская компания, предоставляющая комплексные
             решения в области инфраструктурных технологий от проектирования до

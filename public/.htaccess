@@ -1,0 +1,14 @@
+# Раздаём файлы как есть
+RewriteEngine On
+
+# Не переписывать существующие файлы/папки/скрипты
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d [OR]
+RewriteCond %{REQUEST_FILENAME} -s
+RewriteRule ^ - [L]
+
+# API на PHP: всё что начинается с /api и заканчивается .php — отдать PHP
+RewriteRule ^api/ - [L]
+
+# Остальное — на index.html (SPA fallback)
+RewriteRule . /index.html [L]

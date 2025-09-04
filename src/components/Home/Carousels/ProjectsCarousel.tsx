@@ -129,7 +129,7 @@ export default function ProjectsCarousel({
                   <h3 className="font-mono text-white text-xl md:text-2xl font-semibold tracking-wide">
                     {p.title}
                   </h3>
-                  <p className="mt-3 text-white/85 text-[15px] md:text-base leading-snug">
+                  <p className="mt-3 text-white text-[15px] md:text-base leading-snug">
                     {p.subtitle}
                   </p>
 
