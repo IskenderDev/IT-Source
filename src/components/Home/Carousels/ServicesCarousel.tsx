@@ -74,7 +74,7 @@ export default function ServicesCarousel() {
 
                     {s.ghost && (
                       <a
-                        href="/assets/check-lists/check-list_1.pdf"
+                        href={`${import.meta.env.BASE_URL}assets/check-lists/check-list_1.pdf`}
                         download
                         className="inline-block"
                       >

@@ -16,7 +16,7 @@ const Services = () => {
       }}
     >
       <ServiceHero
-        svgSrc={"/assets/servers-hero.svg"}
+        svgSrc={`${import.meta.env.BASE_URL}assets/servers-hero.svg`}
         title={"Раскройте мощь первоклассного серверного оборудования"}
         subtitle={
           'Сервис "Серверное оборудование" предназначен для обеспечения предприятий аппаратными и программными решениями для максимально эффективных ИТ-операций.'

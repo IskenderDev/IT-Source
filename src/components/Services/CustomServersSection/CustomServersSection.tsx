@@ -29,7 +29,7 @@ export default function CustomServersSection() {
             "
           >
             <img
-              src="/assets/custom-server.png"
+              src={`${import.meta.env.BASE_URL}assets/custom-server.png`}
               alt="Custom Server"
               className="h-full max-h-full w-auto object-contain"
             />

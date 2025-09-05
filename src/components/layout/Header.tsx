@@ -84,7 +84,7 @@ export default function Header() {
             goTo("home");
           }}
         >
-          <img src="/assets/logo.svg" alt="ITSource Logo" className="h-9 w-auto" />
+          <img src={`${import.meta.env.BASE_URL}assets/logo.svg`} alt="ITSource Logo" className="h-9 w-auto" />
         </Link>
         <nav
           className={[
