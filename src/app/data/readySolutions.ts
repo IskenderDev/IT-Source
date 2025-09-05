@@ -11,8 +11,8 @@ export const DEFAULT_SOLUTIONS: Solution[] = [
   {
     id: "industry",
     title: "Для производственных предприятий",
-    image: "/assets/sectors/industry.png",
-    modalImage: "/assets/sectors/industry-modal.png",
+    image: `${import.meta.env.BASE_URL}assets/sectors/industry.png`,
+    modalImage: `${import.meta.env.BASE_URL}assets/sectors/industry-modal.png`,
     contactHref: "/#contact",
     bullets: [
       "Пропускная система для работников",
@@ -24,8 +24,8 @@ export const DEFAULT_SOLUTIONS: Solution[] = [
   {
     id: "hotel",
     title: "Для гостиниц",
-    image: "/assets/sectors/hotel.png",
-    modalImage: "/assets/sectors/hotel-modal.png",
+    image: `${import.meta.env.BASE_URL}assets/sectors/hotel.png`,
+    modalImage: `${import.meta.env.BASE_URL}assets/sectors/hotel-modal.png`,
     contactHref: "/#contact",
     bullets: [
       "Датчики атмосферы объекта — температура, влажность, качество воздуха",
@@ -37,8 +37,8 @@ export const DEFAULT_SOLUTIONS: Solution[] = [
   {
     id: "business",
     title: "Для бизнес центров",
-    image: "/assets/sectors/bizcenter.png",
-    modalImage: "/assets/sectors/bizcenter-modal.png",
+    image: `${import.meta.env.BASE_URL}assets/sectors/bizcenter.png`,
+    modalImage: `${import.meta.env.BASE_URL}assets/sectors/bizcenter-modal.png`,
     contactHref: "/#contact",
     bullets: [
       "Управление парковкой",

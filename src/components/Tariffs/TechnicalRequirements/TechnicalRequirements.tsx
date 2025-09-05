@@ -70,7 +70,7 @@ import {
   
           <div className="relative">
             <img
-              src="/assets/rdp-requirements.png"
+              src={`${import.meta.env.BASE_URL}assets/rdp-requirements.png`}
               alt="Технические требования"
               className="w-full"
             />
@@ -78,5 +78,5 @@ import {
         </div>
       </section>
     );
-  }
+}
   

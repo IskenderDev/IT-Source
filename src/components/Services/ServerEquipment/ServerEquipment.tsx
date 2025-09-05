@@ -67,7 +67,7 @@
 
             <div className="relative">
                 <img
-                src="/assets/server-equipment.png"
+                src={`${import.meta.env.BASE_URL}assets/server-equipment.png`}
                 alt="Серверное оборудование"
                 className="w-full"
                 />

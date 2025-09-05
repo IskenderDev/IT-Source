@@ -333,7 +333,7 @@ function CTAButtons({
 }) {
   if (!primary && !secondary) return null;
 
-  const secondaryHref = secondary?.href ?? "/assets/check-lists/check-list_1.pdf";
+  const secondaryHref = secondary?.href ?? `${import.meta.env.BASE_URL}assets/check-lists/check-list_1.pdf`;
   const isPdf = /\.pdf($|\?)/i.test(secondaryHref);
 
   return (

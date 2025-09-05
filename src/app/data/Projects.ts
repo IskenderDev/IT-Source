@@ -38,15 +38,15 @@ export const PROJECTS: Project[] = [
     id: "binteq",
     title: "Binteq group",
     subtitle: "Комплексная инфраструктура для очистных сооружений",
-    image: "/assets/projects/binteq.png",
-    modalImage: "/assets/projects/binteq.png",
+    image: `${import.meta.env.BASE_URL}assets/projects/binteq.png`,
+    modalImage: `${import.meta.env.BASE_URL}assets/projects/binteq.png`,
     cta: { label: "Подробнее", href: "/cases/binteq" },
     location: "г. Бишкек",
     details: {
       heading:
         'Комплексная IT инфраструктура для стратегического предприятия, очистные сооружений "Binteq group"',
-      heroImage: "/assets/projects/binteq.png",
-      logo: "/assets/logos/binteq.svg",
+      heroImage: `${import.meta.env.BASE_URL}assets/projects/binteq.png`,
+      logo: `${import.meta.env.BASE_URL}assets/logos/binteq.svg`,
       blocks: {
         task: {
           title: "Задача",
@@ -90,14 +90,14 @@ export const PROJECTS: Project[] = [
     id: "aplus",
     title: "Бизнес-Центр «А-Плюс»",
     subtitle: "Проектирование и реализация полной цифровой инфраструктуры",
-    image: "/assets/projects/a-plus.png",
+    image: `${import.meta.env.BASE_URL}assets/projects/a-plus.png`,
     modalImage: "projects/a-plus.png",
     cta: { label: "Подробнее", href: "/cases/aplus" },
     location: "г. Бишкек",
     details: {
       heading: 'Цифровая инфраструктура бизнес-центра "А-Плюс"',
       heroImage: "projects/a-plus.png",
-      logo: "/assets/logos/aplus.svg",
+      logo: `${import.meta.env.BASE_URL}assets/logos/aplus.svg`,
       blocks: {
         task: {
           title: "Задача",
@@ -141,13 +141,13 @@ export const PROJECTS: Project[] = [
     id: "abc",
     title: "Частная школа ABC",
     subtitle: "Безопасная образовательная среда частной школы «ABC»",
-    image: "/assets/projects/abc-school.png",
-    modalImage: "/assets/projects/abc-school.png",
+    image: `${import.meta.env.BASE_URL}assets/projects/abc-school.png`,
+    modalImage: `${import.meta.env.BASE_URL}assets/projects/abc-school.png`,
     cta: { label: "Подробнее", href: "/cases/abc" },
     details: {
       heading: 'Безопасная образовательная среда школы "ABC"',
-      heroImage: "/assets/projects/abc-school.png",
-      logo: "/assets/logos/abc.svg",
+      heroImage: `${import.meta.env.BASE_URL}assets/projects/abc-school.png`,
+      logo: `${import.meta.env.BASE_URL}assets/logos/abc.svg`,
       blocks: {
         task: {
           title: "Задача",
@@ -184,13 +184,13 @@ export const PROJECTS: Project[] = [
     id: "liverpool",
     title: "Бизнес-Центр «Ливерпуль»",
     subtitle: "Комплексная безопасность бизнес-центра «Ливерпуль»",
-    image: "/assets/projects/liverpool-bc.png",
-    modalImage: "/assets/projects/liverpool-bc.png",
+    image: `${import.meta.env.BASE_URL}assets/projects/liverpool-bc.png`,
+    modalImage: `${import.meta.env.BASE_URL}assets/projects/liverpool-bc.png`,
     cta: { label: "Подробнее", href: "/cases/liverpool" },
     details: {
       heading: 'Комплексная безопасность бизнес-центра "Ливерпуль"',
-      heroImage: "/assets/projects/liverpool-bc.png",
-      logo: "/assets/logos/liverpool.svg",
+      heroImage: `${import.meta.env.BASE_URL}assets/projects/liverpool-bc.png`,
+      logo: `${import.meta.env.BASE_URL}assets/logos/liverpool.svg`,
       blocks: {
         task: {
           title: "Задача",
@@ -228,14 +228,14 @@ export const PROJECTS: Project[] = [
     id: "crocus",
     title: "Crocus Fitness",
     subtitle: "Технологическая инфраструктура для премиального фитнес-клуба",
-    image: "/assets/projects/crocus-fitness.png",
-    modalImage: "/assets/projects/crocus-fitness.png",
+    image: `${import.meta.env.BASE_URL}assets/projects/crocus-fitness.png`,
+    modalImage: `${import.meta.env.BASE_URL}assets/projects/crocus-fitness.png`,
     cta: { label: "Подробнее", href: "/cases/crocus" },
     details: {
       heading:
         'Технологическая инфраструктура премиальной франшизы фитнес-клуба "Crocus Fitness"',
-      heroImage: "/assets/projects/crocus-fitness.png",
-      logo: "/assets/logos/crocus.svg",
+      heroImage: `${import.meta.env.BASE_URL}assets/projects/crocus-fitness.png`,
+      logo: `${import.meta.env.BASE_URL}assets/logos/crocus.svg`,
       blocks: {
         task: {
           title: "Задача",
@@ -274,14 +274,14 @@ export const PROJECTS: Project[] = [
     title: "«Sky  park-Байтик»",
     subtitle:
       "Проектирование и реализация технологической системы для парка развлечений",
-    image: "/assets/projects/skypark-baytik.png",
-    modalImage: "/assets/projects/skypark-baytik.png",
+    image: `${import.meta.env.BASE_URL}assets/projects/skypark-baytik.png`,
+    modalImage: `${import.meta.env.BASE_URL}assets/projects/skypark-baytik.png`,
     cta: { label: "Подробнее", href: "/cases/skypark" },
     details: {
       heading:
         'Полная технологическая система парка развлечений "Sky park-Байтик"',
-      heroImage: "/assets/projects/skypark-baytik.png",
-      logo: "/assets/logos/skypark.svg",
+      heroImage: `${import.meta.env.BASE_URL}assets/projects/skypark-baytik.png`,
+      logo: `${import.meta.env.BASE_URL}assets/logos/skypark.svg`,
       blocks: {
         task: {
           title: "Задача",
@@ -326,13 +326,13 @@ export const PROJECTS: Project[] = [
     id: "tezjol",
     title: "Дорога “Тез-Жол”",
     subtitle: "Технологическая инфраструктура платной дороги",
-    image: "/assets/projects/tez-jol.png",
-    modalImage: "/assets/projects/tez-jol.png",
+    image: `${import.meta.env.BASE_URL}assets/projects/tez-jol.png`,
+    modalImage: `${import.meta.env.BASE_URL}assets/projects/tez-jol.png`,
     cta: { label: "Подробнее", href: "/cases/tez-jol" },
     details: {
       heading: 'Технологическая инфраструктура платной дороги "Тез Жол"',
-      heroImage: "/assets/projects/tez-jol.png",
-      logo: "/assets/logos/tez-jol.svg",
+      heroImage: `${import.meta.env.BASE_URL}assets/projects/tez-jol.png`,
+      logo: `${import.meta.env.BASE_URL}assets/logos/tez-jol.svg`,
       blocks: {
         task: {
           title: "Задача",
@@ -368,13 +368,13 @@ export const PROJECTS: Project[] = [
     title: "Цементный завод «Терек  Таш»",
     subtitle:
       "Проектирование и реализация проекта, по внедрению систем безопасности и контроля доступа",
-    image: "/assets/projects/terek-tash.png",
-    modalImage: "/assets/projects/terek-tash.png",
+    image: `${import.meta.env.BASE_URL}assets/projects/terek-tash.png`,
+    modalImage: `${import.meta.env.BASE_URL}assets/projects/terek-tash.png`,
     cta: { label: "Подробнее", href: "/cases/terek-tash" },
     details: {
       heading: 'Системы безопасности заводов "Терек Таш" (Кемин, Новопокровка)',
-      heroImage: "/assets/projects/terek-tash.png",
-      logo: "/assets/logos/terek-tash.svg",
+      heroImage: `${import.meta.env.BASE_URL}assets/projects/terek-tash.png`,
+      logo: `${import.meta.env.BASE_URL}assets/logos/terek-tash.svg`,
       blocks: {
         task: {
           title: "Задача",

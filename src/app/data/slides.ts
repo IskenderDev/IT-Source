@@ -12,11 +12,11 @@ export const EXPERTISE_SLIDES: Slide[] = [
 Аудит информационной безопасности — выявление уязвимостей, проверка антивирусной защиты и политик доступа
 Анализ программного обеспечения — проверка лицензионной чистоты, актуальности и соответствия бизнес-задачам
 Оценка ИТ-сервисов — диагностика работы почты, файловых хранилищ, ERP/CRM, систем резервного копирования`,
-    image: "/assets/slides/checklist.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/checklist.png`,
     primary: { label: "Связаться с нами", href: "/contacts" },
     secondary: {
       label: "Скачать чек-лист 1",
-      href: "/assets/check-lists/check-list_1.pdf",
+      href: `${import.meta.env.BASE_URL}assets/check-lists/check-list_1.pdf`,
     },
   },
   {
@@ -28,7 +28,7 @@ export const EXPERTISE_SLIDES: Slide[] = [
 Планирование миграций — безопасный переход на новые технологии и платформы
 Масштабирование инфраструктуры — подготовка к росту бизнеса
 Повышение безопасности — внедрение современных методов защиты`,
-    image: "/assets/slides/consulting.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/consulting.png`,
     primary: { label: "Заказать консалтинг", href: "/services/consulting" },
   },
   {
@@ -37,7 +37,7 @@ export const EXPERTISE_SLIDES: Slide[] = [
 Детальная документация — полные отчёты с практическими рекомендациями
 Опытная команда — специалисты с практикой в проектах разного масштаба
 Применимые решения — не просто отчёт, а ценные рекомендации для внедрения`,
-    image: "/assets/slides/way.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/way.png`,
     primary: { label: "Связаться с нами", href: "/contacts" },
   },
 ];
@@ -51,11 +51,11 @@ export const HOSTING_SLIDES: Slide[] = [
       "Управляемые решения — берём на себя администрирование и мониторинг\n" +
       "Разные конфигурации — от веб‑серверов до высоконагруженных БД\n" +
       "1C RDP — качественный доступ с соблюдением лицензирования по RDP/root",
-    image: "/assets/slides/servers.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/servers.png`,
     primary: { label: "Подробнее", href: "#contact" },
     secondary: {
       label: "Узнать больше",
-      href: "/assets/check-lists/check-list_1.pdf",
+      href: `${import.meta.env.BASE_URL}assets/check-lists/check-list_1.pdf`,
     },
     background: "#06498233",
   },
@@ -66,7 +66,7 @@ export const HOSTING_SLIDES: Slide[] = [
       "Объёмные HDD‑массивы — для архива и долгого хранения\n" +
       "Автоматическое резервное копирование — настроенные сценарии бэкапа\n" +
       "Географически распределённые копии — защита от форс‑мажоров",
-    image: "/assets/slides/storage.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/storage.png`,
     primary: { label: "Связаться с нами", href: "/contacts" },
     background: "#06498233",
   },
@@ -77,7 +77,7 @@ export const HOSTING_SLIDES: Slide[] = [
       "Виртуальные частные сети — безопасные соединения между локациями\n" +
       "Гибридные решения — интеграция с вашей локальной инфраструктурой\n" +
       "API‑управление — автоматизация развертывания и управления ресурсами",
-    image: "/assets/slides/clouds.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/clouds.png`,
     primary: { label: "Связаться с нами", href: "/contacts" },
     background: "#06498233",
   },
@@ -88,7 +88,7 @@ export const HOSTING_SLIDES: Slide[] = [
       "Поддержка 24/7/365 — круглосуточный мониторинг и техподдержка\n" +
       "Проактивное обслуживание — предупреждение проблем до их возникновения\n" +
       "Прозрачная отчётность — детальная аналитика использования ресурсов",
-    image: "/assets/slides/support.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/support.png`,
     primary: { label: "Связаться с нами", href: "/contacts" },
     background: "#06498233",
   },
@@ -104,14 +104,14 @@ export const SOLUTIONS_SLIDES: Slide[] = [
       "Охранно-пожарная сигнализация (ОПС) — защита периметра и помещений\n" +
       "Системы оповещения — звуковое и световое информирование\n" +
       "Телефония — современные IP-АТС и интеграции",
-    image: "/assets/slides/low-current.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/low-current.png`,
     secondary: {
       label: "Скачать чек-лист 2",
-      href: "/assets/check-lists/check-list_2.pdf",
+      href: `${import.meta.env.BASE_URL}assets/check-lists/check-list_2.pdf`,
     },
     tertiary: {
       label: "Скачать чек-лист 3",
-      href: "/assets/check-lists/check-list_3.pdf",
+      href: `${import.meta.env.BASE_URL}assets/check-lists/check-list_3.pdf`,
     },
     background:
       "linear-gradient(96.31deg, rgba(6, 73, 130, 0.38) 23.99%, rgba(1, 25, 42, 0.38) 69.11%)",
@@ -125,7 +125,7 @@ export const SOLUTIONS_SLIDES: Slide[] = [
       "Маршрутизация и коммутация — оптимальная топология для вашего бизнеса\n" +
       "VPN и удалённый доступ — безопасное подключение филиалов и сотрудников\n" +
       "Системы безопасности сети — межсетевые экраны, IPS/IDS, сегментация",
-    image: "/assets/slides/network.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/network.png`,
     primary: { label: "Связаться с нами", href: "/contacts" },
     background:
       "linear-gradient(281.87deg, rgba(6, 73, 130, 0.38) 45.02%, rgba(1, 25, 42, 0.38) 85.34%)",
@@ -139,7 +139,7 @@ export const SOLUTIONS_SLIDES: Slide[] = [
       "Системы резервного копирования — надёжная защита критически важных данных\n" +
       "Кластеризация — высокая доступность сервисов\n" +
       "Гибридные облачные решения — интеграция с Azure, AWS, Yandex Cloud",
-    image: "/assets/slides/server.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/server.png`,
     primary: { label: "Подробнее", href: "/services/servers" },
     background:
       "linear-gradient(281.87deg, rgba(6, 73, 130, 0.38) 45.02%, rgba(1, 25, 42, 0.38) 85.34%)",
@@ -152,7 +152,7 @@ export const SOLUTIONS_SLIDES: Slide[] = [
       "Умное освещение и климат — автоматизация и энергосбережение\n" +
       "Бронирование переговорных — интеграция с календарями и системами доступа\n" +
       "Мультимедиа решения — интерактивные доски, проекторы, звук",
-    image: "/assets/slides/office.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/office.png`,
     primary: { label: "Связаться с нами", href: "/contacts" },
     background:
       "linear-gradient(281.87deg, rgba(6, 73, 130, 0.38) 45.02%, rgba(1, 25, 42, 0.38) 85.34%)",
@@ -164,7 +164,7 @@ export const SPECIAL_SOLUTION_SLIDES: Slide[] = [
     title: "Готовые интеграции",
     text:
       "Системы видеонаблюдения и аналитики, используемые для управления IP-камерами анализа видеопотоков и обеспечения безопасности. Основные функции: распознавание лиц, номеров автомобилей, детекция движения, интеграция с другими системами.",
-    image: "/assets/slides/integrations.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/integrations.png`,
     primary: { label: "Подробнее", href: "/services/integrations" },
   },
   {
@@ -175,20 +175,20 @@ export const SPECIAL_SOLUTION_SLIDES: Slide[] = [
 - Интеграция с HR-системами — синхронизация с кадровыми базами данных
 - API для разработчиков — возможность интеграции с любыми внешними системами
 - Мобильное приложение — управление и мониторинг с мобильных устройств`,
-    image: "/assets/slides/ukey.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/ukey.png`,
   },
   {
     title: "R‑Keeper, Game‑Keeper",
     text: `- Система автоматизации для ресторанов и кафе. Включает модули для работы официантов, кассиров, менеджеров. Обеспечивает учет заказов, управление складом, финансовую отчетность и интеграцию с онлайн‑заказами (Click & Collect).
 - Решение для автоматизации игровых и развлекательных центров. Использует пластиковые карты с магнитной полосой вместо жетонов. Позволяет управлять игровыми автоматами, отслеживать использование оборудования в реальном времени, интегрируется с ресторанными системами (например, R‑Keeper) и поддерживает программы лояльности.`,
-    image: "/assets/slides/rkeeper.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/rkeeper.png`,
     primary: { label: "Подробнее", href: "/services/rkeeper" },
   },
   {
     title: "Shelter",
     text:
       "Shelter PMS — система управления отелем: прием бронирований с сайта и агрегаторов, автоматизация работы персонала, контроль всех бизнес‑процессов.",
-    image: "/assets/slides/shelter.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/shelter.png`,
     primary: { label: "Подробнее", href: "/services/shelter" },
   },
   {
@@ -198,7 +198,7 @@ export const SPECIAL_SOLUTION_SLIDES: Slide[] = [
 - Управление парковкой — контроль доступа, оплата, мониторинг занятости
 - Посетительский учет — регистрация гостей, выдача временных пропусков
 - Управление ресурсами — планирование использования помещений и оборудования`,
-    image: "/assets/slides/management.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/management.png`,
   },
   {
     title: "IoT и умная автоматизация",
@@ -207,35 +207,35 @@ export const SPECIAL_SOLUTION_SLIDES: Slide[] = [
 - Умное освещение — автоматическое управление в зависимости от присутствия
 - Системы климат‑контроля — оптимизация энергопотребления
 - Мониторинг оборудования — предиктивная аналитика и предупреждение поломок`,
-    image: "/assets/slides/iot.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/iot.png`,
   },
 ];
 
 export const SERVICE_SLIDES = [
   {
-    image: "/assets/slides/exp.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/exp.png`,
     title: "Экспертиза",
     subtitle: "Аудит, консалтинг, анализ инфраструктуры",
     cta: { label: "Подробнее", href: "/services/expertise" },
     ghost: {
       label: "Скачать чек-лист",
-      href: "/assets/check-lists/check-list_1.pdf",
+      href: `${import.meta.env.BASE_URL}assets/check-lists/check-list_1.pdf`,
     },
   },
   {
-    image: "/assets/slides/design.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/design.png`,
     title: "Проектирование под ключ",
     subtitle: "Сетевые, серверные и слаботочные решения",
     cta: { label: "Подробнее", href: "/services/design" },
   },
   {
-    image: "/assets/slides/hosting.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/hosting.png`,
     title: "Аренда серверов",
     subtitle: "Готовая IT-инфраструктура в ЦОД без перерывов",
     cta: { label: "Подробнее", href: "/services/servers" },
   },
   {
-    image: "/assets/slides/special.png",
+    image: `${import.meta.env.BASE_URL}assets/slides/special.png`,
     title: "Специальные решения",
     subtitle: "UKEY, IoT, интеграции, автоматизация",
     cta: { label: "Подробнее", href: "/services/special" },

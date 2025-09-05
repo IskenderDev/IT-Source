@@ -4,9 +4,9 @@ const TariffsHero = () => (
   <ServiceHero
     image={
       <picture>
-        <source media="(max-width: 640px)" srcSet="/assets/tariffs-hero-small.svg" />
+        <source media="(max-width: 640px)" srcSet={`${import.meta.env.BASE_URL}assets/tariffs-hero-small.svg`} />
         <img
-          src="/assets/tariffs-hero.svg"
+          src={`${import.meta.env.BASE_URL}assets/tariffs-hero.svg`}
           alt="1C:Enterprise — удалённый доступ"
           className="relative z-10 w-full -mb-30 md:-mb-0 select-none"
           loading="eager"
