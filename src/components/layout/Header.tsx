@@ -18,7 +18,7 @@ function scrollToId(id: string) {
 export default function Header() {
   const location = useLocation();
   const navigate = useNavigate();
-  const isHome = location.pathname === "/itsource/public/";
+  const isHome = location.pathname === "/";
   const [open, setOpen] = useState(false);
 
   const activeId = useMemo<SectionId | null>(() => {
@@ -34,7 +34,7 @@ export default function Header() {
   const goTo = (id: SectionId) => {
     switch (id) {
       case "home":
-        if (!isHome) navigate("/itsource/public/");
+        if (!isHome) navigate("/");
         else scrollToId("home");
         break;
       case "tariffs":
