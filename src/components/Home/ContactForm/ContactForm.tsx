@@ -3,9 +3,9 @@ import { Button } from "../../ui";
 
 type Status = "idle" | "success" | "error";
 
-type LeadResponse =
-  | { ok: true; leadId: number; leadUrl?: string }
-  | { ok: false; error: string };
+type LeadOk = { ok: true; leadId: number; leadUrl?: string };
+type LeadFail = { ok: false; error: string; raw?: unknown };
+type LeadResponse = LeadOk | LeadFail;
 
 function isErrorLike(x: unknown): x is { message?: string } {
   return typeof x === "object" && x !== null && "message" in x;
@@ -24,6 +24,16 @@ const COUNTRY_CODES = [
   { code: "+380", name: "Украина" },
 ];
 
+// /api в деве и /itsource/api в проде, можно переопределить VITE_API_BASE
+const API_BASE =
+  import.meta.env.VITE_API_BASE ??
+  (import.meta.env.DEV ? "/api" : "/itsource/api");
+
+// безопасно склеиваем путь (без двойного слеша)
+function joinUrl(base: string, path: string) {
+  return `${base.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
+}
+
 export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
@@ -38,7 +48,8 @@ export default function ContactForm() {
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
-    setFormData((s) => ({ ...s, [e.target.name]: e.target.value }));
+    const { name, value } = e.target;
+    setFormData((s) => ({ ...s, [name]: value }));
   }
 
   function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -56,11 +67,22 @@ export default function ContactForm() {
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (loading) return;
+
     setLoading(true);
     setStatus("idle");
     setNotice("");
 
+    // простая валидация
+    const name = formData.name.trim();
     const phoneDigits = normalizedPhone(formData.phone);
+
+    if (name.length < 2) {
+      setLoading(false);
+      setStatus("error");
+      setNotice("Укажите корректное имя (минимум 2 символа).");
+      return;
+    }
     if (phoneDigits.length < 6) {
       setLoading(false);
       setStatus("error");
@@ -71,30 +93,59 @@ export default function ContactForm() {
     try {
       const fullPhone = `${formData.countryCode} ${phoneDigits}`;
 
+      // корректный сбор UTM
+      const qs = new URLSearchParams(window.location.search);
+      const utm = Object.fromEntries(qs.entries());
+
       const body = {
-        name: formData.name,
+        name,
         phone: fullPhone,
-        message: formData.message,
+        message: formData.message.trim(),
         page: window.location.href,
-        utm: Object.fromEntries(new URLSearchParams(window.location.search)),
+        utm,
       };
 
-      const r = await fetch("/api/b24-lead.php", {
+      const r = await fetch(joinUrl(API_BASE, "b24-lead.php"), {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
         body: JSON.stringify(body),
+        // credentials: "include", // если когда-нибудь понадобится cookie
       });
-      const data: LeadResponse = await r.json();
 
-      if (data.ok) {
+      // пытаемся аккуратно разобрать ответ (может быть пустым при ошибке сервера)
+      let data: LeadResponse | null = null;
+      const contentType = r.headers.get("content-type") || "";
+      if (contentType.includes("application/json")) {
+        try {
+          data = (await r.json()) as LeadResponse;
+        } catch {
+          data = null;
+        }
+      }
+
+      if (!r.ok) {
+        const msg =
+          (data && "error" in data && data.error) || `HTTP ${r.status}`;
+        throw new Error(msg);
+      }
+
+      if (data && data.ok) {
         console.log(`Lead created: ID=${data.leadId} ${data.leadUrl ?? ""}`);
         setStatus("success");
-        setNotice(`Заявка отправлена.`);
+        setNotice("Заявка отправлена.");
         setFormData({ name: "", countryCode: "+996", phone: "", message: "" });
-      } else {
-        console.error("Bitrix24 error:", data.error);
+      } else if (data && !data.ok) {
+        console.error("Bitrix24 error:", data.error, data.raw);
         setStatus("error");
         setNotice("Ошибка отправки. Попробуйте позже.");
+      } else {
+        // неожиданный формат успешного ответа
+        setStatus("success");
+        setNotice("Заявка отправлена.");
+        setFormData({ name: "", countryCode: "+996", phone: "", message: "" });
       }
     } catch (err: unknown) {
       console.error(
@@ -115,8 +166,10 @@ export default function ContactForm() {
     >
       <form
         onSubmit={handleSubmit}
+        noValidate
         className="relative z-10 max-w-2xl w-full bg-[#010C15]/50 backdrop-blur-3xl rounded-2xl border border-white/20 p-8 md:p-10 shadow-lg text-white"
       >
+        {/* glow background */}
         <div
           aria-hidden
           className="pointer-events-none absolute -top-12 -left-12 w-[300px] h-[300px] bg-[#6A5ACD] rounded-full opacity-35 blur-[200px]"
@@ -152,6 +205,7 @@ export default function ContactForm() {
               value={formData.name}
               onChange={handleChange}
               required
+              minLength={2}
               className="w-full rounded-xl bg-[#1F2733]/80 text-white placeholder:text-white/50 px-6 py-4 focus:outline-none"
             />
           </label>
@@ -164,7 +218,8 @@ export default function ContactForm() {
               id="countryCode"
               value={formData.countryCode}
               onChange={handleCodeChange}
-              className="rounded-l-2xl bg-[#1F2733]/80 text-white placeholder:text-white/50 px-6 py-4 focus:outline-none "
+              className="rounded-l-2xl bg-[#1F2733]/80 text-white px-6 py-4 focus:outline-none"
+              aria-label="Код страны"
             >
               {COUNTRY_CODES.map((c) => (
                 <option key={c.code} value={c.code} title={`${c.name} (${c.code})`}>
@@ -186,7 +241,7 @@ export default function ContactForm() {
               onChange={handlePhoneChange}
               required
               className="w-full rounded-r-2xl bg-[#1F2733]/80 text-white placeholder:text-white/50 px-6 py-4 focus:outline-none"
-            /> 
+            />
           </div>
         </div>
 
@@ -206,11 +261,13 @@ export default function ContactForm() {
             size="md"
             className="transition-shadow hover:shadow-[0_0_20px_#03CEA4]"
             disabled={loading}
+            aria-busy={loading}
           >
             {loading ? "Отправка..." : "Отправить"}
           </Button>
         </div>
 
+        {/* glow bottom */}
         <div
           aria-hidden
           className="pointer-events-none absolute bottom-20 -right-20 w-[200px] h-[75px] bg-[#03CEA4] rounded-full opacity-50 blur-[140px]"

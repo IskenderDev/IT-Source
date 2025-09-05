@@ -10,7 +10,7 @@ export default function App() {
     <div className="bg-main min-h-screen font-mono">
       <Header />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/itsource/public/" element={<Home />} />
         <Route path="/services" element={<Services />} />
         <Route path="/tariffs" element={<Tariffs />} />
       </Routes>
