@@ -24,14 +24,9 @@ const COUNTRY_CODES = [
   { code: "+380", name: "Украина" },
 ];
 
-// /api в деве и /itsource/api в проде, можно переопределить VITE_API_BASE
-const API_BASE =
-  import.meta.env.VITE_API_BASE ??
-  (import.meta.env.DEV ? "/api" : "/itsource/api");
-
-// безопасно склеиваем путь (без двойного слеша)
-function joinUrl(base: string, path: string) {
-  return `${base.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
+const API_BASE = import.meta.env.VITE_API_BASE ?? "/api";
+function apiUrl(path: string) {
+  return `${API_BASE.replace(/\/+$/, "")}/${path.replace(/^\/+/, "")}`;
 }
 
 export default function ContactForm() {
@@ -73,7 +68,6 @@ export default function ContactForm() {
     setStatus("idle");
     setNotice("");
 
-    // простая валидация
     const name = formData.name.trim();
     const phoneDigits = normalizedPhone(formData.phone);
 
@@ -93,7 +87,6 @@ export default function ContactForm() {
     try {
       const fullPhone = `${formData.countryCode} ${phoneDigits}`;
 
-      // корректный сбор UTM
       const qs = new URLSearchParams(window.location.search);
       const utm = Object.fromEntries(qs.entries());
 
@@ -105,15 +98,14 @@ export default function ContactForm() {
         utm,
       };
 
-      const r = await fetch(joinUrl(API_BASE, "b24-lead.php"), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(body),
-        // credentials: "include", // если когда-нибудь понадобится cookie
-      });
+     const r = await fetch(apiUrl("b24-lead.php"), {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Accept: "application/json",
+  },
+  body: JSON.stringify(body),
+});
 
       // пытаемся аккуратно разобрать ответ (может быть пустым при ошибке сервера)
       let data: LeadResponse | null = null;
@@ -267,7 +259,6 @@ export default function ContactForm() {
           </Button>
         </div>
 
-        {/* glow bottom */}
         <div
           aria-hidden
           className="pointer-events-none absolute bottom-20 -right-20 w-[200px] h-[75px] bg-[#03CEA4] rounded-full opacity-50 blur-[140px]"
