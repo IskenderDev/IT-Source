@@ -89,7 +89,7 @@ export default function ContactForm() {
       if (data.ok) {
         console.log(`Lead created: ID=${data.leadId} ${data.leadUrl ?? ""}`);
         setStatus("success");
-        setNotice(`Заявка отправлена. №${data.leadId}`);
+        setNotice(`Заявка отправлена.`);
         setFormData({ name: "", countryCode: "+996", phone: "", message: "" });
       } else {
         console.error("Bitrix24 error:", data.error);
