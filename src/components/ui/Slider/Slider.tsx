@@ -169,7 +169,7 @@ export default function Slider({
                     {(s.primary || s.secondary || s.tertiary) && (
                       <div className="mt-4 flex flex-wrap gap-3 justify-center">
                         {s.primary && (
-                          <a href={s.primary.href}>
+                          <a href='#contact'>
                             <Button size="lg">{s.primary.label}</Button>
                           </a>
                         )}

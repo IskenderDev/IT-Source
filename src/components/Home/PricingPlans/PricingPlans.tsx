@@ -55,6 +55,7 @@ function PlanCard({ plan }: { plan: Plan }) {
             size="lg"
             className="w-full text-[14.5px] sm:text-[15.5px] md:text-[16.5px]"
             aria-label={`Выбрать план за ${price} сом/мес`}
+            href="#contact"
           >
             Я хочу это
           </Button>

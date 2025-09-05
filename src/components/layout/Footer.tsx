@@ -6,11 +6,65 @@ import {
 } from "react-icons/fa";
 
 const year = new Date().getFullYear();
+const BASE = import.meta.env.BASE_URL || "/";
+
+/** Плавный скролл к якорю с учётом «той же» страницы */
+function scrollToHash(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const prefersReduced =
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+
+  // при необходимости сместите offset под высоту шапки
+  const offset = 10; // px
+  const top = el.getBoundingClientRect().top + window.scrollY - offset;
+
+  window.scrollTo({ top, behavior: prefersReduced ? "auto" : "smooth" });
+}
+
+/** Умная навссылка: если мы на той же странице — скроллим; иначе — обычный переход */
+function NavLink({
+  toId,
+  children,
+}: {
+  toId: string;
+  children: React.ReactNode;
+}) {
+  const href = `${BASE}#${toId}`;
+  const onClick: React.MouseEventHandler<HTMLAnchorElement> = (e) => {
+    const sameDoc =
+      // на проде с заданным base
+      window.location.pathname.startsWith(BASE) ||
+      // на деве/локали
+      (BASE === "/" && window.location.pathname === "/");
+
+    if (sameDoc) {
+      const el = document.getElementById(toId);
+      if (el) {
+        e.preventDefault();
+        // обновим hash в адресной строке, чтобы работал back/forward
+        history.replaceState(null, "", href);
+        scrollToHash(toId);
+      }
+    }
+  };
+
+  return (
+    <a
+      href={href}
+      onClick={onClick}
+      className="hover:text-primary transition-colors"
+    >
+      {children}
+    </a>
+  );
+}
 
 export default function Footer() {
   return (
     <footer className="border-t border-white/10 text-white/90 font-sans bg-black">
-      <div className="mx-auto px-4 sm:px-8 lg:px-16 py-20  ">
+      <div className="mx-auto px-4 sm:px-8 lg:px-16 py-20">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 lg:gap-16">
           <div className="flex flex-col justify-between">
             <div>
@@ -20,7 +74,7 @@ export default function Footer() {
               </p>
             </div>
 
-            <div className=" flex items-center gap-5">
+            <div className="flex items-center gap-5">
               <SocialLink href="#" label="Twitter">
                 <FaTwitter />
               </SocialLink>
@@ -40,36 +94,16 @@ export default function Footer() {
             <h4 className="text-white font-semibold">Навигация</h4>
             <ul className="mt-4 space-y-3 text-sm">
               <li>
-                <button
-                  className="hover:text-primary transition-colors"
-                  onClick={() => scrollToHash("home")}
-                >
-                  Главная
-                </button>
+                <NavLink toId="home">Главная</NavLink>
               </li>
               <li>
-                <button
-                  className="hover:text-primary transition-colors"
-                  onClick={() => scrollToHash("services")}
-                >
-                  Услуги
-                </button>
+                <NavLink toId="services">Услуги</NavLink>
               </li>
               <li>
-                <button
-                  className="hover:text-primary transition-colors"
-                  onClick={() => scrollToHash("pricing")}
-                >
-                  Тарифы
-                </button>
+                <NavLink toId="pricing">Тарифы</NavLink>
               </li>
               <li>
-                <button
-                  className="hover:text-primary transition-colors"
-                  onClick={() => scrollToHash("contact")}
-                >
-                  Контакты
-                </button>
+                <NavLink toId="contact">Контакты</NavLink>
               </li>
             </ul>
           </div>
@@ -78,7 +112,7 @@ export default function Footer() {
             <h4 className="text-white font-semibold">Услуги</h4>
             <ul className="mt-4 space-y-3 text-sm">
               <li>Аудит инфраструктуры</li>
-              <li>Проектирование IT‑решений</li>
+              <li>Проектирование IT-решений</li>
               <li>Внедрение систем &quot;под ключ&quot;</li>
               <li>Слаботочные системы</li>
               <li>Сетевые решения</li>
@@ -139,6 +173,7 @@ export default function Footer() {
           </div>
         </div>
       </div>
+
       <div className="mt-10 lg:mt-14 border-t border-white/10 py-8 text-center text-xs text-white/60">
         © {year} – It Source
       </div>
@@ -161,19 +196,9 @@ function SocialLink({
       aria-label={label}
       className="inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/15 hover:border-white/30 hover:bg-white/5 active:scale-95 transition"
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
     >
       <span className="text-lg">{children}</span>
     </a>
   );
-}
-
-function scrollToHash(id: string) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  const top = el.getBoundingClientRect().top + window.scrollY - 10;
-  const prefersReduced =
-    typeof window !== "undefined" &&
-    window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-  window.scrollTo({ top, behavior: prefersReduced ? "auto" : "smooth" });
 }
